@@ -1,9 +1,9 @@
 #!/bin/bash
 
 ssh root@95.85.43.196 <<'ENDSSH'
-    cd /var/www/prylar-api
+    cd /var/www/cssgrid.pro
     git reset --hard HEAD
     git pull --rebase origin master
-    yarn
-    npm run production
+    npm install
+    npm run build
 ENDSSH

@@ -92,6 +92,7 @@ class Input extends Component {
                       <input
                         type="text"
                         value={property.value}
+                        placeholder="value"
                         onChange={this.onChange(rule.selector, property.key)}
                       />
                     )}

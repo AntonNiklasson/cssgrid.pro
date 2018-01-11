@@ -1,96 +1,72 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
-import InputContainer from './Input';
-import OutputContainer from './Output';
+import Level from './Level';
+import levels from './data/levels';
 
 const Wrapper = glamorous.div({
   height: '100%',
   display: 'flex',
-  flexFlow: 'row wrap',
+  flexDirection: 'column',
 });
-
-const styleTreeToString = tree =>
-  tree.reduce(
-    (raw, rule) =>
-      `${raw}
-    ${rule.selector} {
-      ${rule.properties.reduce(
-        (raw, property) =>
-          `${raw}
-          ${property.key}: ${property.value};`,
-        ''
-      )}
-    }`,
-    ''
-  );
+const Nav = glamorous.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  background: '#333',
+  fontSize: '20px',
+  color: 'whitesmoke',
+  margin: '0 0 1em 0',
+  padding: '1em',
+  userSelect: 'none',
+  '& button': {
+    background: 'none',
+    fontSize: '14px',
+    padding: '.5em',
+    margin: '0.1em',
+    color: 'whitesmoke',
+    borderRadius: '3px',
+    ':disabled': {
+      cursor: 'not-allowed',
+      textDecoration: 'line-through',
+    },
+  },
+  '& h1': {
+    display: 'inline',
+    fontWeight: 'bold',
+    fontSize: '25px',
+  },
+  '& h2': {
+    display: 'inline',
+    fontWeight: 'normal',
+    fontSize: '16px',
+    margin: '0 1em',
+  },
+});
 
 class App extends Component {
   state = {
-    markup: `<div class="grid">
-  <div class="cat">🐈</div>
-  <div class="elephant">🐘</div>
-  <div class="shark">🦈</div>
-  <div class="dog">🐶</div>
-  <div class="turtle">🐢</div>
-</div>`,
-    styles: [
-      {
-        selector: '.grid',
-        properties: [
-          { key: 'display', value: 'grid' },
-          { key: 'grid-template-rows', value: '1fr 1fr 1fr', editable: true },
-          {
-            key: 'grid-template-columns',
-            value: '1fr 1fr 1fr',
-            editable: true,
-          },
-          { key: 'grid-gap', value: '5px', editable: true },
-        ],
-      },
-      {
-        selector: '.cat, .elephant, .shark, .dog, .turtle',
-        properties: [
-          { key: 'display', value: 'flex' },
-          { key: 'justify-content', value: 'center' },
-          { key: 'align-items', value: 'center' },
-          { key: 'background', value: 'tomato' },
-          { key: 'padding', value: '2rem' },
-        ],
-      },
-    ],
-  };
-
-  onInputChange = (selector, propertyKey, value) => {
-    const state = this.state.styles.map(rule => {
-      if (rule.selector !== selector) return rule;
-
-      return {
-        ...rule,
-        properties: rule.properties.map(property => {
-          if (property.key !== propertyKey) return property;
-
-          return {
-            ...property,
-            value,
-          };
-        }),
-      };
-    });
-
-    this.setState({ styles: state });
+    currentLevel: 0,
   };
 
   render() {
-    const { markup, styles } = this.state;
+    const { currentLevel } = this.state;
+    const { title, markup, styles } = levels[0];
+    const hasPreviousLevel = currentLevel > 0;
+    const hasNextLevel = currentLevel + 1 < levels.length;
+
     return (
       <Wrapper>
-        <InputContainer
-          markup={markup}
-          styles={styles}
-          onChange={this.onInputChange}
-        />
-        <OutputContainer>Output</OutputContainer>
-        <style>{styleTreeToString(styles)}</style>
+        <Nav>
+          <h1>{title}</h1>
+          <div>
+            <button disabled={!hasPreviousLevel}>Previous</button>
+            <h2>
+              Level {currentLevel + 1} of {levels.length}
+            </h2>
+            <button disabled={!hasNextLevel}>Next</button>
+          </div>
+        </Nav>
+        <Level markup={markup} styles={styles} />;
       </Wrapper>
     );
   }

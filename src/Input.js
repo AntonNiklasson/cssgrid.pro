@@ -8,12 +8,16 @@ const Container = glamorous.div({
   padding: '20px',
   fontSize: '20px',
   background: '#333',
+  userSelect: 'none',
 });
 const PartialInput = glamorous.div({
   flex: 1,
 });
 const Rule = glamorous.div({
   margin: '0 0 2rem 0',
+  '&:last-child': {
+    marginBottom: 0,
+  },
 });
 const Selector = glamorous.div({
   fontSize: '1.1em',
@@ -53,17 +57,27 @@ const PropertyValue = glamorous.span({
   },
 });
 
+const Markup = glamorous.pre({
+  flex: 1,
+  fontSize: '0.8em',
+  margin: '1em 0 0 0',
+  padding: '1em 0',
+  // background: 'whitesmoke',
+  borderTop: '1px solid #666',
+  color: 'gray',
+});
+
 class Input extends Component {
   onChange = (selector, property) => ({ target: { value } }) => {
     this.props.onChange(selector, property, value);
   };
 
   render() {
-    const { value } = this.props;
+    const { styles, markup } = this.props;
     return (
       <Container>
         <PartialInput>
-          {value.map(rule => (
+          {styles.map(rule => (
             <Rule key={rule.selector}>
               <Selector>
                 {rule.selector} {` {`}
@@ -88,6 +102,7 @@ class Input extends Component {
             </Rule>
           ))}
         </PartialInput>
+        <Markup>{markup}</Markup>
       </Container>
     );
   }

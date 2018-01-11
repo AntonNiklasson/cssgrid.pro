@@ -26,6 +26,13 @@ const styleTreeToString = tree =>
 
 class App extends Component {
   state = {
+    markup: `<div class="grid">
+  <div class="cat">🐈</div>
+  <div class="elephant">🐘</div>
+  <div class="shark">🦈</div>
+  <div class="dog">🐶</div>
+  <div class="turtle">🐢</div>
+</div>`,
     styles: [
       {
         selector: '.grid',
@@ -74,10 +81,14 @@ class App extends Component {
   };
 
   render() {
-    const { styles } = this.state;
+    const { markup, styles } = this.state;
     return (
       <Wrapper>
-        <InputContainer value={styles} onChange={this.onInputChange} />
+        <InputContainer
+          markup={markup}
+          styles={styles}
+          onChange={this.onInputChange}
+        />
         <OutputContainer>Output</OutputContainer>
         <style>{styleTreeToString(styles)}</style>
       </Wrapper>

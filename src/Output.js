@@ -6,6 +6,7 @@ const Container = glamorous.div({
   padding: '10px',
   fontSize: '40px',
   background: 'whitesmoke',
+  userSelect: 'none',
 
   '& .grid > *': {
     transition: 'all 300ms',
@@ -18,7 +19,6 @@ class Output extends Component {
       <Container>
         <div className="grid">
           <div className="cat">🐈</div>
-          <div className="hejsan" />
           <div className="elephant">🐘</div>
           <div className="shark">🦈</div>
           <div className="dog">🐶</div>

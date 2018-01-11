@@ -21,7 +21,7 @@ const Selector = glamorous.div({
 });
 const Property = glamorous.div({
   display: 'flex',
-  margin: '0.2rem 0',
+  margin: '0.3rem 0',
   padding: '0 0 0 1rem',
 });
 const PropertyKey = glamorous.span({
@@ -31,18 +31,25 @@ const PropertyKey = glamorous.span({
     content: ':',
   },
 });
-const PropertyValue = glamorous.input({
+const PropertyValue = glamorous.span({
   flex: 1,
   width: 'auto',
   border: 'none',
   fontSize: 'inherit',
-  color: 'tomato',
+  color: '#CCC',
   background: 'none',
   transition: 'all 300ms',
-  ':focus': {
-    outline: 'none',
-    fontWeight: 'bold',
-    color: 'white',
+  '& input': {
+    fontSize: 'inherit',
+    color: 'tomato',
+    border: 'none',
+    background: 'none',
+    transition: 'all 300ms',
+    ':focus': {
+      outline: 'none',
+      fontWeight: 'bold',
+      color: 'white',
+    },
   },
 });
 
@@ -64,11 +71,17 @@ class Input extends Component {
               {rule.properties.map(property => (
                 <Property key={property.key}>
                   <PropertyKey>{property.key}</PropertyKey>
-                  <PropertyValue
-                    type="text"
-                    value={property.value}
-                    onChange={this.onChange(rule.selector, property.key)}
-                  />
+                  <PropertyValue>
+                    {!property.editable ? (
+                      property.value
+                    ) : (
+                      <input
+                        type="text"
+                        value={property.value}
+                        onChange={this.onChange(rule.selector, property.key)}
+                      />
+                    )}
+                  </PropertyValue>
                 </Property>
               ))}
               <Selector>{`}`}</Selector>

@@ -31,9 +31,13 @@ class App extends Component {
         selector: '.grid',
         properties: [
           { key: 'display', value: 'grid' },
-          { key: 'grid-template-rows', value: '1fr 1fr 1fr' },
-          { key: 'grid-template-columns', value: '1fr 1fr 1fr' },
-          { key: 'grid-gap', value: '5px' },
+          { key: 'grid-template-rows', value: '1fr 1fr 1fr', editable: true },
+          {
+            key: 'grid-template-columns',
+            value: '1fr 1fr 1fr',
+            editable: true,
+          },
+          { key: 'grid-gap', value: '5px', editable: true },
         ],
       },
       {
@@ -59,7 +63,7 @@ class App extends Component {
           if (property.key !== propertyKey) return property;
 
           return {
-            key: property.key,
+            ...property,
             value,
           };
         }),

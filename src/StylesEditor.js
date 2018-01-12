@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import glamorous from 'glamorous';
 
 const Container = glamorous.div({
-  flex: '1 0 400px',
+  flex: 1,
   display: 'flex',
   flexDirection: 'column',
   padding: '20px',
-  fontSize: '20px',
+  borderRight: '1px solid #666',
+  fontSize: '18px',
   background: '#333',
   userSelect: 'none',
 });
@@ -52,7 +53,6 @@ const PropertyValue = glamorous.span({
     ':focus': {
       outline: 'none',
       fontWeight: 'bold',
-      color: 'white',
     },
   },
 });
@@ -67,7 +67,7 @@ const Markup = glamorous.pre({
   color: 'gray',
 });
 
-class Input extends Component {
+class StylesEditor extends Component {
   onChange = (selector, property) => ({ target: { value } }) => {
     this.props.onChange(selector, property, value);
   };
@@ -86,14 +86,15 @@ class Input extends Component {
                 <Property key={property.key}>
                   <PropertyKey>{property.key}</PropertyKey>
                   <PropertyValue>
-                    {!property.editable ? (
+                    {!property.input || !property.input.editable ? (
                       property.value
                     ) : (
                       <input
                         type="text"
                         value={property.value}
-                        placeholder="value"
+                        placeholder={property.input.placeholder}
                         onChange={this.onChange(rule.selector, property.key)}
+                        autoFocus={true}
                       />
                     )}
                   </PropertyValue>
@@ -103,10 +104,9 @@ class Input extends Component {
             </Rule>
           ))}
         </PartialInput>
-        <Markup>{markup}</Markup>
       </Container>
     );
   }
 }
 
-export default Input;
+export default StylesEditor;

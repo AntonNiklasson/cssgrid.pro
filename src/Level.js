@@ -1,16 +1,29 @@
 import React from 'react';
 import glamorous from 'glamorous';
-import InputContainer from './Input';
-import OutputContainer from './Output';
+import StylesEditor from './StylesEditor';
+import MarkupEditor from './MarkupEditor';
+import Output from './Output';
+import levels from './data/levels';
 
 const Wrapper = glamorous.div({
   flex: 1,
   display: 'flex',
-  flexFlow: 'row wrap',
+  flexFlow: 'column',
 });
 
-const styleTreeToString = tree =>
-  tree.reduce(
+const Editors = glamorous.div({
+  flex: 1,
+  display: 'flex',
+});
+
+const OutputContainer = glamorous.div({
+  flex: 1,
+});
+
+const styleTreeToString = tree => {
+  if (!tree) return null;
+
+  return tree.reduce(
     (raw, rule) =>
       `${raw}
     ${rule.selector} {
@@ -23,19 +36,27 @@ const styleTreeToString = tree =>
     }`,
     ''
   );
+};
 
 class Level extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      markup: props.markup,
-      styles: props.styles,
+      markup: this.props.markup,
+      styles: this.props.styles,
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      markup: nextProps.markup,
+      styles: nextProps.styles,
+    });
+  }
+
   onInputChange = (selector, propertyKey, value) => {
-    const state = this.state.styles.map(rule => {
+    const styles = this.state.styles.map(rule => {
       if (rule.selector !== selector) return rule;
 
       return {
@@ -51,19 +72,25 @@ class Level extends React.Component {
       };
     });
 
-    this.setState({ styles: state });
+    this.setState({ styles });
   };
 
   render() {
     const { markup, styles } = this.state;
+
+    if (!markup || !styles) return null;
+
     return (
       <Wrapper>
-        <InputContainer
-          markup={markup}
-          styles={styles}
-          onChange={this.onInputChange}
-        />
-        <OutputContainer>Output</OutputContainer>
+        <Editors>
+          <StylesEditor
+            markup={markup}
+            styles={styles}
+            onChange={this.onInputChange}
+          />
+          <MarkupEditor markup={markup} />
+        </Editors>
+        <Output markup={markup}>Output</Output>
         <style>{styleTreeToString(styles)}</style>
       </Wrapper>
     );

@@ -4,11 +4,13 @@ import StylesEditor from './StylesEditor';
 import MarkupEditor from './MarkupEditor';
 import Output from './Output';
 import levels from './data/levels';
+import SuccessModal from './SuccessModal';
 
 const Wrapper = glamorous.div({
   flex: 1,
   display: 'flex',
   flexFlow: 'column',
+  position: 'relative',
 });
 
 const Editors = glamorous.div({
@@ -45,6 +47,7 @@ class Level extends React.Component {
     this.state = {
       markup: this.props.markup,
       styles: this.props.styles,
+      validator: this.props.validator,
     };
   }
 
@@ -72,16 +75,20 @@ class Level extends React.Component {
       };
     });
 
-    this.setState({ styles });
+    this.setState({
+      styles,
+      completed: this.state.validator(styles),
+    });
   };
 
   render() {
-    const { markup, styles } = this.state;
+    const { markup, styles, completed } = this.state;
 
     if (!markup || !styles) return null;
 
     return (
       <Wrapper>
+        {completed && <SuccessModal />}
         <Editors>
           <StylesEditor
             markup={markup}

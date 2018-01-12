@@ -39,6 +39,17 @@ const levels = [
         ],
       },
     ],
+    validator: styles => {
+      try {
+        return (
+          styles
+            .find(rule => rule.selector === '.grid')
+            .properties.find(prop => prop.key === 'display').value === 'grid'
+        );
+      } catch (e) {
+        return false;
+      }
+    },
   },
   {
     title: 'Add a gap of 5px!',

@@ -69,7 +69,7 @@ class App extends Component {
 
   render() {
     const { currentLevel } = this.state;
-    const { title, markup, styles } = levels[currentLevel];
+    const { title, markup, styles, validator } = levels[currentLevel];
     const hasPreviousLevel = currentLevel > 0;
     const hasNextLevel = currentLevel + 1 < levels.length;
 
@@ -94,7 +94,7 @@ class App extends Component {
             </Buttons>
           </ChallengeNavigation>
         </Nav>
-        <Level markup={markup} styles={styles} />
+        <Level markup={markup} styles={styles} validator={validator} />
       </Wrapper>
     );
   }

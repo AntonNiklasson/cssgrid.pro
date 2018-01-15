@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import glamorous from 'glamorous';
+import LandingPage from './LandingPage';
 import Level from './Level';
 import levels from './data/levels';
 
@@ -74,7 +76,12 @@ class App extends Component {
     const hasNextLevel = currentLevel + 1 < levels.length;
 
     return (
-      <Wrapper>
+      <Router>
+        <div>
+          <Route path="/" component={LandingPage} />
+          <Route path="/challenge/:id" component={Level} />
+        </div>
+        {/* <Wrapper>
         <Nav>
           <h1>{title}</h1>
           <ChallengeNavigation>
@@ -95,7 +102,8 @@ class App extends Component {
           </ChallengeNavigation>
         </Nav>
         <Level markup={markup} styles={styles} validator={validator} />
-      </Wrapper>
+      </Wrapper> */}
+      </Router>
     );
   }
 }

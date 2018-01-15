@@ -88,7 +88,7 @@ class Level extends React.Component {
 
     return (
       <Wrapper>
-        {completed && <SuccessModal />}
+        <SuccessModal showing={completed} />
         <Editors>
           <StylesEditor
             markup={markup}

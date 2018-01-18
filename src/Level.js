@@ -11,15 +11,59 @@ const Wrapper = glamorous.div({
   display: 'flex',
   flexFlow: 'column',
   position: 'relative',
+  background: 'red',
 });
-
 const Editors = glamorous.div({
   flex: 1,
   display: 'flex',
 });
-
 const OutputContainer = glamorous.div({
   flex: 1,
+});
+const Nav = glamorous.div({
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  background: '#333',
+  borderBottom: '1px solid #666',
+  fontSize: '20px',
+  color: 'whitesmoke',
+  padding: '1em',
+  userSelect: 'none',
+  '& h1': {
+    display: 'inline',
+    fontWeight: 'bold',
+    fontSize: '25px',
+  },
+  '& h2': {
+    display: 'inline',
+    fontWeight: 'bold',
+    fontSize: '16px',
+    margin: '0 1em',
+    textTransform: 'uppercase',
+  },
+});
+const ChallengeNavigation = glamorous.div({
+  display: 'flex',
+  flexDirection: 'column',
+});
+const Buttons = glamorous.div({
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '10px',
+  '& button': {
+    background: 'none',
+    fontSize: '14px',
+    padding: '.5em',
+    margin: '0 0.3em',
+    color: 'whitesmoke',
+    border: '1px solid whitesmoke',
+    borderRadius: '3px',
+    ':disabled': {
+      borderColor: '#777',
+      color: '#777',
+    },
+  },
 });
 
 const styleTreeToString = tree => {
@@ -88,6 +132,25 @@ class Level extends React.Component {
 
     return (
       <Wrapper>
+        <Nav>
+          <h1>{title}</h1>
+          <ChallengeNavigation>
+            <h2>
+              Challenge {currentLevel + 1} of {levels.length}
+            </h2>
+            <Buttons>
+              <button
+                disabled={!hasPreviousLevel}
+                onClick={this.gotoPreviousLevel}
+              >
+                Previous
+              </button>
+              <button disabled={!hasNextLevel} onClick={this.gotoNextLevel}>
+                Next
+              </button>
+            </Buttons>
+          </ChallengeNavigation>
+        </Nav>
         <SuccessModal showing={completed} />
         <Editors>
           <StylesEditor

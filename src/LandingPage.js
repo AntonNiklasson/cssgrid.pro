@@ -28,15 +28,13 @@ const Title = glamorous.h1({
 const Link = glamorous.a({
   display: 'inline-block',
   textDecoration: 'none',
-  fontSize: 25,
-  fontWeight: 'bold',
+  fontSize: 20,
   color: '#DDD',
   transition: 'all 300ms',
-  padding: '.3em .6em',
+  padding: '.4em 1em',
   background: 'transparent',
-  border: '3px solid rgba(255,255,255,0.8)',
+  border: '2px solid rgba(255,255,255,0.8)',
   transition: 'all 300ms',
-
   ':hover': {
     color: 'white',
     background: 'rgba(200, 200, 200, 0.2)',
@@ -44,11 +42,10 @@ const Link = glamorous.a({
 });
 const Footer = glamorous.div({
   padding: '1em',
-  // background: 'rgba(0,0,0,0.3)',
   textAlign: 'center',
-  color: 'whitesmoke',
+  color: '#CCC',
   '& a': {
-    color: 'gold',
+    color: 'white',
   },
 });
 
@@ -60,7 +57,7 @@ const LandingPage = () => {
           Are you ready for<br />
           <strong>CSS Grid</strong>? 😍
         </Title>
-        <Link href="/challenge/1">Let's go!</Link>
+        <Link href="/challenge">Let's go!</Link>
       </Content>
       <Footer>
         Made by{' '}

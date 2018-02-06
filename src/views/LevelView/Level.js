@@ -3,7 +3,7 @@ import glamorous from 'glamorous';
 import StylesEditor from './StylesEditor';
 import MarkupEditor from './MarkupEditor';
 import Output from './Output';
-import levels from './data/levels';
+import levels from '../../data/levels';
 import SuccessModal from './SuccessModal';
 
 const Wrapper = glamorous.div({
@@ -55,6 +55,7 @@ class Level extends React.Component {
     this.setState({
       markup: nextProps.markup,
       styles: nextProps.styles,
+      completed: false,
     });
   }
 

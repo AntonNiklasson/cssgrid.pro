@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import glamorous from 'glamorous';
 import Level from './Level';
-import levels from './data/levels';
+import levels from '../../data/levels';
 
 const Wrapper = glamorous.div({
   height: '100%',
@@ -54,7 +55,7 @@ const Buttons = glamorous.div({
   },
 });
 
-class App extends Component {
+class LevelView extends Component {
   state = {
     currentLevel: 0,
   };
@@ -100,4 +101,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default LevelView;

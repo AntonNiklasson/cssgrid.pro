@@ -38,6 +38,8 @@ const PropertyKey = glamorous.span({
 });
 const PropertyValue = glamorous.span({
   flex: 1,
+  display: 'flex',
+  alignItems: 'center',
   width: 'auto',
   border: 'none',
   fontSize: 'inherit',
@@ -48,7 +50,7 @@ const PropertyValue = glamorous.span({
     fontSize: 'inherit',
     color: 'tomato',
     border: 'none',
-    background: 'none',
+    background: 'transparent',
     transition: 'all 300ms',
     ':focus': {
       outline: 'none',
@@ -57,20 +59,29 @@ const PropertyValue = glamorous.span({
   },
 });
 
-const Markup = glamorous.pre({
-  flex: 1,
-  fontSize: '0.8em',
-  margin: '1em 0 0 0',
-  padding: '1em 0',
-  // background: 'whitesmoke',
-  borderTop: '1px solid #666',
-  color: 'gray',
-});
-
 class StylesEditor extends Component {
+  constructor(props) {
+    super(props);
+
+    this._inputRefs = [];
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+    this.focus();
+  }
+
+  focus = () => {
+    console.log('focus', this._inputRefs);
+    this._inputRefs[0].focus();
+    console.log(this._inputRefs[0].focus.toString());
+  };
+
   onChange = (selector, property) => ({ target: { value } }) => {
     this.props.onChange(selector, property, value);
   };
+
+  inputRefCallback = el => this._inputRefs.push(el);
 
   render() {
     const { styles, markup } = this.props;
@@ -95,6 +106,7 @@ class StylesEditor extends Component {
                         placeholder={property.input.placeholder}
                         onChange={this.onChange(rule.selector, property.key)}
                         autoFocus={true}
+                        ref={this.inputRefCallback}
                       />
                     )}
                   </PropertyValue>

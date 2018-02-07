@@ -1,5 +1,24 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
+import * as glamor from 'glamor';
+
+const fadingColorAnimation = glamor.css.keyframes({
+  '0%': {
+    color: 'white',
+  },
+  '40%': {
+    color: '#bada55',
+  },
+  '50%': {
+    color: 'white',
+  },
+  '60%': {
+    color: 'aqua',
+  },
+  '100%': {
+    color: 'white',
+  },
+});
 
 const Container = glamorous.div({
   flex: 1,
@@ -29,13 +48,18 @@ const Property = glamorous.div({
   margin: '0.3rem 0',
   padding: '0 0 0 1rem',
 });
-const PropertyKey = glamorous.span({
-  color: '#AAA',
-  margin: '0 0.4rem 0 0',
-  ':after': {
-    content: ':',
+const PropertyKey = glamorous.span(
+  {
+    margin: '0 0.4rem 0 0',
+    ':after': {
+      content: ':',
+    },
   },
-});
+  ({ editable }) => ({
+    color: '#CCC',
+    animation: editable ? `${fadingColorAnimation} 600ms infinite` : '',
+  })
+);
 const PropertyValue = glamorous.span({
   flex: 1,
   display: 'flex',
@@ -63,28 +87,17 @@ class StylesEditor extends Component {
   constructor(props) {
     super(props);
 
-    this._inputRefs = [];
+    this.inputRefs = [];
   }
-
-  componentDidMount() {
-    console.log('componentDidMount');
-    this.focus();
-  }
-
-  focus = () => {
-    console.log('focus', this._inputRefs);
-    this._inputRefs[0].focus();
-    console.log(this._inputRefs[0].focus.toString());
-  };
 
   onChange = (selector, property) => ({ target: { value } }) => {
     this.props.onChange(selector, property, value);
   };
 
-  inputRefCallback = el => this._inputRefs.push(el);
+  inputRefCallback = el => this.inputRefs.push(el);
 
   render() {
-    const { styles, markup } = this.props;
+    const { styles } = this.props;
     return (
       <Container>
         <PartialInput>
@@ -93,26 +106,30 @@ class StylesEditor extends Component {
               <Selector>
                 {rule.selector} {` {`}
               </Selector>
-              {rule.properties.map(property => (
-                <Property key={property.key}>
-                  <PropertyKey>{property.key}</PropertyKey>
-                  <PropertyValue>
-                    {!property.input || !property.input.editable ? (
-                      property.value
-                    ) : (
-                      <input
-                        type="text"
-                        value={property.value}
-                        placeholder={property.input.placeholder}
-                        onChange={this.onChange(rule.selector, property.key)}
-                        autoFocus={true}
-                        ref={this.inputRefCallback}
-                      />
-                    )}
-                  </PropertyValue>
-                </Property>
-              ))}
-              <Selector>{`}`}</Selector>
+              {rule.properties.map(property => {
+                const editable = property.input;
+                return (
+                  <Property key={property.key}>
+                    <PropertyKey editable={editable}>
+                      {property.key}
+                    </PropertyKey>
+                    <PropertyValue>
+                      {!editable ? (
+                        property.value
+                      ) : (
+                        <input
+                          type="text"
+                          value={property.value}
+                          placeholder={property.input.placeholder}
+                          onChange={this.onChange(rule.selector, property.key)}
+                          ref={this.inputRefCallback}
+                        />
+                      )}
+                    </PropertyValue>
+                  </Property>
+                );
+              })}
+              <Selector>}</Selector>
             </Rule>
           ))}
         </PartialInput>

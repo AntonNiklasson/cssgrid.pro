@@ -1,0 +1,9 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "prettier"],
+  "rules": {
+    "react/forbid-prop-types": 0,
+    "react/jsx-filename-extension": 0,
+    "react/prop-types": [2, { "skipUndeclared": true }]
+  }
+}

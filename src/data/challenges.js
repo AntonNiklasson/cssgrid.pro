@@ -1,6 +1,6 @@
-const levels = [
+const challenges = [
   {
-    title: 'Create your first grid!',
+    title: 'Create your first grid! 🤓',
     markup: `<div class="grid">
   <div class="cat">🐈</div>
   <div class="elephant">🐘</div>
@@ -52,38 +52,60 @@ const levels = [
     },
   },
   {
-    title: 'Add a gap of 5px!',
+    title: 'Add some spacing 🌌',
     markup: `<div class="grid">
   <div class="cat">🐈</div>
   <div class="elephant">🐘</div>
   <div class="shark">🦈</div>
-  <div class="dog">🐶</div>
   <div class="turtle">🐢</div>
 </div>`,
     styles: [
       {
         selector: '.grid',
         properties: [
-          { key: 'display', value: 'grid' },
-          { key: 'grid-template-rows', value: '1fr 1fr 1fr', editable: true },
+          {
+            key: 'display',
+            value: 'grid',
+          },
           {
             key: 'grid-template-columns',
-            value: '1fr 1fr 1fr',
-            editable: true,
+            value: '50% 50%',
           },
-          { key: 'grid-gap', value: '', editable: true },
+          {
+            key: 'border',
+            value: '3px solid Gold',
+          },
+          {
+            key: 'grid-gap',
+            value: '',
+            input: {
+              placeholder: '10px',
+            },
+          },
         ],
       },
       {
-        selector: '.cat, .elephant, .shark, .dog, .turtle',
+        selector: '.cat, .elephant, .shark, .turtle',
         properties: [
+          { key: 'display', value: 'inline-block' },
           { key: 'background', value: 'tomato' },
           { key: 'padding', value: '1rem' },
           { key: 'text-align', value: 'center' },
         ],
       },
     ],
+    validator: styles => {
+      try {
+        return (
+          styles
+            .find(rule => rule.selector === '.grid')
+            .properties.find(prop => prop.key === 'grid-gap').value === '10px'
+        );
+      } catch (e) {
+        return false;
+      }
+    },
   },
 ];
 
-export default levels;
+export default challenges;

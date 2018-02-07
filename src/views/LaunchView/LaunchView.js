@@ -3,6 +3,7 @@ import glamorous from 'glamorous';
 import { isEmail } from '../../utils';
 import SubmitButton from './SubmitButton';
 import Spinner from './Spinner';
+import Checkmark from './Checkmark';
 
 const Wrapper = glamorous.div({
   width: '100vw',
@@ -20,17 +21,19 @@ const Form = glamorous.div({
   margin: '6em 0',
 });
 const InputContainer = glamorous.div({
+  width: '100%',
+  minWidth: 400,
+  maxWidth: 800,
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   margin: '0 0 2em 0',
+  borderBottom: '1px solid #CCC',
 
   '& input': {
-    width: '100%',
-    minWidth: 400,
-    maxWidth: 800,
+    flex: 1,
     fontSize: '23px',
     border: 'none',
-    borderBottom: '1px solid #CCC',
     padding: '0.3em',
     ':focus': {
       outline: 'none',
@@ -50,8 +53,6 @@ class LaunchView extends Component {
     const email = evt.target.value;
     const valid = isEmail(email);
 
-    console.log({ email, valid });
-
     this.setState({ email, valid, submitSuccess: false });
   };
 
@@ -60,7 +61,7 @@ class LaunchView extends Component {
 
     setTimeout(() => {
       this.setState({ submitting: false, submitSuccess: true });
-    }, 20000);
+    }, 2000);
   };
 
   render() {
@@ -71,20 +72,18 @@ class LaunchView extends Component {
         <h1>You wanna learn CSS Grid?</h1>
 
         <Form>
-          {submitSuccess ? (
-            <h2>You are signed up!</h2>
-          ) : (
-            <InputContainer>
-              <input
-                onChange={this.handleEmailChange}
-                type="email"
-                placeholder="you@domain.com"
-                value={email}
-                autoFocus
-              />
-              {submitting && <Spinner />}
-            </InputContainer>
-          )}
+          <InputContainer>
+            <input
+              onChange={this.handleEmailChange}
+              type="email"
+              placeholder="you@domain.com"
+              value={email}
+              autoFocus
+              disabled={submitting}
+            />
+            {submitting && !submitSuccess && <Spinner />}
+            {submitSuccess && <Checkmark />}
+          </InputContainer>
           <SubmitButton visible={valid} onClick={this.handleSubmit} />
         </Form>
       </Wrapper>

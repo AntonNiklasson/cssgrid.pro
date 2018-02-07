@@ -3,8 +3,6 @@ import glamorous from 'glamorous';
 import StylesEditor from './StylesEditor';
 import MarkupEditor from './MarkupEditor';
 import Output from './Output';
-import levels from '../../data/levels';
-import SuccessModal from './SuccessModal';
 
 const Wrapper = glamorous.div({
   flex: 1,
@@ -18,20 +16,16 @@ const Editors = glamorous.div({
   display: 'flex',
 });
 
-const OutputContainer = glamorous.div({
-  flex: 1,
-});
-
 const styleTreeToString = tree => {
   if (!tree) return null;
 
   return tree.reduce(
-    (raw, rule) =>
-      `${raw}
+    (ruleBlob, rule) =>
+      `${ruleBlob}
     ${rule.selector} {
       ${rule.properties.reduce(
-        (raw, property) =>
-          `${raw}
+        (propertyBlob, property) =>
+          `${propertyBlob}
           ${property.key}: ${property.value};`,
         ''
       )}
@@ -47,7 +41,6 @@ class Level extends React.Component {
     this.state = {
       markup: this.props.markup,
       styles: this.props.styles,
-      validator: this.props.validator,
     };
   }
 
@@ -55,7 +48,6 @@ class Level extends React.Component {
     this.setState({
       markup: nextProps.markup,
       styles: nextProps.styles,
-      completed: false,
     });
   }
 
@@ -76,26 +68,22 @@ class Level extends React.Component {
       };
     });
 
-    this.setState({
-      styles,
-      completed: this.state.validator(styles),
-    });
+    this.props.onStylesChanged(styles);
+
+    if (this.props.validator(styles)) {
+      this.props.onChallengeCompleted();
+    }
   };
 
   render() {
-    const { markup, styles, completed } = this.state;
+    const { markup, styles } = this.state;
 
     if (!markup || !styles) return null;
 
     return (
       <Wrapper>
-        <SuccessModal showing={completed} />
         <Editors>
-          <StylesEditor
-            markup={markup}
-            styles={styles}
-            onChange={this.onInputChange}
-          />
+          <StylesEditor styles={styles} onChange={this.onInputChange} />
           <MarkupEditor markup={markup} />
         </Editors>
         <Output markup={markup}>Output</Output>

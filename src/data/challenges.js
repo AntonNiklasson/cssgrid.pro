@@ -25,7 +25,7 @@ const challenges = [
           },
           {
             key: 'border',
-            value: '3px solid Gold',
+            value: '3px solid greenyellow',
           },
         ],
       },
@@ -33,7 +33,7 @@ const challenges = [
         selector: '.cat, .elephant, .shark',
         properties: [
           { key: 'display', value: 'inline-block' },
-          { key: 'background', value: 'tomato' },
+          { key: 'background', value: 'aliceblue' },
           { key: 'padding', value: '1rem' },
           { key: 'text-align', value: 'center' },
         ],

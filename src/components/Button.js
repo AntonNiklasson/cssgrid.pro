@@ -3,26 +3,28 @@ import glamorous from 'glamorous';
 
 const Button = glamorous.button(
   {
-    background: 'none',
-    padding: '.4em .6em',
     margin: '0 0.3em',
+    background: 'transparent',
     border: '2px solid whitesmoke',
-    borderRadius: '3px',
-    ':disabled': {
-      borderColor: '#777',
-      color: '#777',
-    },
+    borderRadius: '4px',
+    textTransform: 'uppercase',
+    transition: 'all 300ms',
   },
-  ({ primary, inverted, large }) => ({
-    fontSize: large ? 23 : 16,
-    color: primary ? 'forestgreen' : '#333',
-    borderColor: primary ? 'forestgreen' : '#333',
-  })
+  ({ theme, inverted, large, primary }) => ({
+    fontSize: large ? 18 : 12,
+    padding: large ? '.4em .8em' : '.6em 1em',
+    color: primary
+      ? theme.colors.primary
+      : inverted ? 'whitesmoke' : theme.colors.grayDarkest,
+    borderColor: primary
+      ? theme.colors.primary
+      : inverted ? 'whitesmoke' : theme.colors.grayDarkest,
 
-  // return {
-  //   color: primary ? 'forestgreen' : 'whitesmoke',
-  //   borderColor: primary ? 'forestgreen' : 'whitesmoke',
-  // };
+    ':hover': {
+      color: primary ? theme.colors.primaryLight : theme.colors.gray,
+      borderColor: primary ? theme.colors.primaryLight : theme.colors.gray,
+    },
+  })
 );
 
 Button.propTypes = {

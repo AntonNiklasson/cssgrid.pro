@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
 
-const Container = glamorous.div({
+const Container = glamorous.div(({ theme }) => ({
   flex: 1,
-  padding: '10px',
+  padding: '1em',
   fontSize: '40px',
   background: '#CCC',
   userSelect: 'none',
@@ -11,14 +11,12 @@ const Container = glamorous.div({
   '& .grid > *': {
     transition: 'all 300ms',
   },
-});
+}));
 
 class Output extends Component {
-  renderMarkup = () => {
-    return {
-      __html: this.props.markup,
-    };
-  };
+  renderMarkup = () => ({
+    __html: this.props.markup,
+  });
 
   render() {
     return <Container dangerouslySetInnerHTML={this.renderMarkup()} />;

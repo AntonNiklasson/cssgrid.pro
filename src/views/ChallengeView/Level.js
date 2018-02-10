@@ -10,28 +10,31 @@ const Wrapper = glamorous.div({
   flexFlow: 'column',
   position: 'relative',
 });
-
 const Editors = glamorous.div({
+  flex: 2,
+  display: 'flex',
+  overflow: 'scroll-y',
+});
+const OutputContainer = glamorous.div(({ theme }) => ({
   flex: 1,
   display: 'flex',
-});
+  overflowY: 'auto',
+  borderTop: `2px solid ${theme.colors.gray}`,
+}));
 
 const styleTreeToString = tree => {
   if (!tree) return null;
 
-  return tree.reduce(
-    (ruleBlob, rule) =>
-      `${ruleBlob}
-    ${rule.selector} {
-      ${rule.properties.reduce(
-        (propertyBlob, property) =>
-          `${propertyBlob}
-          ${property.key}: ${property.value};`,
-        ''
-      )}
-    }`,
-    ''
-  );
+  const propertyToString = property =>
+    property.key && property.value ? `${property.key}: ${property.value};` : '';
+  const ruleToString = rule =>
+    `${rule.selector} { ${rule.properties.map(propertyToString).join('\n')} }`;
+
+  const stringified = tree.map(ruleToString).join('\n');
+
+  console.log(stringified);
+
+  return stringified;
 };
 
 class Level extends React.Component {
@@ -86,7 +89,9 @@ class Level extends React.Component {
           <StylesEditor styles={styles} onChange={this.onInputChange} />
           <MarkupEditor markup={markup} />
         </Editors>
-        <Output markup={markup}>Output</Output>
+        <OutputContainer>
+          <Output markup={markup}>Output</Output>
+        </OutputContainer>
         <style>{styleTreeToString(styles)}</style>
       </Wrapper>
     );

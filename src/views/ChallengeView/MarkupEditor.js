@@ -1,25 +1,21 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
 
-const Container = glamorous.div({
+const Container = glamorous.div(({ theme }) => ({
   flex: 1,
-  background: '#333',
-  padding: '1em',
-  color: '#CCC',
-  fontSize: '16px',
+  background: theme.colors.grayLightest,
+  padding: '2em',
+  fontSize: '1.2em',
+  color: theme.colors.grayDarkest,
   userSelect: 'none',
   lineHeight: 1.5,
-});
+  overflowY: 'auto',
+}));
 
-class StylesEditor extends Component {
-  render() {
-    const { markup } = this.props;
-    return (
-      <Container>
-        <pre>{markup}</pre>
-      </Container>
-    );
-  }
-}
+const StylesEditor = ({ markup }) => (
+  <Container>
+    <pre>{markup}</pre>
+  </Container>
+);
 
 export default StylesEditor;

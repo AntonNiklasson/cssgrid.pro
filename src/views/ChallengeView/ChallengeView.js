@@ -11,29 +11,20 @@ const Wrapper = glamorous.div({
   display: 'flex',
   flexDirection: 'column',
 });
-const Nav = glamorous.div({
+const Nav = glamorous.div(({ theme }) => ({
+  background: theme.colors.grayDarker,
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  background: '#333',
-  borderBottom: '1px solid #666',
   fontSize: '20px',
   color: 'whitesmoke',
   padding: '1em',
   userSelect: 'none',
   '& h1': {
-    display: 'inline',
-    fontWeight: 'bold',
-    fontSize: '25px',
+    margin: '0 0 .2em 0',
+    fontSize: '1.5em',
   },
-  '& h2': {
-    display: 'inline',
-    fontWeight: 'bold',
-    fontSize: '16px',
-    margin: '0 1em',
-    textTransform: 'uppercase',
-  },
-});
+}));
 const ChallengeNavigation = glamorous.div({
   display: 'flex',
   flexDirection: 'column',
@@ -111,19 +102,26 @@ class ChallengeView extends Component {
     return (
       <Wrapper>
         <Nav>
-          <h1>{title}</h1>
+          <div className="left">
+            <h1>{title}</h1>
+            <Button large primary>
+              Submit Solution!
+            </Button>
+          </div>
           <ChallengeNavigation>
-            <h2>
-              Challenge {challengeIndex + 1} of {challenges.length}
-            </h2>
             <Buttons>
               <Button
                 disabled={!hasPreviousLevel}
                 onClick={this.gotoPreviousLevel}
+                inverted
               >
                 Previous
               </Button>
-              <Button disabled={!hasNextLevel} onClick={this.gotoNextLevel}>
+              <Button
+                disabled={!hasNextLevel}
+                onClick={this.gotoNextLevel}
+                inverted
+              >
                 Next
               </Button>
             </Buttons>

@@ -1,87 +1,74 @@
 import React, { Component } from 'react';
 import glamorous from 'glamorous';
-import * as glamor from 'glamor';
 
-const fadingColorAnimation = glamor.css.keyframes({
-  '0%': {
-    color: 'white',
-  },
-  '40%': {
-    color: '#bada55',
-  },
-  '50%': {
-    color: 'white',
-  },
-  '60%': {
-    color: 'aqua',
-  },
-  '100%': {
-    color: 'white',
-  },
-});
-
-const Container = glamorous.div({
+const Container = glamorous.div(({ theme }) => ({
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
-  padding: '20px',
-  borderRight: '1px solid #666',
-  fontSize: '18px',
-  background: '#333',
+  padding: '2em',
+  fontSize: '1.2em',
   userSelect: 'none',
-});
+  background: theme.colors.grayLightest,
+  borderRight: `1px solid ${theme.colors.grayLight}`,
+  overflowY: 'auto',
+}));
 const PartialInput = glamorous.div({
   flex: 1,
 });
 const Rule = glamorous.div({
-  margin: '0 0 2rem 0',
+  margin: '0 0 2em 0',
   '&:last-child': {
     marginBottom: 0,
   },
 });
-const Selector = glamorous.div({
-  fontSize: '1.1em',
-  color: '#EEE',
-});
-const Property = glamorous.div({
+const Selector = glamorous.div(({ theme }) => ({
+  color: theme.colors.grayDarker,
+}));
+const Property = glamorous.div(({ theme, editable }) => ({
   display: 'flex',
-  margin: '0.3rem 0',
-  padding: '0 0 0 1rem',
-});
-const PropertyKey = glamorous.span(
-  {
-    margin: '0 0.4rem 0 0',
-    ':after': {
-      content: ':',
-    },
+  alignItems: 'center',
+  maxWidth: '350px',
+  margin: '.1em 0',
+  padding: '.2em .2em .2em 1rem',
+  background: editable ? theme.colors.grayLighter : 'transparent',
+  border: editable ? '1px solid rgba(255,255,255, 0.3)' : 'none',
+  borderRadius: editable ? '2px' : 'none',
+}));
+const PropertyKey = glamorous.span(({ theme, editable }) => ({
+  margin: '0 0.4rem 0 0',
+  ':after': {
+    content: ':',
   },
-  ({ editable }) => ({
-    color: '#CCC',
-    animation: editable ? `${fadingColorAnimation} 600ms infinite` : '',
-  })
-);
-const PropertyValue = glamorous.span({
+  color: editable ? theme.colors.accentDark : theme.colors.grayDarker,
+}));
+const PropertyValue = glamorous.span(({ theme }) => ({
   flex: 1,
   display: 'flex',
   alignItems: 'center',
   width: 'auto',
   border: 'none',
   fontSize: 'inherit',
-  color: '#CCC',
   background: 'none',
   transition: 'all 300ms',
-  '& input': {
-    fontSize: 'inherit',
-    color: 'tomato',
-    border: 'none',
-    background: 'transparent',
-    transition: 'all 300ms',
-    ':focus': {
-      outline: 'none',
-      fontWeight: 'bold',
+  color: theme.colors.grayLight,
+}));
+const PropertyInput = glamorous.input(({ theme }) => ({
+  width: '100%',
+  background: 'transparent',
+  fontSize: 'inherit',
+  border: 'none',
+  transition: 'all 300ms',
+  color: theme.colors.primaryDark,
+  ':focus': {
+    outline: 'none',
+    fontSize: '1.3em',
+    color: theme.colors.accentDark,
+
+    '&::placeholder': {
+      color: theme.colors.grayDark,
     },
   },
-});
+}));
 
 class StylesEditor extends Component {
   constructor(props) {
@@ -109,7 +96,7 @@ class StylesEditor extends Component {
               {rule.properties.map(property => {
                 const editable = property.input;
                 return (
-                  <Property key={property.key}>
+                  <Property key={property.key} editable={editable}>
                     <PropertyKey editable={editable}>
                       {property.key}
                     </PropertyKey>
@@ -117,7 +104,7 @@ class StylesEditor extends Component {
                       {!editable ? (
                         property.value
                       ) : (
-                        <input
+                        <PropertyInput
                           type="text"
                           value={property.value}
                           placeholder={property.input.placeholder}
@@ -137,5 +124,4 @@ class StylesEditor extends Component {
     );
   }
 }
-
 export default StylesEditor;

@@ -16,3 +16,9 @@
 ## Output
 
 * [x] Set some default styles on .grid and .animalX without having them shown in the editor
+
+## Landing Page
+
+* [ ] (?) Email signup
+* [ ] Nice and clean design
+* [ ] "Start the tutorial!"

@@ -14,4 +14,8 @@ export const colors = {
   grayLight: '#B2B2B2',
   grayLighter: '#E5E5E5',
   grayLightest: '#FAFAFA',
+
+  white: '#FFF',
+
+  green: 'forestgreen',
 };

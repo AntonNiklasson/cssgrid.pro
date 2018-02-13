@@ -4,11 +4,18 @@ import glamorous from 'glamorous';
 const Container = glamorous.div(({ theme }) => ({
   flex: 1,
   padding: '1em',
-  fontSize: '40px',
+  fontSize: '30px',
   background: '#CCC',
   userSelect: 'none',
 
+  '& .grid': {
+    display: 'grid',
+    width: '100%',
+    background: theme.colors.primaryLight,
+  },
   '& .grid > *': {
+    padding: '1em',
+    background: theme.colors.accentLight,
     transition: 'all 300ms',
   },
 }));

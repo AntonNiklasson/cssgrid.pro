@@ -11,7 +11,7 @@ const Wrapper = glamorous.div({
   position: 'relative',
 });
 const Editors = glamorous.div({
-  flex: 2,
+  flex: 1,
   display: 'flex',
   overflow: 'scroll-y',
 });
@@ -30,11 +30,7 @@ const styleTreeToString = tree => {
   const ruleToString = rule =>
     `${rule.selector} { ${rule.properties.map(propertyToString).join('\n')} }`;
 
-  const stringified = tree.map(ruleToString).join('\n');
-
-  console.log(stringified);
-
-  return stringified;
+  return tree.map(ruleToString).join('\n');
 };
 
 class Level extends React.Component {
@@ -72,10 +68,6 @@ class Level extends React.Component {
     });
 
     this.props.onStylesChanged(styles);
-
-    if (this.props.validator(styles)) {
-      this.props.onChallengeCompleted();
-    }
   };
 
   render() {

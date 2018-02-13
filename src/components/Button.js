@@ -3,28 +3,45 @@ import glamorous from 'glamorous';
 
 const Button = glamorous.button(
   {
-    margin: '0 0.3em',
-    background: 'transparent',
-    border: '2px solid whitesmoke',
+    borderStyle: 'solid',
     borderRadius: '4px',
+    fontSize: 14,
+    margin: '0 0.3em',
+    padding: '.6em 1em',
     textTransform: 'uppercase',
-    transition: 'all 300ms',
   },
-  ({ theme, inverted, large, primary }) => ({
-    fontSize: large ? 18 : 12,
-    padding: large ? '.4em .8em' : '.6em 1em',
-    color: primary
-      ? theme.colors.primary
-      : inverted ? 'whitesmoke' : theme.colors.grayDarkest,
-    borderColor: primary
-      ? theme.colors.primary
-      : inverted ? 'whitesmoke' : theme.colors.grayDarkest,
+  ({ theme: { colors }, disabled, inverted, large, primary }) => {
+    if (disabled) {
+      return {
+        color: colors.gray,
+        border: `2px solid ${colors.gray}`,
+      };
+    }
+    return {
+      background: primary ? colors.primary : 'transparent',
+      borderWidth: large ? 4 : 2,
+      borderColor: primary
+        ? colors.primary
+        : inverted ? 'whitesmoke' : colors.grayDarkest,
+      color: primary
+        ? colors.white
+        : inverted ? 'whitesmoke' : colors.grayDarkest,
+      fontSize: large ? 20 : 14,
+      fontWeight: 'bold',
+      transition: 'all 300ms',
+      padding: large ? '.4em .8em' : '.6em 1em',
 
-    ':hover': {
-      color: primary ? theme.colors.primaryLight : theme.colors.gray,
-      borderColor: primary ? theme.colors.primaryLight : theme.colors.gray,
-    },
-  })
+      ':hover': {
+        color: primary
+          ? colors.grayLightest
+          : inverted ? colors.grayLight : colors.gray,
+        borderColor: primary
+          ? 'none'
+          : inverted ? colors.grayLight : colors.gray,
+        background: primary ? colors.primaryLight : 'inherit',
+      },
+    };
+  }
 );
 
 Button.propTypes = {

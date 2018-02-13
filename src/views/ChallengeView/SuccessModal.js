@@ -60,7 +60,7 @@ const ButtonsContainer = glamorous.div({
 });
 
 const SuccessModal = ({ showing, onNextChallengeClicked }) => (
-  <Transition in={showing} timeout={600}>
+  <Transition in={showing} timeout={0}>
     {state => (
       <Container state={state}>
         <Content state={state}>
@@ -68,7 +68,7 @@ const SuccessModal = ({ showing, onNextChallengeClicked }) => (
           <p>Lets move on to the next challenge!</p>
 
           <ButtonsContainer>
-            <Button inverted large onClick={onNextChallengeClicked}>
+            <Button large onClick={onNextChallengeClicked}>
               Go!
             </Button>
           </ButtonsContainer>

@@ -6,6 +6,7 @@ import { colors } from './theme';
 import LandingView from './views/LandingView/LandingView';
 import ChallengeView from './views/ChallengeView/ChallengeView';
 import LaunchView from './views/LaunchView/LaunchView';
+import KitchensinkView from './views/KitchensinkView/KitchensinkView';
 import registerServiceWorker from './registerServiceWorker';
 
 import './index.css';
@@ -17,6 +18,7 @@ const Router = (
         <Route path="/" exact component={LandingView} />
         <Route path="/signup" component={LaunchView} />
         <Route path="/challenge/:id" component={ChallengeView} />
+        <Route path="/kitchensink" component={KitchensinkView} />
         <Route>
           <h1>404 Not Found</h1>
         </Route>

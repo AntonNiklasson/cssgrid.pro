@@ -11,35 +11,33 @@ const Container = glamorous.div(({ theme }) => ({
   background: theme.colors.grayLightest,
   borderRight: `1px solid ${theme.colors.grayLight}`,
   overflowY: 'auto',
+  fontFamily: 'Source Code Pro, monospace',
 }));
 const PartialInput = glamorous.div({
   flex: 1,
 });
 const Rule = glamorous.div({
-  margin: '0 0 2em 0',
+  margin: '0 0 1em 0',
   '&:last-child': {
     marginBottom: 0,
   },
 });
 const Selector = glamorous.div(({ theme }) => ({
   color: theme.colors.grayDarker,
+  fontWeight: 'bold',
 }));
-const Property = glamorous.div(({ theme, editable }) => ({
+const Property = glamorous.div({
   display: 'flex',
   alignItems: 'center',
-  maxWidth: '350px',
   margin: '.1em 0',
   padding: '.2em .2em .2em 1rem',
-  background: editable ? theme.colors.grayLighter : 'transparent',
-  border: editable ? '1px solid rgba(255,255,255, 0.3)' : 'none',
-  borderRadius: editable ? '2px' : 'none',
-}));
+});
 const PropertyKey = glamorous.span(({ theme, editable }) => ({
   margin: '0 0.4rem 0 0',
   ':after': {
     content: ':',
   },
-  color: editable ? theme.colors.accentDark : theme.colors.grayDarker,
+  color: editable ? theme.colors.grayDark : theme.colors.gray,
 }));
 const PropertyValue = glamorous.span(({ theme }) => ({
   flex: 1,
@@ -50,23 +48,20 @@ const PropertyValue = glamorous.span(({ theme }) => ({
   fontSize: 'inherit',
   background: 'none',
   transition: 'all 300ms',
-  color: theme.colors.grayLight,
+  color: theme.colors.gray,
 }));
 const PropertyInput = glamorous.input(({ theme }) => ({
   width: '100%',
-  background: 'transparent',
+  flex: 1,
+  padding: '0.2em',
+  background: theme.colors.white,
+  border: `1px solid ${theme.colors.grayDark}`,
   fontSize: 'inherit',
-  border: 'none',
   transition: 'all 300ms',
   color: theme.colors.primaryDark,
   ':focus': {
     outline: 'none',
-    fontSize: '1.3em',
     color: theme.colors.accentDark,
-
-    '&::placeholder': {
-      color: theme.colors.grayDark,
-    },
   },
 }));
 
@@ -100,19 +95,17 @@ class StylesEditor extends Component {
                     <PropertyKey editable={editable}>
                       {property.key}
                     </PropertyKey>
-                    <PropertyValue>
-                      {!editable ? (
-                        property.value
-                      ) : (
-                        <PropertyInput
-                          type="text"
-                          value={property.value}
-                          placeholder={property.input.placeholder}
-                          onChange={this.onChange(rule.selector, property.key)}
-                          ref={this.inputRefCallback}
-                        />
-                      )}
-                    </PropertyValue>
+                    {editable ? (
+                      <PropertyInput
+                        type="text"
+                        value={property.value}
+                        placeholder={property.input.placeholder}
+                        onChange={this.onChange(rule.selector, property.key)}
+                        ref={this.inputRefCallback}
+                      />
+                    ) : (
+                      <PropertyValue>{property.value}</PropertyValue>
+                    )}
                   </Property>
                 );
               })}

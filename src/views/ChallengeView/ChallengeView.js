@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import glamorous from 'glamorous';
+import Transition from 'react-transition-group/Transition';
 import Level from './Level';
-import challenges from '../../data/challenges';
+import challenges from '../../data/challenges/';
 import Button from '../../components/Button';
 import SuccessModal from './SuccessModal';
+import { Check } from '../../components/Icons';
 
 const Wrapper = glamorous.div({
   height: '100%',
@@ -34,6 +36,14 @@ const Buttons = glamorous.div({
   justifyContent: 'center',
   marginTop: '10px',
 });
+const SubmitContainer = glamorous.div({
+  position: 'relative',
+
+  '& svg': {
+    position: 'absolute',
+    right: '-10px',
+  },
+});
 
 class ChallengeView extends Component {
   static propTypes = {
@@ -45,8 +55,9 @@ class ChallengeView extends Component {
 
     this.state = {
       challengeIndex: null,
-      completed: false,
+      valid: false,
       challenge: null,
+      submitSuccess: false,
     };
   }
 
@@ -59,7 +70,7 @@ class ChallengeView extends Component {
   }
 
   onChallengeCompleted = () => {
-    this.setState({ completed: true });
+    this.setState({ valid: true });
   };
 
   onStylesChanged = styles => {
@@ -68,6 +79,7 @@ class ChallengeView extends Component {
         ...this.state.challenge,
         styles,
       },
+      valid: this.state.challenge.validator(styles),
     });
   };
 
@@ -75,12 +87,11 @@ class ChallengeView extends Component {
     const idParam = props.match.params.id;
     const challengeIndex = parseInt(idParam, 10) - 1;
 
-    console.log('loadLevel', challengeIndex);
-
     this.setState({
       challengeIndex,
-      completed: false,
       challenge: challenges[challengeIndex],
+      valid: false,
+      submitSuccess: false,
     });
   };
 
@@ -90,8 +101,14 @@ class ChallengeView extends Component {
     history.push(`/challenge/${challengeIndex + 2}`);
   };
 
+  handleSubmit = () => {
+    if (this.state.valid) {
+      this.setState({ submitSuccess: true });
+    }
+  };
+
   render() {
-    const { challengeIndex, completed, challenge } = this.state;
+    const { challengeIndex, valid, challenge, submitSuccess } = this.state;
 
     if (!challenge) return null;
 
@@ -102,12 +119,15 @@ class ChallengeView extends Component {
     return (
       <Wrapper>
         <Nav>
-          <div className="left">
-            <h1>{title}</h1>
-            <Button large primary>
+          <h1>{title}</h1>
+          <SubmitContainer>
+            <Button large primary onClick={this.handleSubmit}>
               Submit Solution!
             </Button>
-          </div>
+            <Transition in={valid} timeout={100}>
+              {state => <Check size={25} transitionState={state} />}
+            </Transition>
+          </SubmitContainer>
           <ChallengeNavigation>
             <Buttons>
               <Button
@@ -131,11 +151,10 @@ class ChallengeView extends Component {
           markup={markup}
           styles={styles}
           validator={validator}
-          onChallengeCompleted={this.onChallengeCompleted}
           onStylesChanged={this.onStylesChanged}
         />
         <SuccessModal
-          showing={completed}
+          showing={submitSuccess}
           onNextChallengeClicked={this.gotoNextChallenge}
         />
       </Wrapper>

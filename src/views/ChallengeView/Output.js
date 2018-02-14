@@ -7,6 +7,7 @@ const Container = glamorous.div(({ theme }) => ({
   fontSize: '30px',
   background: '#CCC',
   userSelect: 'none',
+  overflow: 'auto',
 
   '& .grid': {
     display: 'grid',

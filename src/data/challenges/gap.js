@@ -1,6 +1,9 @@
-export default {
-  title: 'Create columns!',
+module.exports = {
+  title: 'Gaps ',
   markup: `<div class="grid">
+  <div class="cat">🐈</div>
+  <div class="elephant">🐘</div>
+  <div class="shark">🦈</div>
   <div class="cat">🐈</div>
   <div class="elephant">🐘</div>
   <div class="shark">🦈</div>
@@ -15,9 +18,13 @@ export default {
         },
         {
           key: 'grid-template-columns',
+          value: '100px 100px',
+        },
+        {
+          key: 'grid-gap',
           value: '',
           input: {
-            placeholder: '100px 100px',
+            placeholder: '10px',
           },
         },
       ],
@@ -28,8 +35,7 @@ export default {
       return (
         styles
           .find(rule => rule.selector === '.grid')
-          .properties.find(prop => prop.key === 'grid-template-columns')
-          .value === '100px 100px'
+          .properties.find(prop => prop.key === 'grid-gap').value === '10px'
       );
     } catch (e) {
       return false;

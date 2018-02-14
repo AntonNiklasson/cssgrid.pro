@@ -1,5 +1,5 @@
-import challenge01 from './01-helloworld';
-import challenge02 from './02-columns';
-import challenge03 from './03-gap';
+/* eslint-disable global-require, import/no-dynamic-require */
 
-export default [challenge01, challenge02, challenge03];
+const challenges = ['helloworld', 'rows-and-columns', 'gap'];
+
+module.exports = challenges.map(c => require(`./${c}.js`));

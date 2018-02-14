@@ -108,13 +108,11 @@ class ChallengeView extends Component {
   };
 
   render() {
-    const { challengeIndex, valid, challenge, submitSuccess } = this.state;
+    const { valid, challenge, submitSuccess } = this.state;
 
     if (!challenge) return null;
 
     const { title, markup, styles, validator } = challenge;
-    const hasPreviousLevel = challengeIndex > 0;
-    const hasNextLevel = challengeIndex < challenges.length;
 
     return (
       <Wrapper>
@@ -128,24 +126,6 @@ class ChallengeView extends Component {
               {state => <Check size={25} transitionState={state} />}
             </Transition>
           </SubmitContainer>
-          <ChallengeNavigation>
-            <Buttons>
-              <Button
-                disabled={!hasPreviousLevel}
-                onClick={this.gotoPreviousLevel}
-                inverted
-              >
-                Previous
-              </Button>
-              <Button
-                disabled={!hasNextLevel}
-                onClick={this.gotoNextLevel}
-                inverted
-              >
-                Next
-              </Button>
-            </Buttons>
-          </ChallengeNavigation>
         </Nav>
         <Level
           markup={markup}

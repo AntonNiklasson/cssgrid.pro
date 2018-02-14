@@ -1,47 +1,108 @@
 import React from 'react';
 import glamorous from 'glamorous';
+import * as glamor from 'glamor';
 import Button from '../../components/Button';
+import background from '../../resources/background.jpg';
 
 const Wrapper = glamorous.div({
   width: '100vw',
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  padding: '3em',
+  background: `url(${background}) no-repeat center center fixed`,
+  backgroundSize: 'cover',
   fontSize: 25,
-  background: 'whitesmoke',
   color: '#333',
 
-  '& h1': {
-    display: 'inline-block',
-    margin: '0 0 1em 0',
-    padding: '.2em',
-    background: '#1b498e',
+  '& .content': {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '6em 3em',
+  },
+
+  '& hgroup': {
+    margin: '0 0 5em 0',
     color: 'white',
-    transform: 'rotate(4deg)',
-    transition: 'all 400ms',
-
-    ':hover': {
-      transform: 'scale(1.3)',
-    },
+    textAlign: 'center',
   },
 
-  '& p': {
-    width: '100%',
-    maxWidth: '600px',
-    margin: '0.3em 0',
+  '& h1': {
+    fontSize: '3em',
+    fontFamily: 'Roboto Slab',
+
+    position: 'relative',
+    opacity: 0,
+    animation: `600ms cubic-bezier(.4, 2.8, .6, .3) 500ms ${glamor.css.keyframes(
+      {
+        from: {
+          opacity: 0,
+          top: '-200',
+        },
+        to: {
+          opacity: 1,
+          top: 0,
+        },
+      }
+    )} forwards, 1200ms ${glamor.css.keyframes({
+      from: { transform: 'scale(.2)' },
+      to: { transform: 'scale(1)' },
+    })}`,
   },
 
-  '& hr': {
-    height: '1px',
-    width: '100%',
-    maxWidth: '600px',
-    margin: '2em 0',
-    background: '#CCC',
-    border: 'none',
+  '& .button-container': {
+    opacity: 0,
+    animation: `${glamor.css.keyframes({
+      from: {
+        opacity: 0,
+      },
+      to: {
+        opacity: 1,
+      },
+    })} 2000ms 3000ms forwards`,
+  },
+
+  '& h2': {
+    fontSize: '1.2em',
+    fontWeight: 'normal',
+
+    opacity: 0,
+    animation: `${glamor.css.keyframes({
+      from: {
+        opacity: 0,
+      },
+      to: {
+        opacity: 1,
+      },
+    })} 2s 1s forwards`,
   },
 });
+const Footer = glamorous.div(({ theme }) => ({
+  flex: '0 0 120px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  padding: '1em 3em',
+  background: 'linear-gradient(transparent, #071D2F 60%)',
+  textAlign: 'center',
+  fontSize: 16,
+  color: 'white',
+
+  opacity: 0,
+  animation: `${glamor.css.keyframes({
+    from: {
+      opacity: 0,
+    },
+    to: {
+      opacity: 1,
+    },
+  })} 3000ms 2000ms forwards`,
+
+  '& a': {
+    color: theme.colors.primary,
+    textDecoration: 'none',
+  },
+}));
 
 class LandingView extends React.Component {
   handleGoClick = () => {
@@ -51,21 +112,27 @@ class LandingView extends React.Component {
   render() {
     return (
       <Wrapper>
-        <h1>Learn CSS Grid!</h1>
-        <p>
-          This is an interactive guide through the different properties in the
-          CSS Grid module.
-        </p>
-        <p>
-          Make your way through the different challenges by changing the
-          property values in the editor by hand.
-        </p>
-
-        <hr />
-
-        <Button large primary onClick={this.handleGoClick}>
-          Let's go!
-        </Button>
+        <div className="content">
+          <hgroup>
+            <h1>Learn CSS Grid!</h1>
+            <h2>An Interactive Tutorial</h2>
+          </hgroup>
+          <div className="button-container">
+            <Button large primary onClick={this.handleGoClick}>
+              Let's go! 🚀
+            </Button>
+          </div>
+        </div>
+        <Footer>
+          <div>
+            Made by <a href="http://www.antonniklasson.se">Anton Niklasson</a>
+          </div>
+          <div>
+            <a href="http://github.com/AntonNiklasson/cssgrid.pro">
+              github.com/AntonNiklasson/cssgrid.pro
+            </a>
+          </div>
+        </Footer>
       </Wrapper>
     );
   }

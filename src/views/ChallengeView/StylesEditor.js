@@ -6,7 +6,7 @@ const Container = glamorous.div(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   padding: '2em',
-  fontSize: '1.2em',
+  fontSize: 20,
   userSelect: 'none',
   background: theme.colors.grayLightest,
   borderRight: `1px solid ${theme.colors.grayLight}`,
@@ -55,13 +55,15 @@ const PropertyInput = glamorous.input(({ theme }) => ({
   flex: 1,
   padding: '0.2em',
   background: theme.colors.white,
-  border: `1px solid ${theme.colors.grayDark}`,
+  border: `1px solid ${theme.colors.grayLight}`,
   fontSize: 'inherit',
+  fontFamily: 'inherit',
   transition: 'all 300ms',
   color: theme.colors.primaryDark,
   ':focus': {
     outline: 'none',
     color: theme.colors.accentDark,
+    borderColor: theme.colors.grayDark,
   },
 }));
 

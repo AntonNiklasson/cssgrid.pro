@@ -12,6 +12,7 @@ const Container = glamorous.div(({ theme }) => ({
     display: 'grid',
     width: '100%',
     background: theme.colors.primaryLight,
+    transition: 'all 500ms',
   },
   '& .grid > *': {
     padding: '1em',

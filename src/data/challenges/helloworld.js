@@ -14,20 +14,10 @@ module.exports = {
           value: '',
           input: {
             placeholder: 'grid',
+            regex: /^grid$/,
           },
         },
       ],
     },
   ],
-  validator: styles => {
-    try {
-      return (
-        styles
-          .find(rule => rule.selector === '.grid')
-          .properties.find(prop => prop.key === 'display').value === 'grid'
-      );
-    } catch (e) {
-      return false;
-    }
-  },
 };

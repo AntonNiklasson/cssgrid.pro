@@ -26,12 +26,23 @@ const Selector = glamorous.div(({ theme }) => ({
   color: theme.colors.grayDarker,
   fontWeight: 'bold',
 }));
-const Property = glamorous.div({
+const Property = glamorous.div(({ valid }) => ({
+  position: 'relative',
   display: 'flex',
   alignItems: 'center',
   margin: '.1em 0',
   padding: '.2em .2em .2em 1rem',
-});
+  ':after': {
+    content: valid ? '"👍"' : '""',
+    position: 'absolute',
+    top: 0,
+    right: -20,
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 const PropertyKey = glamorous.span(({ theme, editable }) => ({
   margin: '0 0.4rem 0 0',
   ':after': {
@@ -53,17 +64,18 @@ const PropertyValue = glamorous.span(({ theme }) => ({
 const PropertyInput = glamorous.input(({ theme }) => ({
   width: '100%',
   flex: 1,
-  padding: '0.2em',
+  position: 'relative',
   background: theme.colors.white,
   border: `1px solid ${theme.colors.grayLight}`,
+  borderRadius: 3,
+  padding: '0.2em',
   fontSize: 'inherit',
   fontFamily: 'inherit',
   transition: 'all 300ms',
-  color: theme.colors.primaryDark,
   ':focus': {
     outline: 'none',
     color: theme.colors.accentDark,
-    borderColor: theme.colors.grayDark,
+    borderColor: theme.colors.primary,
   },
 }));
 
@@ -93,7 +105,11 @@ class StylesEditor extends Component {
               {rule.properties.map(property => {
                 const editable = property.input;
                 return (
-                  <Property key={property.key} editable={editable}>
+                  <Property
+                    key={property.key}
+                    editable={editable}
+                    valid={property.valid}
+                  >
                     <PropertyKey editable={editable}>
                       {property.key}
                     </PropertyKey>
@@ -102,7 +118,7 @@ class StylesEditor extends Component {
                         type="text"
                         value={property.value}
                         placeholder={property.input.placeholder}
-                        onChange={this.onChange(rule.selector, property.key)}
+                        onChange={this.onChange(rule.selector, property)}
                         ref={this.inputRefCallback}
                       />
                     ) : (

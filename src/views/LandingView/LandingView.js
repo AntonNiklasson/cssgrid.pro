@@ -34,7 +34,7 @@ const Wrapper = glamorous.div({
 
     position: 'relative',
     opacity: 0,
-    animation: `600ms cubic-bezier(.4, 2.8, .6, .3) 500ms ${glamor.css.keyframes(
+    animation: `1000ms cubic-bezier(.4, 2.8, .6, .3) 500ms ${glamor.css.keyframes(
       {
         from: {
           opacity: 0,
@@ -45,7 +45,7 @@ const Wrapper = glamorous.div({
           top: 0,
         },
       }
-    )} forwards, 1200ms ${glamor.css.keyframes({
+    )} forwards, 2500ms ${glamor.css.keyframes({
       from: { transform: 'scale(.2)' },
       to: { transform: 'scale(1)' },
     })}`,
@@ -60,7 +60,7 @@ const Wrapper = glamorous.div({
       to: {
         opacity: 1,
       },
-    })} 2000ms 3000ms forwards`,
+    })} 1500ms 3000ms forwards`,
   },
 
   '& h2': {
@@ -79,11 +79,10 @@ const Wrapper = glamorous.div({
   },
 });
 const Footer = glamorous.div(({ theme }) => ({
-  flex: '0 0 120px',
+  flex: '0 0 80px',
   display: 'flex',
   justifyContent: 'space-between',
   padding: '1em 3em',
-  background: 'linear-gradient(transparent, #071D2F 60%)',
   textAlign: 'center',
   fontSize: 16,
   color: 'white',
@@ -118,7 +117,7 @@ class LandingView extends React.Component {
             <h2>An Interactive Tutorial</h2>
           </hgroup>
           <div className="button-container">
-            <Button large primary onClick={this.handleGoClick}>
+            <Button crazy onClick={this.handleGoClick}>
               Let's go! 🚀
             </Button>
           </div>

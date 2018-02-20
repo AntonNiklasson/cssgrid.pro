@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import glamorous from 'glamorous';
+import * as glamor from 'glamor';
 
 const Button = glamorous.button(
   {
@@ -10,13 +11,43 @@ const Button = glamorous.button(
     padding: '.6em 1em',
     textTransform: 'uppercase',
   },
-  ({ theme: { colors }, disabled, inverted, large, primary }) => {
+  ({ theme: { colors }, crazy, disabled, inverted, large, primary }) => {
+    if (crazy) {
+      return {
+        fontSize: 25,
+        fontWeight: 'bold',
+        border: '2px solid #ffffff66',
+        borderRadius: 4,
+        boxShadow: '0 10px 10px rgba(0, 0, 0, .3)',
+        color: 'white',
+        backgroundImage:
+          'linear-gradient(80deg, #c90041, #0127ae, forestgreen, #bada55)',
+        backgroundSize: '400% 400%',
+
+        animation: `${glamor.css.keyframes({
+          from: {
+            backgroundPosition: '0% 0%',
+          },
+          to: {
+            backgroundPosition: '100% 0%',
+          },
+        })} 15s linear infinite alternate`,
+
+        transition: 'all 400ms',
+        ':hover': {
+          color: '#DDD',
+          border: '2px solid white',
+        },
+      };
+    }
+
     if (disabled) {
       return {
         color: colors.gray,
         border: `2px solid ${colors.gray}`,
       };
     }
+
     return {
       background: primary ? colors.primary : 'transparent',
       borderWidth: large ? 4 : 2,

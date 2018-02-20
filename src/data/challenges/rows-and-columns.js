@@ -1,4 +1,6 @@
-module.exports = {
+import regexes from './utils/regexes';
+
+export default {
   title: 'Row your boat',
   markup: `<div class="grid">
   <div class="turtle">🐢</div>
@@ -25,32 +27,20 @@ module.exports = {
         {
           key: 'grid-template-columns',
           input: {
-            placeholder: '100px 100px',
+            value: '',
+            placeholder: 'Apx Bpx',
+            regex: regexes.moreThanOneLengthParameter,
           },
         },
         {
           key: 'grid-template-rows',
           input: {
-            placeholder: '100px 100px',
+            value: '',
+            placeholder: 'Apx Bpx',
+            regex: regexes.moreThanOneLengthParameter,
           },
         },
       ],
     },
   ],
-  validator: styles => {
-    try {
-      return (
-        styles
-          .find(rule => rule.selector === '.grid')
-          .properties.find(prop => prop.key === 'grid-template-columns')
-          .value === '100px 100px' &&
-        styles
-          .find(rule => rule.selector === '.grid')
-          .properties.find(prop => prop.key === 'grid-template-rows').value ===
-          '100px 100px'
-      );
-    } catch (e) {
-      return false;
-    }
-  },
 };

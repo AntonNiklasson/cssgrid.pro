@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import glamorous from 'glamorous';
 import Transition from 'react-transition-group/Transition';
-import Level from './Level';
+import Challenge from './Challenge';
 import challenges from '../../data/challenges/';
 import Button from '../../components/Button';
 import SuccessModal from './SuccessModal';
-import { Check } from '../../components/Icons';
+import Icon from '../../components/Icon';
 
 const Wrapper = glamorous.div({
   height: '100%',
@@ -25,6 +25,7 @@ const Nav = glamorous.div(({ theme }) => ({
   '& h1': {
     margin: '0 0 .2em 0',
     fontSize: '1.5em',
+    fontFamily: `'Source Code Pro', 'Roboto', Arial, sans-serif`,
   },
 }));
 const ChallengeNavigation = glamorous.div({
@@ -54,8 +55,6 @@ class ChallengeView extends Component {
     super(props);
 
     this.state = {
-      challengeIndex: null,
-      valid: false,
       challenge: null,
       submitSuccess: false,
     };
@@ -69,17 +68,12 @@ class ChallengeView extends Component {
     this.loadLevel(nextProps);
   }
 
-  onChallengeCompleted = () => {
-    this.setState({ valid: true });
-  };
-
   onStylesChanged = styles => {
     this.setState({
       challenge: {
         ...this.state.challenge,
         styles,
       },
-      valid: this.state.challenge.validator(styles),
     });
   };
 
@@ -88,9 +82,7 @@ class ChallengeView extends Component {
     const challengeIndex = parseInt(idParam, 10) - 1;
 
     this.setState({
-      challengeIndex,
       challenge: challenges[challengeIndex],
-      valid: false,
       submitSuccess: false,
     });
   };
@@ -101,14 +93,8 @@ class ChallengeView extends Component {
     history.push(`/challenge/${challengeIndex + 2}`);
   };
 
-  handleSubmit = () => {
-    if (this.state.valid) {
-      this.setState({ submitSuccess: true });
-    }
-  };
-
   render() {
-    const { valid, challenge, submitSuccess } = this.state;
+    const { challenge, submitSuccess } = this.state;
 
     if (!challenge) return null;
 
@@ -120,14 +106,11 @@ class ChallengeView extends Component {
           <h1>{title}</h1>
           <SubmitContainer>
             <Button large primary onClick={this.handleSubmit}>
-              Submit Solution!
+              Submit!
             </Button>
-            <Transition in={valid} timeout={100}>
-              {state => <Check size={25} transitionState={state} />}
-            </Transition>
           </SubmitContainer>
         </Nav>
-        <Level
+        <Challenge
           markup={markup}
           styles={styles}
           validator={validator}

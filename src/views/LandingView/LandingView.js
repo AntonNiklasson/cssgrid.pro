@@ -1,8 +1,8 @@
-import React from 'react';
-import glamorous from 'glamorous';
-import * as glamor from 'glamor';
-import Button from '../../components/Button';
-import background from '../../resources/background.jpg';
+import React from 'react'
+import glamorous from 'glamorous'
+import * as glamor from 'glamor'
+import Button from '../../components/Button'
+import background from '../../resources/background.jpg'
 
 const Wrapper = glamorous.div({
   width: '100vw',
@@ -77,7 +77,7 @@ const Wrapper = glamorous.div({
       },
     })} 2s 1s forwards`,
   },
-});
+})
 const Footer = glamorous.div(({ theme }) => ({
   flex: '0 0 80px',
   display: 'flex',
@@ -101,12 +101,12 @@ const Footer = glamorous.div(({ theme }) => ({
     color: theme.colors.primary,
     textDecoration: 'none',
   },
-}));
+}))
 
 class LandingView extends React.Component {
   handleGoClick = () => {
-    this.props.history.push('/challenge/1');
-  };
+    this.props.history.push('/challenge/0')
+  }
 
   render() {
     return (
@@ -133,8 +133,8 @@ class LandingView extends React.Component {
           </div>
         </Footer>
       </Wrapper>
-    );
+    )
   }
 }
 
-export default LandingView;
+export default LandingView

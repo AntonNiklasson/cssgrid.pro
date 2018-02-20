@@ -70,8 +70,13 @@ class ChallengeView extends Component {
 
   loadLevel = (props = this.props) => {
     const idParam = props.match.params.id
-    const challengeIndex = parseInt(idParam, 10) - 1
+    const challengeIndex = parseInt(idParam, 10)
     const challenge = challenges[challengeIndex]
+    const { history } = this.props
+
+    if (!challenge) {
+      return history.push('/')
+    }
 
     this.setState({
       challengeIndex,
@@ -89,8 +94,16 @@ class ChallengeView extends Component {
   gotoNextChallenge = () => {
     const { history } = this.props
     const { challengeIndex } = this.state
+    const nextChallengeIndex = challengeIndex + 1
+    const nextChallenge = challenges[nextChallengeIndex]
 
-    history.push(`/challenge/${challengeIndex + 2}`)
+    console.log({ nextChallenge })
+
+    if (nextChallenge) {
+      history.push(`/challenge/${nextChallengeIndex}`)
+    } else {
+      history.push('/theend')
+    }
   }
 
   render() {

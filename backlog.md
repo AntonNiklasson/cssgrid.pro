@@ -1,5 +1,5 @@
 * [ ] Rewrite the whole layout with grid where it fits
-* [ ] (?) Store data in localStorage
+* [ ] (?) Store progress data in localStorage
 * [ ] (?) Toggle between dark and light mode
 * [ ] Open any challenge in codepen with prepopulated fields
 
@@ -21,8 +21,7 @@
 ## Landing Page
 
 * [ ] (?) Email signup
-* [ ] Nice and clean design
-* [ ] "Start the tutorial!"
+* [x] "Start the tutorial!"
 
 ## Code Stuff
 

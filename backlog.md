@@ -12,6 +12,7 @@
 
 * [x] Make the "editable property key" nicer
 * [ ] Clicking a property key should focus the input if there is one
+* [ ] Autofocus the first input on the page
 
 ## Output
 
@@ -22,3 +23,7 @@
 * [ ] (?) Email signup
 * [ ] Nice and clean design
 * [ ] "Start the tutorial!"
+
+## Code Stuff
+
+* [ ] Use Immutable.js to store things in state

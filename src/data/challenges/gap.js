@@ -1,3 +1,5 @@
+const regexes = require('../../utils/regexes')
+
 module.exports = {
   title: 'Gaps ',
   markup: `<div class="grid">
@@ -30,15 +32,4 @@ module.exports = {
       ],
     },
   ],
-  validator: styles => {
-    try {
-      return (
-        styles
-          .find(rule => rule.selector === '.grid')
-          .properties.find(prop => prop.key === 'grid-gap').value === '10px'
-      );
-    } catch (e) {
-      return false;
-    }
-  },
-};
+}

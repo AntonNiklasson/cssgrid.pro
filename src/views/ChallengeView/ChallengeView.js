@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import glamorous from 'glamorous';
-import Transition from 'react-transition-group/Transition';
-import Challenge from './Challenge';
-import challenges from '../../data/challenges/';
-import Button from '../../components/Button';
-import SuccessModal from './SuccessModal';
-import Icon from '../../components/Icon';
+import React, { Component } from 'react'
+import glamorous from 'glamorous'
+import Challenge from './Challenge'
+import challenges from '../../data/challenges/'
+import Button from '../../components/Button'
+import SuccessModal from './SuccessModal'
+import IntroductionModal from './IntroductionModal'
+
+console.log(challenges)
 
 const Wrapper = glamorous.div({
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
-});
+})
 const Nav = glamorous.div(({ theme }) => ({
   background: theme.colors.grayDarker,
   display: 'flex',
@@ -27,16 +27,7 @@ const Nav = glamorous.div(({ theme }) => ({
     fontSize: '1.5em',
     fontFamily: `'Source Code Pro', 'Roboto', Arial, sans-serif`,
   },
-}));
-const ChallengeNavigation = glamorous.div({
-  display: 'flex',
-  flexDirection: 'column',
-});
-const Buttons = glamorous.div({
-  display: 'flex',
-  justifyContent: 'center',
-  marginTop: '10px',
-});
+}))
 const SubmitContainer = glamorous.div({
   position: 'relative',
 
@@ -44,28 +35,24 @@ const SubmitContainer = glamorous.div({
     position: 'absolute',
     right: '-10px',
   },
-});
+})
 
 class ChallengeView extends Component {
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-  };
-
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
+      challengeIndex: null,
       challenge: null,
       submitSuccess: false,
-    };
+    }
   }
 
   componentDidMount() {
-    this.loadLevel();
+    this.loadLevel()
   }
-
   componentWillReceiveProps(nextProps) {
-    this.loadLevel(nextProps);
+    this.loadLevel(nextProps)
   }
 
   onStylesChanged = styles => {
@@ -74,31 +61,44 @@ class ChallengeView extends Component {
         ...this.state.challenge,
         styles,
       },
-    });
-  };
+    })
+  }
+
+  onIntroConfirm = () => {
+    this.setState({ showingIntro: false })
+  }
 
   loadLevel = (props = this.props) => {
-    const idParam = props.match.params.id;
-    const challengeIndex = parseInt(idParam, 10) - 1;
+    const idParam = props.match.params.id
+    const challengeIndex = parseInt(idParam, 10) - 1
+    const challenge = challenges[challengeIndex]
 
     this.setState({
-      challenge: challenges[challengeIndex],
+      challengeIndex,
+      challenge,
       submitSuccess: false,
-    });
-  };
+      showingIntro: !!challenge.introduction,
+    })
+  }
+
+  handleSubmit = () => {
+    // TODO: Highlight non-valid inputs!!!
+    this.gotoNextChallenge()
+  }
 
   gotoNextChallenge = () => {
-    const { props: { history }, state: { challengeIndex } } = this;
+    const { history } = this.props
+    const { challengeIndex } = this.state
 
-    history.push(`/challenge/${challengeIndex + 2}`);
-  };
+    history.push(`/challenge/${challengeIndex + 2}`)
+  }
 
   render() {
-    const { challenge, submitSuccess } = this.state;
+    const { challenge, submitSuccess, showingIntro } = this.state
 
-    if (!challenge) return null;
+    if (!challenge) return null
 
-    const { title, markup, styles, validator } = challenge;
+    const { title, markup, styles, validator } = challenge
 
     return (
       <Wrapper>
@@ -120,9 +120,14 @@ class ChallengeView extends Component {
           showing={submitSuccess}
           onNextChallengeClicked={this.gotoNextChallenge}
         />
+        <IntroductionModal
+          content={challenge.introduction}
+          showing={showingIntro}
+          onConfirm={this.onIntroConfirm}
+        />
       </Wrapper>
-    );
+    )
   }
 }
 
-export default ChallengeView;
+export default ChallengeView

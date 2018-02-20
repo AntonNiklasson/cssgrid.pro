@@ -1,7 +1,7 @@
-import React from 'react';
-import glamorous from 'glamorous';
-import Transition from 'react-transition-group/Transition';
-import Button from '../../components/Button';
+import React from 'react'
+import glamorous from 'glamorous'
+import Transition from 'react-transition-group/Transition'
+import Button from '../../components/Button'
 
 const Container = glamorous.div(
   {
@@ -21,7 +21,7 @@ const Container = glamorous.div(
   ({ state }) => ({
     background: state === 'entered' ? 'rgba(0,0,0, .4)' : 'transparent',
   })
-);
+)
 const Content = glamorous.div(
   {
     width: '30vw',
@@ -40,24 +40,24 @@ const Content = glamorous.div(
       return {
         opacity: 0,
         transform: 'scale(0)',
-      };
+      }
     }
 
     if (state === 'entered') {
       return {
         opacity: 1,
         transform: 'scale(1)',
-      };
+      }
     }
 
-    return {};
+    return {}
   }
-);
+)
 const ButtonsContainer = glamorous.div({
   display: 'flex',
   justifyContent: 'center',
   margin: '2em 0 0 0',
-});
+})
 
 const SuccessModal = ({ showing, onNextChallengeClicked }) => (
   <Transition in={showing} timeout={0}>
@@ -76,6 +76,6 @@ const SuccessModal = ({ showing, onNextChallengeClicked }) => (
       </Container>
     )}
   </Transition>
-);
+)
 
-export default SuccessModal;
+export default SuccessModal

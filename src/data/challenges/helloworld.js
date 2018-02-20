@@ -13,11 +13,20 @@ module.exports = {
           key: 'display',
           value: '',
           input: {
-            placeholder: 'grid',
+            placeholder: '',
             regex: /^grid$/,
           },
         },
       ],
     },
   ],
-};
+  introduction: `
+# Turn any container into a grid
+
+The \`display\` property on a container is what makes it a grid.
+
+\`\`\`
+display: grid;
+\`\`\`
+  `,
+}

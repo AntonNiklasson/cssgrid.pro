@@ -19,7 +19,7 @@ body {
   height: 100%;
 }
 
-::selection {
+:not(input)::selection {
   background: white;
   color: black;
 }

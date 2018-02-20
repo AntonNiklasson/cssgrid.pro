@@ -43,8 +43,21 @@ const challenge = {
       ],
     },
   ],
-  introduction: `# This is the introduction
-  Cillum non eiusmod laborum et irure cillum aliquip anim sit nulla sint aliqua. Magna mollit est velit sunt aliqua labore. Est aliquip ipsum ea aute. Qui dolor ipsum minim ea. Ullamco sunt sit Lorem est fugiat tempor anim Lorem. Quis ut adipisicing enim ipsum. Id cillum sit excepteur aute. Sint laboris duis voluptate cillum laborum. Ullamco sint velit labore ex excepteur irure ipsum ex nostrud nostrud. Ipsum in dolore ad est sint aliquip irure sint sint minim. Laboris laborum minim commodo ipsum. Nulla magna veniam sunt adipisicing esse ea incididunt dolore magna sint minim fugiat.`,
+  introduction: `# Rows & Columns
+  You can define the columns in the grid by setting any number of "lengths" as you want in the \`grid-template-columns\` property.
+  
+  \`\`\`
+  grid-template-columns: 100px 200px 100px;
+  \`\`\`
+
+  The same goes for \`grid-template-rows\`:
+  
+  \`\`\`
+  grid-template-rows: 100px 200px 100px;
+  \`\`\`
+
+  Try different units (rem, em, px, % etc) and change the number of parameters to see what happens.
+  `,
 }
 
 module.exports = challenge

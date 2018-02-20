@@ -27,9 +27,20 @@ module.exports = {
           value: '',
           input: {
             placeholder: '10px',
+            regex: regexes.oneOrTwoLengthParameters,
           },
         },
       ],
     },
   ],
+  introduction: `# Gap Between the Cells 
+
+  CSS Grid supports a super simple way of adding gap. \`grid-gap\` takes any kind of "length" argument.
+
+  \`\`\`
+  grid-gap: 10px;
+  \`\`\`
+
+  It also works with two parameters. That will specify the row gap separate from the column gap. Try it out!
+  `,
 }

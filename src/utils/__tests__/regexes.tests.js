@@ -1,4 +1,7 @@
-import { moreThanOneLengthParameter } from '../regexes'
+import {
+  moreThanOneLengthParameter,
+  oneOrTwoLengthParameters,
+} from '../regexes'
 
 describe('Regexes', () => {
   describe('More than one length parameter', () => {
@@ -28,6 +31,18 @@ describe('Regexes', () => {
 
     it('should match "-1px -.1%"', () => {
       expect(moreThanOneLengthParameter.test('-1px -.1%')).toBe(true)
+    })
+  })
+
+  describe.only('Any number of length parameters', () => {
+    it('should match "10px"', () => {
+      expect(oneOrTwoLengthParameters.test('10px')).toBe(true)
+    })
+    it('should match "10px 10px"', () => {
+      expect(oneOrTwoLengthParameters.test('10px 10px')).toBe(true)
+    })
+    it('should not match "10px 10px 10px"', () => {
+      expect(oneOrTwoLengthParameters.test('10px 10px 10px')).toBe(false)
     })
   })
 })

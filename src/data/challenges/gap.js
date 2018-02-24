@@ -41,6 +41,12 @@ module.exports = {
   grid-gap: 10px;
   \`\`\`
 
-  It also works with two parameters. That will specify the row gap separate from the column gap. Try it out!
+  It also works with two parameters:
+
+  \`\`\`
+  grid-gap: 100px 30px;
+  \`\`\`
+
+  Remember: all of these properties takes what's referred to as a "length". [More on that here](https://developer.mozilla.org/en-US/docs/Web/CSS/length)
   `,
 }

@@ -15,7 +15,7 @@ const Wrapper = glamorous.div(({ transitionState }) => ({
   flexDirection: 'column',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  padding: '10vh 0',
+  padding: '5vh 0',
   pointerEvents: 'none',
   background: '#000000CC',
 
@@ -29,6 +29,7 @@ const Content = glamorous.div(() => ({
   padding: '4em',
   borderRadius: '3px',
   pointerEvents: 'auto',
+  overflow: 'auto',
 
   '& h1': {
     lineHeight: 2,
@@ -43,6 +44,9 @@ const Content = glamorous.div(() => ({
     maxWidth: 800,
     whiteSpace: 'pre-wrap',
     background: '#EEE',
+  },
+  '& p': {
+    marginBottom: '1em',
   },
 }))
 const ButtonsContainer = glamorous.div({

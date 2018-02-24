@@ -56,7 +56,7 @@ const challenge = {
   grid-template-rows: 100px 200px 100px;
   \`\`\`
 
-  Try different units (rem, em, px, % etc) and change the number of parameters to see what happens.
+  These values are any valid CSS "length" value. Basically anything that describes a distance in some unit. A deeper explanation is available on MDN: [CSS Length](https://developer.mozilla.org/en-US/docs/Web/CSS/length)
   `,
 }
 

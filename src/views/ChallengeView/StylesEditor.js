@@ -61,6 +61,7 @@ const PropertyValue = glamorous.span(({ theme }) => ({
   background: 'none',
   transition: 'all 300ms',
   color: theme.colors.gray,
+  margin: '0 0 0 .5em',
 }))
 const PropertyInput = glamorous.input(({ theme }) => ({
   flex: '1 0 100px',
@@ -69,7 +70,7 @@ const PropertyInput = glamorous.input(({ theme }) => ({
   background: theme.colors.white,
   border: `1px solid ${theme.colors.grayLight}`,
   borderRadius: 3,
-  margin: '0 0 0 .4em',
+  margin: '0 0 0 .5em',
   padding: '0.2em',
   fontSize: 'inherit',
   fontFamily: 'inherit',
@@ -120,7 +121,7 @@ class StylesEditor extends Component {
                         onChange={this.onChange(rule.selector, property.key)}
                       />
                     ) : (
-                      <PropertyValue>{property.value}</PropertyValue>
+                      <PropertyValue>{property.value};</PropertyValue>
                     )}
                   </Property>
                 )

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import glamorous from 'glamorous';
+import React, { Component } from 'react'
+import glamorous from 'glamorous'
 
 const Container = glamorous.div(({ theme }) => ({
   flex: 1,
@@ -16,20 +16,20 @@ const Container = glamorous.div(({ theme }) => ({
     transition: 'all 500ms',
   },
   '& .grid > *': {
-    padding: '1em',
+    padding: '.2em',
     background: theme.colors.accentLight,
     transition: 'all 300ms',
   },
-}));
+}))
 
 class Output extends Component {
   renderMarkup = () => ({
     __html: this.props.markup,
-  });
+  })
 
   render() {
-    return <Container dangerouslySetInnerHTML={this.renderMarkup()} />;
+    return <Container dangerouslySetInnerHTML={this.renderMarkup()} />
   }
 }
 
-export default Output;
+export default Output

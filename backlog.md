@@ -11,4 +11,4 @@
 * [ ] (?) Email signup
 * [x] "Start the tutorial!"
 * [ ] Use Immutable.js to store things in state
-* [ ] A question mark for showing the help modal
+* [x] A question mark for showing the help modal

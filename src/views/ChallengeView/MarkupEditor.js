@@ -1,21 +1,27 @@
-import React from 'react';
-import glamorous from 'glamorous';
+import React from 'react'
+import glamorous from 'glamorous'
 
 const Container = glamorous.div(({ theme }) => ({
-  flex: 1,
+  flex: '1 3 500px',
   background: theme.colors.grayLightest,
-  padding: '2em',
-  fontSize: 20,
   color: theme.colors.grayDarkest,
   userSelect: 'none',
+  overflow: 'auto',
+}))
+const ContentWrapper = glamorous.div({
+  padding: '1em',
+  width: 'auto',
+  overflow: 'hidden',
+  whiteSpace: 'pre',
   lineHeight: 1.5,
-  overflowY: 'auto',
-}));
+  fontSize: 20,
+  fontFamily: '"Source Code Pro", monospace',
+})
 
-const StylesEditor = ({ markup }) => (
+const MarkupEditor = ({ markup }) => (
   <Container>
-    <pre>{markup}</pre>
+    <ContentWrapper>{markup}</ContentWrapper>
   </Container>
-);
+)
 
-export default StylesEditor;
+export default MarkupEditor

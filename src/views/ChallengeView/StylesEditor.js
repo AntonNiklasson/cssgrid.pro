@@ -2,10 +2,10 @@ import React, { Component } from 'react'
 import glamorous from 'glamorous'
 
 const Container = glamorous.div(({ theme }) => ({
-  flex: 1,
+  flex: '1 1 500px',
   display: 'flex',
   flexDirection: 'column',
-  padding: '2em',
+  padding: '1em',
   fontSize: 20,
   userSelect: 'none',
   background: theme.colors.grayLightest,

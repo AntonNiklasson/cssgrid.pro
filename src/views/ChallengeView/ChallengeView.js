@@ -3,10 +3,7 @@ import glamorous from 'glamorous'
 import Challenge from './Challenge'
 import challenges from '../../data/challenges/'
 import Button from '../../components/Button'
-import SuccessModal from './SuccessModal'
-import IntroductionModal from './IntroductionModal'
-
-console.log(challenges)
+import Modal from '../../components/Modal'
 
 const Wrapper = glamorous.div({
   height: '100%',
@@ -106,6 +103,10 @@ class ChallengeView extends Component {
     }
   }
 
+  onHelpClick = () => {
+    this.setState({ showingIntro: true })
+  }
+
   render() {
     const { challenge, submitSuccess, showingIntro } = this.state
 
@@ -118,6 +119,11 @@ class ChallengeView extends Component {
         <Nav>
           <h1>{title}</h1>
           <SubmitContainer>
+            {!showingIntro && (
+              <Button inverted onClick={this.onHelpClick}>
+                Help?
+              </Button>
+            )}
             <Button large primary onClick={this.handleSubmit}>
               Submit!
             </Button>
@@ -129,14 +135,12 @@ class ChallengeView extends Component {
           validator={validator}
           onStylesChanged={this.onStylesChanged}
         />
-        <SuccessModal
-          showing={submitSuccess}
-          onNextChallengeClicked={this.gotoNextChallenge}
-        />
-        <IntroductionModal
+        <Modal
           content={challenge.introduction}
-          showing={showingIntro}
+          visible={showingIntro}
           onConfirm={this.onIntroConfirm}
+          confirmLabel="Got it."
+          markdown
         />
       </Wrapper>
     )

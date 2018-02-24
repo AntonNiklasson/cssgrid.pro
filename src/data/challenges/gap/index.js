@@ -1,6 +1,6 @@
-const regexes = require('../../utils/regexes')
+const regexes = require('../../../utils/regexes')
 
-module.exports = {
+export default {
   title: 'Gaps ',
   markup: `<div class="grid">
   <div class="cat">🐈</div>

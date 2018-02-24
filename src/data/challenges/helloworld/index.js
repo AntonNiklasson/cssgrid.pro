@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   title: 'Create your first grid! 🤓',
   markup: `<div class="grid">
   <div class="cat">🐈</div>

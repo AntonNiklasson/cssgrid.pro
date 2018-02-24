@@ -1,9 +1,9 @@
 /* eslint-disable global-require, import/no-dynamic-require */
 
 module.exports = [
-  require('./helloworld.js'),
-  require('./rows-and-columns'),
-  require('./gap'),
-  require('./lines.js'),
+  require('./helloworld').default,
+  require('./rows-and-columns').default,
+  require('./gap').default,
+  require('./lines').default,
   require('./areas').default,
 ]

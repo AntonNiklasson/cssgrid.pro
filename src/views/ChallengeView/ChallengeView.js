@@ -42,7 +42,6 @@ class ChallengeView extends Component {
     this.state = {
       challengeIndex: null,
       challenge: null,
-      // submitSuccess: false,
     }
   }
 
@@ -95,7 +94,6 @@ class ChallengeView extends Component {
       this.setState({
         challengeIndex,
         challenge,
-        // submitSuccess: false,
         showingIntro: !!challenge.introduction,
       })
     }
@@ -119,7 +117,7 @@ class ChallengeView extends Component {
           <SubmitContainer>
             {!showingIntro && (
               <Button inverted onClick={this.onHelpClick}>
-                Help?
+                ?
               </Button>
             )}
             <Button large primary onClick={this.handleSubmit}>

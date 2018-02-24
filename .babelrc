@@ -1,7 +1,0 @@
-{
-  "env": {
-    "test": {
-      "presets": ["stage-2", "es2015"]
-    }
-  }
-}

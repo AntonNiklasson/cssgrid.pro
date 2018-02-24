@@ -1,6 +1,4 @@
-import introduction from './areas-introduction.md'
-
-console.log(introduction)
+const introduction = require('./areas-introduction.md')
 
 export default {
   title: 'Areas 💥',

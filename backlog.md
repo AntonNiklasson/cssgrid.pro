@@ -3,6 +3,7 @@
 * [x] Set some default styles on .grid and .animalX without having them shown in the editor
 * [x] "Start the tutorial!"
 * [x] A question mark for showing the help modal
+* [x] Eject from CRA
 * [ ] Rewrite the whole layout with grid where it fits
 * [ ] (?) Store progress data in localStorage
 * [ ] (?) Toggle between dark and light mode

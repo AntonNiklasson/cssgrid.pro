@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import glamorous from 'glamorous'
 import Challenge from './Challenge'
-import challenges from '../../data/challenges/'
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
+
+const challenges = require('../../data/challenges')
 
 const Wrapper = glamorous.div({
   height: '100%',

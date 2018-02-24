@@ -5,5 +5,5 @@ module.exports = [
   require('./rows-and-columns'),
   require('./gap'),
   require('./lines.js'),
-  require('./areas'),
+  require('./areas').default,
 ]

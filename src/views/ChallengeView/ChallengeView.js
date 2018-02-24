@@ -41,7 +41,7 @@ class ChallengeView extends Component {
     this.state = {
       challengeIndex: null,
       challenge: null,
-      submitSuccess: false,
+      // submitSuccess: false,
     }
   }
 
@@ -65,27 +65,8 @@ class ChallengeView extends Component {
     this.setState({ showingIntro: false })
   }
 
-  loadLevel = (props = this.props) => {
-    const idParam = props.match.params.id
-    const challengeIndex = parseInt(idParam, 10)
-    const challenge = challenges[challengeIndex]
-    const { history } = this.props
-
-    if (!challenge) {
-      return history.push('/')
-    }
-
-    this.setState({
-      challengeIndex,
-      challenge,
-      submitSuccess: false,
-      showingIntro: !!challenge.introduction,
-    })
-  }
-
-  handleSubmit = () => {
-    // TODO: Highlight non-valid inputs!!!
-    this.gotoNextChallenge()
+  onHelpClick = () => {
+    this.setState({ showingIntro: true })
   }
 
   gotoNextChallenge = () => {
@@ -94,8 +75,6 @@ class ChallengeView extends Component {
     const nextChallengeIndex = challengeIndex + 1
     const nextChallenge = challenges[nextChallengeIndex]
 
-    console.log({ nextChallenge })
-
     if (nextChallenge) {
       history.push(`/challenge/${nextChallengeIndex}`)
     } else {
@@ -103,12 +82,30 @@ class ChallengeView extends Component {
     }
   }
 
-  onHelpClick = () => {
-    this.setState({ showingIntro: true })
+  loadLevel = (props = this.props) => {
+    const idParam = props.match.params.id
+    const challengeIndex = parseInt(idParam, 10)
+    const challenge = challenges[challengeIndex]
+    const { history } = this.props
+
+    if (!challenge) {
+      history.push('/')
+    } else {
+      this.setState({
+        challengeIndex,
+        challenge,
+        // submitSuccess: false,
+        showingIntro: !!challenge.introduction,
+      })
+    }
+  }
+
+  handleSubmit = () => {
+    this.gotoNextChallenge()
   }
 
   render() {
-    const { challenge, submitSuccess, showingIntro } = this.state
+    const { challenge, showingIntro } = this.state
 
     if (!challenge) return null
 

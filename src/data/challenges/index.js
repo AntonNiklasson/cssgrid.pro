@@ -1,9 +1,9 @@
 /* eslint-disable global-require, import/no-dynamic-require */
 
 module.exports = [
-  'helloworld',
-  'rows-and-columns',
-  'gap',
-  'lines',
-  'areas',
-].map(c => require(`./${c}.js`))
+  require('./helloworld.js'),
+  require('./rows-and-columns'),
+  require('./gap'),
+  require('./lines.js'),
+  require('./areas'),
+]

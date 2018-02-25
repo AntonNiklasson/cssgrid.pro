@@ -10,21 +10,11 @@ import {
 
 const Wrapper = glamorous.div({
   flex: 1,
-  display: 'flex',
-  flexFlow: 'column',
-  position: 'relative',
+  display: 'grid',
+  gridTemplateRows: '1fr 1fr',
+  gridTemplateColumns: 'minmax(600px, 1fr) 1fr',
+  gridTemplateAreas: "'styles markup' 'output output'",
 })
-const Editors = glamorous.div({
-  flex: 1,
-  display: 'flex',
-  overflow: 'scroll-y',
-})
-const OutputContainer = glamorous.div(({ theme }) => ({
-  flex: 1,
-  display: 'flex',
-  overflowY: 'auto',
-  borderTop: `2px solid ${theme.colors.gray}`,
-}))
 
 class Challenge extends React.Component {
   constructor(props) {
@@ -61,13 +51,9 @@ class Challenge extends React.Component {
 
     return (
       <Wrapper>
-        <Editors>
-          <StylesEditor styles={styles} onChange={this.onInputChange} />
-          <MarkupEditor markup={markup} />
-        </Editors>
-        <OutputContainer>
-          <Output markup={markup}>Output</Output>
-        </OutputContainer>
+        <StylesEditor styles={styles} onChange={this.onInputChange} />
+        <MarkupEditor markup={markup} />
+        <Output markup={markup}>Output</Output>
         <style>{stringifyStyleTree(styles)}</style>
       </Wrapper>
     )

@@ -3,30 +3,17 @@ import glamorous from 'glamorous'
 import Challenge from './Challenge'
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
+import Header from './Header'
 
 const challenges = require('../../data/challenges')
 
-const Wrapper = glamorous.div({
-  height: '100%',
+const Wrapper = glamorous('div', { displayName: 'App' })({
+  width: '100vw',
+  height: '100vh',
   display: 'flex',
-  flexDirection: 'column',
+  flexFlow: 'column nowrap',
 })
-const Nav = glamorous.div(({ theme }) => ({
-  background: theme.colors.grayDarker,
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  fontSize: '20px',
-  color: 'whitesmoke',
-  padding: '1em',
-  userSelect: 'none',
-  '& h1': {
-    margin: '0 0 .2em 0',
-    fontSize: '1.5em',
-    fontFamily: `'Source Code Pro', 'Roboto', Arial, sans-serif`,
-  },
-}))
-const SubmitContainer = glamorous.div({
+const SubmitContainer = glamorous('div', { displayName: 'SubmitContainer' })({
   position: 'relative',
 
   '& svg': {
@@ -112,7 +99,7 @@ class ChallengeView extends Component {
 
     return (
       <Wrapper>
-        <Nav>
+        <Header>
           <h1>{title}</h1>
           <SubmitContainer>
             {!showingIntro && (
@@ -124,7 +111,7 @@ class ChallengeView extends Component {
               Submit!
             </Button>
           </SubmitContainer>
-        </Nav>
+        </Header>
         <Challenge
           markup={markup}
           styles={styles}

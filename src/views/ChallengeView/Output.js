@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import glamorous from 'glamorous'
 
 const Container = glamorous.div(({ theme }) => ({
-  flex: 1,
+  gridArea: 'output',
   padding: '1em',
   fontSize: '30px',
   background: '#CCC',

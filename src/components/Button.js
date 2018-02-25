@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-import glamorous from 'glamorous';
-import * as glamor from 'glamor';
+import PropTypes from 'prop-types'
+import glamorous from 'glamorous'
+import * as glamor from 'glamor'
 
-const Button = glamorous.button(
+const Button = glamorous('button', { displayName: 'Button' })(
   {
     borderStyle: 'solid',
     borderRadius: '4px',
@@ -38,14 +38,14 @@ const Button = glamorous.button(
           color: '#DDD',
           border: '2px solid white',
         },
-      };
+      }
     }
 
     if (disabled) {
       return {
         color: colors.gray,
         border: `2px solid ${colors.gray}`,
-      };
+      }
     }
 
     return {
@@ -71,19 +71,19 @@ const Button = glamorous.button(
           : inverted ? colors.grayLight : colors.gray,
         background: primary ? colors.primaryLight : 'inherit',
       },
-    };
+    }
   }
-);
+)
 
 Button.propTypes = {
   children: PropTypes.any.isRequired,
   onClick: PropTypes.func,
   primary: PropTypes.bool,
-};
+}
 
 Button.defaultProps = {
   onClick: () => {},
   primary: false,
-};
+}
 
-export default Button;
+export default Button

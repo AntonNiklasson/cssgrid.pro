@@ -2,16 +2,17 @@ import React, { Component } from 'react'
 import glamorous from 'glamorous'
 
 const Container = glamorous.div(({ theme }) => ({
-  flex: '1 1 500px',
   display: 'flex',
   flexDirection: 'column',
   padding: '1em',
+  overflow: 'auto',
+
   fontSize: 20,
-  userSelect: 'none',
   background: theme.colors.grayLightest,
   borderRight: `1px solid ${theme.colors.grayLight}`,
-  overflowY: 'auto',
   fontFamily: 'Source Code Pro, monospace',
+
+  userSelect: 'none',
 }))
 const PartialInput = glamorous.div({
   flex: 1,
@@ -22,11 +23,11 @@ const Rule = glamorous.div({
     marginBottom: 0,
   },
 })
-const Selector = glamorous.div(({ theme }) => ({
+const Selector = glamorous('div', { displayname: 'Selector' })(({ theme }) => ({
   color: theme.colors.grayDarker,
   fontWeight: 'bold',
 }))
-const Property = glamorous.div(({ valid }) => ({
+const Property = glamorous('div', { displayName: 'Property' })(({ valid }) => ({
   position: 'relative',
   display: 'flex',
   flexFlow: 'row wrap',
@@ -44,13 +45,15 @@ const Property = glamorous.div(({ valid }) => ({
     alignItems: 'center',
   },
 }))
-const PropertyKey = glamorous.span(({ theme, editable }) => ({
-  lineHeight: 1.5,
-  ':after': {
-    content: ':',
-  },
-  color: editable ? theme.colors.grayDark : theme.colors.gray,
-}))
+const PropertyKey = glamorous('div', { displayName: 'PropertyKey' })(
+  ({ theme, editable }) => ({
+    lineHeight: 1.5,
+    ':after': {
+      content: ':',
+    },
+    color: editable ? theme.colors.grayDark : theme.colors.gray,
+  })
+)
 const PropertyValue = glamorous.span(({ theme }) => ({
   flex: 1,
   display: 'flex',
@@ -63,24 +66,26 @@ const PropertyValue = glamorous.span(({ theme }) => ({
   color: theme.colors.gray,
   margin: '0 0 0 .5em',
 }))
-const PropertyInput = glamorous.input(({ theme }) => ({
-  flex: '1 0 100px',
-  minWidth: 100,
-  position: 'relative',
-  background: theme.colors.white,
-  border: `1px solid ${theme.colors.grayLight}`,
-  borderRadius: 3,
-  margin: '0 0 0 .5em',
-  padding: '0.2em',
-  fontSize: 'inherit',
-  fontFamily: 'inherit',
-  transition: 'all 300ms',
-  ':focus': {
-    outline: 'none',
-    color: theme.colors.accentDark,
-    borderColor: theme.colors.primary,
-  },
-}))
+const PropertyInput = glamorous('input', { displayName: 'PropertyInput' })(
+  ({ theme }) => ({
+    flex: '1 0 100px',
+    minWidth: 100,
+    position: 'relative',
+    background: theme.colors.white,
+    border: `1px solid ${theme.colors.grayLight}`,
+    borderRadius: 3,
+    margin: '0 0 0 .5em',
+    padding: '0.2em',
+    fontSize: 'inherit',
+    fontFamily: 'inherit',
+    transition: 'all 300ms',
+    ':focus': {
+      outline: 'none',
+      color: theme.colors.accentDark,
+      borderColor: theme.colors.primary,
+    },
+  })
+)
 
 class StylesEditor extends Component {
   onChange = (selector, property) => ({ target: { value } }) => {

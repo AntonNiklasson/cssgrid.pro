@@ -2,7 +2,7 @@ import React from 'react'
 import glamorous from 'glamorous'
 
 const Container = glamorous.div(({ theme }) => ({
-  flex: '1 3 500px',
+  gridArea: 'markup',
   background: theme.colors.grayLightest,
   color: theme.colors.grayDarkest,
   userSelect: 'none',

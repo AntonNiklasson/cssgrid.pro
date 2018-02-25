@@ -22,13 +22,13 @@ const Wrapper = glamorous.div(({ transitionState }) => ({
   transition: 'opacity 200ms',
   opacity: transitionState === 'entered' ? 1 : 0,
 }))
-const Content = glamorous.div(() => ({
+const Content = glamorous.div(({ transitionState }) => ({
   background: 'white',
   width: '80%',
   maxWidth: 700,
   padding: '4em',
   borderRadius: '3px',
-  pointerEvents: 'auto',
+  pointerEvents: transitionState === 'entered' ? 'auto' : 'none',
   overflow: 'auto',
 
   '& h1': {
@@ -59,7 +59,7 @@ const Modal = ({ visible, markdown, content, onConfirm, confirmLabel }) => (
   <Transition in={visible} timeout={0}>
     {state => (
       <Wrapper transitionState={state}>
-        <Content>
+        <Content transitionState={state}>
           {markdown ? <Markdown>{content}</Markdown> : content}
           <ButtonsContainer>
             <Button onClick={onConfirm}>{confirmLabel}</Button>

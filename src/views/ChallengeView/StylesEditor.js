@@ -32,6 +32,7 @@ const Property = glamorous('div', { displayName: 'Property' })(({ valid }) => ({
   display: 'flex',
   flexFlow: 'row wrap',
   alignItems: 'center',
+  maxWidth: 800,
   margin: '.1em 0',
   padding: '.2em .2em .2em 1rem',
   ':after': {
@@ -70,7 +71,6 @@ const PropertyInput = glamorous('input', { displayName: 'PropertyInput' })(
   ({ theme }) => ({
     flex: '1 0 100px',
     minWidth: 100,
-    maxWidth: 400,
     position: 'relative',
     background: theme.colors.white,
     border: `1px solid ${theme.colors.grayLight}`,

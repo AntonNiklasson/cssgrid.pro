@@ -1,4 +1,5 @@
 const regexes = require('../../../utils/regexes')
+const introduction = require('./introduction.md')
 
 export default {
   title: 'Gaps ',
@@ -9,44 +10,31 @@ export default {
   <div class="cat">🐈</div>
   <div class="elephant">🐘</div>
   <div class="shark">🦈</div>
+  <div class="cat">🐈</div>
+  <div class="elephant">🐘</div>
+  <div class="shark">🦈</div>
 </div>`,
-  styles: [
-    {
-      selector: '.grid',
-      properties: [
-        {
-          key: 'display',
+  styles: {
+    '.grid': {
+      properties: {
+        display: {
           value: 'grid',
         },
-        {
-          key: 'grid-template-columns',
-          value: '100px 100px',
+        'grid-template-columns': {
+          value: '1fr 1fr 1fr',
         },
-        {
-          key: 'grid-gap',
+        'grid-template-rows': {
+          value: '1fr 1fr 1fr',
+        },
+        'grid-gap': {
           value: '',
           input: {
-            placeholder: '10px',
+            placeholder: '',
             regex: regexes.oneOrTwoLengthParameters,
           },
         },
-      ],
+      },
     },
-  ],
-  introduction: `# Gap Between the Cells 
-
-  CSS Grid supports a super simple way of adding gap. \`grid-gap\` takes any kind of "length" argument.
-
-  \`\`\`
-  grid-gap: 10px;
-  \`\`\`
-
-  It also works with two parameters:
-
-  \`\`\`
-  grid-gap: 100px 30px;
-  \`\`\`
-
-  Remember: all of these properties takes what's referred to as a "length". [More on that here](https://developer.mozilla.org/en-US/docs/Web/CSS/length)
-  `,
+  },
+  introduction,
 }

@@ -3,29 +3,56 @@ import _ from 'lodash/fp'
 export const toString = tree => {
   if (!tree) return null
 
-  const propertyToString = property =>
-    property.key && property.value ? `${property.key}: ${property.value};` : ''
-  const ruleToString = rule =>
-    `${rule.selector} { ${_.flow(_.map(propertyToString), _.join(' '))(
-      rule.properties
-    )} }`
-
-  return _.join(' ')(_.flow(_.map(ruleToString))(tree))
+  return _.pipe(
+    _.keys,
+    _.reduce((ruleString, selector) => {
+      const propertyStrings = _.pipe(
+        _.keys,
+        _.reduce(
+          (propertyString, property) =>
+            `${propertyString}${propertyString.length ? ' ' : ''}${property}: ${
+              tree[selector].properties[property].value
+            };`,
+          ''
+        )
+      )(tree[selector].properties)
+      return `${ruleString}${selector} { ${propertyStrings} }`
+    }, '')
+  )(tree)
 }
 
-export const update = (tree, selector, propertyName, value) =>
-  _.map(rule => {
-    if (rule.selector !== selector) return rule
+export const update = (tree, selectorToUpdate, propertyNameToUpdate, value) =>
+  _.pipe(
+    _.keys,
+    _.reduce((newTree, selector) => {
+      const rule = tree[selector]
 
-    return {
-      ...rule,
-      properties: _.map(property => {
-        if (property.key !== propertyName) return property
-
+      if (selector !== selectorToUpdate) {
         return {
-          ...property,
-          value,
+          ...newTree,
+          [selector]: rule,
         }
-      })(rule.properties),
-    }
-  })(tree)
+      }
+
+      newTree[selector] = {
+        ...rule,
+        properties: _.pipe(
+          _.keys,
+          _.reduce((newProperties, propertyKey) => {
+            const property = rule.properties[propertyKey]
+
+            if (propertyKey !== propertyNameToUpdate) return property
+
+            newProperties[propertyNameToUpdate] = {
+              ...property,
+              value,
+            }
+
+            return newProperties
+          }, {})
+        )(rule.properties),
+      }
+
+      return newTree
+    }, {})
+  )(tree)

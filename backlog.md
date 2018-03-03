@@ -8,6 +8,7 @@
 * [ ] Rewrite css structure with property keys as keys in an object
 * [ ] Hidden styles on a challenge basis
 * [ ] Clicking a property key should focus the input if there is one
+* [ ] Property values should be represented by a string if possible
 * [ ] Autofocus the first input on the page
 * [ ] Tutorial on `minmax()`
 * [ ] Tutorial on `fr`
@@ -21,3 +22,4 @@
 * [ ] Toggle between dark and light mode
 * [ ] Some kind of introduction to tutorial. Explain the interactivity
 * [ ] Email signup
+* [ ] Show some kind of guide behind the real grid to communicate each challenge's purpose better

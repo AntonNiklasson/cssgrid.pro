@@ -1,48 +1,32 @@
 const regexes = require('../../../utils/regexes')
 const introduction = require('./introduction.md')
+const markup = require('./markup.html')
 
 export default {
   title: 'Row your boat 🚣',
-  markup: `<div class="grid">
-  <div class="turtle">🐢</div>
-  <div class="elephant">🐘</div>
-  <div class="dog">🐶</div>
-  <div class="shark">🦈</div>
-  <div class="cat">🐈</div>
-  <div class="elephant">🐘</div>
-  <div class="turtle">🐢</div>
-  <div class="elephant">🐘</div>
-  <div class="dog">🐶</div>
-  <div class="shark">🦈</div>
-  <div class="cat">🐈</div>
-  <div class="elephant">🐘</div>
-</div>`,
-  styles: [
-    {
-      selector: '.grid',
-      properties: [
-        {
-          key: 'display',
+  styles: {
+    '.grid': {
+      properties: {
+        display: {
           value: 'grid',
         },
-        {
-          key: 'grid-template-columns',
+        'grid-template-columns': {
+          value: '',
           input: {
-            value: '',
             placeholder: '',
             regex: regexes.moreThanOneLengthParameter,
           },
         },
-        {
-          key: 'grid-template-rows',
+        'grid-template-rows': {
+          value: '',
           input: {
-            value: '',
             placeholder: '',
             regex: regexes.moreThanOneLengthParameter,
           },
         },
-      ],
+      },
     },
-  ],
+  },
+  markup,
   introduction,
 }

@@ -70,6 +70,7 @@ const PropertyInput = glamorous('input', { displayName: 'PropertyInput' })(
   ({ theme }) => ({
     flex: '1 0 100px',
     minWidth: 100,
+    maxWidth: 400,
     position: 'relative',
     background: theme.colors.white,
     border: `1px solid ${theme.colors.grayLight}`,
@@ -97,43 +98,48 @@ class StylesEditor extends Component {
     return (
       <Container>
         <PartialInput>
-          {styles.map(rule => (
-            <Rule key={rule.selector}>
-              <Selector>
-                {rule.selector} {` {`}
-              </Selector>
-              {rule.properties.map(property => {
-                const editable = property.input
-                const valid =
-                  property.input &&
-                  property.input.regex &&
-                  property.input.regex.test(property.value)
+          {Object.keys(styles).map(selector => {
+            const rule = styles[selector]
 
-                return (
-                  <Property
-                    key={property.key}
-                    editable={editable}
-                    valid={valid}
-                  >
-                    <PropertyKey editable={editable}>
-                      {property.key}
-                    </PropertyKey>
-                    {editable ? (
-                      <PropertyInput
-                        type="text"
-                        value={property.value}
-                        placeholder={property.input.placeholder}
-                        onChange={this.onChange(rule.selector, property.key)}
-                      />
-                    ) : (
-                      <PropertyValue>{property.value};</PropertyValue>
-                    )}
-                  </Property>
-                )
-              })}
-              <Selector>}</Selector>
-            </Rule>
-          ))}
+            return (
+              <Rule key={selector}>
+                <Selector>
+                  {selector} {` {`}
+                </Selector>
+                {Object.keys(rule.properties).map(propertyKey => {
+                  const property = rule.properties[propertyKey]
+                  const editable = property.input
+                  const valid =
+                    property.input &&
+                    property.input.regex &&
+                    property.input.regex.test(property.value)
+
+                  return (
+                    <Property
+                      key={propertyKey}
+                      editable={editable}
+                      valid={valid}
+                    >
+                      <PropertyKey editable={editable}>
+                        {propertyKey}
+                      </PropertyKey>
+                      {editable ? (
+                        <PropertyInput
+                          type="text"
+                          value={property.value}
+                          placeholder={property.input.placeholder}
+                          onChange={this.onChange(selector, propertyKey)}
+                        />
+                      ) : (
+                        <PropertyValue>{property.value};</PropertyValue>
+                      )}
+                    </Property>
+                  )
+                })}
+                <Selector>}</Selector>
+              </Rule>
+            )
+          })}
         </PartialInput>
       </Container>
     )

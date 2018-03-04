@@ -1,3 +1,4 @@
 trailingComma: true
 singleQuote: true
 semi: false
+printWidth: 80

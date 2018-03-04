@@ -1,58 +1,26 @@
 import _ from 'lodash/fp'
 
 export const toString = tree => {
-  if (!tree) return null
+  if (!tree) return ''
 
   return _.pipe(
     _.keys,
-    _.reduce((ruleString, selector) => {
-      const propertyStrings = _.pipe(
-        _.keys,
-        _.reduce(
-          (propertyString, property) =>
-            `${propertyString}${propertyString.length ? ' ' : ''}${property}: ${
-              tree[selector].properties[property].value
-            };`,
-          ''
-        )
-      )(tree[selector].properties)
-      return `${ruleString}${selector} { ${propertyStrings} }`
-    }, '')
+    _.reduce((blob, selectorKey) => {
+      const propertiesBlob = _.pipe(
+        _.get('properties'),
+        _.mapValues('value'),
+        _.toPairs,
+        _.map(_.join(': ')),
+        _.map(str => `${str};`),
+        _.join(' ')
+      )(tree[selectorKey])
+
+      return `${blob ? `${blob} ` : ''}${selectorKey} { ${propertiesBlob} }`
+    }, null)
   )(tree)
 }
 
-export const update = (tree, selectorToUpdate, propertyNameToUpdate, value) =>
-  _.pipe(
-    _.keys,
-    _.reduce((newTree, selector) => {
-      const rule = tree[selector]
-
-      if (selector !== selectorToUpdate) {
-        return {
-          ...newTree,
-          [selector]: rule,
-        }
-      }
-
-      newTree[selector] = {
-        ...rule,
-        properties: _.pipe(
-          _.keys,
-          _.reduce((newProperties, propertyKey) => {
-            const property = rule.properties[propertyKey]
-
-            if (propertyKey !== propertyNameToUpdate) return property
-
-            newProperties[propertyNameToUpdate] = {
-              ...property,
-              value,
-            }
-
-            return newProperties
-          }, {})
-        )(rule.properties),
-      }
-
-      return newTree
-    }, {})
-  )(tree)
+export const updateTree = (tree, selector, property, value) =>
+  _.update(selector, _.update(['properties', property], _.set('value', value)))(
+    tree
+  )

@@ -1,20 +1,27 @@
-import { toString, update } from '../styletree'
+import { toString, updateTree as update } from '../styletree'
 
 describe('styletree', () => {
   describe('toString', () => {
     it('should print something', () => {
-      const result = toString({
-        '.grid': {
-          properties: {
-            display: { value: 'grid' },
-            'grid-gap': {
-              value: '1fr 1fr',
+      expect(
+        toString({
+          '.grid': {
+            properties: {
+              display: { value: 'grid' },
+              'grid-gap': {
+                value: '1fr 1fr',
+              },
             },
           },
-        },
-      })
-
-      expect(result).toBe('.grid { display: grid; grid-gap: 1fr 1fr; }')
+          '.cat': {
+            properties: {
+              background: { value: 'red' },
+            },
+          },
+        })
+      ).toBe(
+        '.grid { display: grid; grid-gap: 1fr 1fr; } .cat { background: red; }'
+      )
     })
   })
 
@@ -22,14 +29,22 @@ describe('styletree', () => {
     it('should update a styletree', () => {
       const initialTree = {
         '.grid': {
-          properties: { display: { value: 'block', input: { regex: /.*$/ } } },
+          properties: {
+            display: {
+              value: 'block',
+              input: {
+                regex: /.*$/,
+              },
+            },
+          },
         },
         '.cat': {
-          properties: { display: { value: 'inline', input: { regex: /.*$/ } } },
+          background: {
+            value: 'red',
+          },
         },
       }
-
-      expect(update(initialTree, '.grid', 'display', 'grid')).toEqual({
+      const updatedTree = {
         '.grid': {
           properties: {
             display: {
@@ -41,14 +56,15 @@ describe('styletree', () => {
           },
         },
         '.cat': {
-          properties: {
-            display: 'inline',
-            input: {
-              regex: /.*$/,
-            },
+          background: {
+            value: 'red',
           },
         },
-      })
+      }
+
+      expect(update(initialTree, '.grid', 'display', 'grid')).toEqual(
+        updatedTree
+      )
     })
   })
 })

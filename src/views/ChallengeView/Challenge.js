@@ -5,7 +5,7 @@ import MarkupEditor from './MarkupEditor'
 import Output from './Output'
 import {
   toString as stringifyStyleTree,
-  update as updateStyleTree,
+  updateTree,
 } from '../../utils/styletree'
 
 const Wrapper = glamorous.div({
@@ -34,7 +34,7 @@ class Challenge extends React.Component {
   }
 
   onInputChange = (selector, property, value) => {
-    const styles = updateStyleTree(
+    const styles = updateTree(
       { ...this.state.styles },
       selector,
       property,

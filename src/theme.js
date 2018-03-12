@@ -18,4 +18,4 @@ export const colors = {
   white: '#FFF',
 
   green: 'forestgreen',
-};
+}

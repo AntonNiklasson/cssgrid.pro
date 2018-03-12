@@ -31,24 +31,6 @@ const Wrapper = glamorous.div({
   '& h1': {
     fontSize: '3em',
     fontFamily: 'Roboto Slab',
-
-    position: 'relative',
-    opacity: 0,
-    animation: `1000ms cubic-bezier(.4, 2.8, .6, .3) 500ms ${glamor.css.keyframes(
-      {
-        from: {
-          opacity: 0,
-          top: '-200',
-        },
-        to: {
-          opacity: 1,
-          top: 0,
-        },
-      }
-    )} forwards, 2500ms ${glamor.css.keyframes({
-      from: { transform: 'scale(.2)' },
-      to: { transform: 'scale(1)' },
-    })}`,
   },
 
   '& .button-container': {

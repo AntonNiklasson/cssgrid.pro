@@ -8,83 +8,54 @@ export default {
   <div class="turtle">🐢</div>
   <div class="dog">🐶</div>
 </div>`,
-  styles: [
-    {
-      selector: '.grid',
-      properties: [
-        {
-          key: 'display',
+  styles: {
+    '.grid': {
+      properties: {
+        display: {
           value: 'grid',
         },
-        {
-          key: 'grid-template-columns',
+        'grid-template-columns': {
           value: '200px auto',
         },
-        {
-          key: 'grid-template-rows',
+        'grid-template-rows': {
           value: '50px auto 50px',
         },
-        {
-          key: 'grid-template-areas',
+        'grid-template-areas': {
           value: '',
           input: {
             regex: /( *"[a-z]+ [a-z]+" *)+/,
           },
         },
-      ],
+      },
     },
-    {
-      selector: '.cat',
-      properties: [
-        {
-          key: 'grid-area',
+    '.cat': {
+      properties: {
+        'grid-area': {
           value: 'header',
         },
-        {
-          key: 'background',
-          value: 'tomato !important',
-        },
-      ],
+      },
     },
-    {
-      selector: '.elephant',
-      properties: [
-        {
-          key: 'grid-area',
+    '.elephant': {
+      properties: {
+        'grid-area': {
           value: 'sidebar',
         },
-        {
-          key: 'background',
-          value: 'gold !important',
-        },
-      ],
+      },
     },
-    {
-      selector: '.turtle',
-      properties: [
-        {
-          key: 'grid-area',
+    '.turtle': {
+      properties: {
+        'grid-area': {
           value: 'content',
         },
-        {
-          key: 'background',
-          value: 'greenyellow !important',
-        },
-      ],
+      },
     },
-    {
-      selector: '.dog',
-      properties: [
-        {
-          key: 'grid-area',
+    '.dog': {
+      properties: {
+        'grid-area': {
           value: 'footer',
         },
-        {
-          key: 'background',
-          value: 'crimson !important',
-        },
-      ],
+      },
     },
-  ],
+  },
   introduction,
 }

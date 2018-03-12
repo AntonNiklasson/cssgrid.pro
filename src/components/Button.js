@@ -14,11 +14,11 @@ const Button = glamorous('button', { displayName: 'Button' })(
   ({ theme: { colors }, crazy, disabled, inverted, large, primary }) => {
     if (crazy) {
       return {
-        fontSize: 25,
+        fontSize: 30,
         fontWeight: 'bold',
         border: '2px solid #ffffff66',
         borderRadius: 4,
-        boxShadow: '0 10px 10px rgba(0, 0, 0, .3)',
+        boxShadow: '0 7px 10px -5px rgba(0, 0, 0, .3)',
         color: 'white',
         backgroundImage:
           'linear-gradient(80deg, #c90041, #0127ae, forestgreen, #bada55)',
@@ -35,7 +35,7 @@ const Button = glamorous('button', { displayName: 'Button' })(
 
         transition: 'all 400ms',
         ':hover': {
-          color: '#DDD',
+          color: '#EEE',
           border: '2px solid white',
         },
       }

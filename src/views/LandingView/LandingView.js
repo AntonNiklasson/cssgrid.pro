@@ -2,15 +2,12 @@ import React from 'react'
 import glamorous from 'glamorous'
 import * as glamor from 'glamor'
 import Button from '../../components/Button'
-import background from '../../resources/background.jpg'
 
 const Wrapper = glamorous.div({
   width: '100vw',
   height: '100vh',
   display: 'flex',
   flexDirection: 'column',
-  background: `url(${background}) no-repeat center center fixed`,
-  backgroundSize: 'cover',
   fontSize: 25,
   color: '#333',
 
@@ -24,13 +21,22 @@ const Wrapper = glamorous.div({
 
   '& hgroup': {
     margin: '0 0 5em 0',
-    color: 'white',
     textAlign: 'center',
   },
 
   '& h1': {
     fontSize: '3em',
     fontFamily: 'Roboto Slab',
+    lineHeight: 1.6,
+    opacity: 0,
+    animation: `${glamor.css.keyframes({
+      from: {
+        opacity: 0,
+      },
+      to: {
+        opacity: 1,
+      },
+    })} 1000ms 300ms forwards`,
   },
 
   '& .button-container': {
@@ -42,12 +48,13 @@ const Wrapper = glamorous.div({
       to: {
         opacity: 1,
       },
-    })} 1500ms 3000ms forwards`,
+    })} 1500ms 1000ms forwards`,
   },
 
   '& h2': {
-    fontSize: '1.2em',
-    fontWeight: 'normal',
+    fontSize: '.9em',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
 
     opacity: 0,
     animation: `${glamor.css.keyframes({
@@ -57,7 +64,7 @@ const Wrapper = glamorous.div({
       to: {
         opacity: 1,
       },
-    })} 2s 1s forwards`,
+    })} 1500ms 1000ms forwards`,
   },
 })
 const Footer = glamorous.div(({ theme }) => ({
@@ -67,7 +74,6 @@ const Footer = glamorous.div(({ theme }) => ({
   padding: '1em 3em',
   textAlign: 'center',
   fontSize: 16,
-  color: 'white',
 
   opacity: 0,
   animation: `${glamor.css.keyframes({
@@ -77,7 +83,7 @@ const Footer = glamorous.div(({ theme }) => ({
     to: {
       opacity: 1,
     },
-  })} 3000ms 2000ms forwards`,
+  })} 2000ms 1500ms forwards`,
 
   '& a': {
     color: theme.colors.primary,
@@ -95,7 +101,7 @@ class LandingView extends React.Component {
       <Wrapper>
         <div className="content">
           <hgroup>
-            <h1>Learn CSS Grid!</h1>
+            <h1>CSSGrid.pro</h1>
             <h2>An Interactive Tutorial</h2>
           </hgroup>
           <div className="button-container">

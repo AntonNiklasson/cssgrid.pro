@@ -1,101 +1,102 @@
-import React, { Component } from 'react'
-import glamorous from 'glamorous'
-import Challenge from './Challenge'
-import Button from '../../components/Button'
-import Modal from '../../components/Modal'
-import Header from './Header'
+import React, { Component } from "react";
+import glamorous from "glamorous";
+import Challenge from "./Challenge";
+import Button from "../../components/Button";
+import Modal from "../../components/Modal";
+import Header from "./Header";
+import storage from "../../storage";
 
-const challenges = require('../../data/challenges')
+const challenges = require("../../data/challenges");
 
-const Wrapper = glamorous('div', { displayName: 'App' })({
-  width: '100vw',
-  height: '100vh',
-  display: 'flex',
-  flexFlow: 'column nowrap',
-})
-const SubmitContainer = glamorous('div', { displayName: 'SubmitContainer' })({
-  position: 'relative',
+const Wrapper = glamorous("div", { displayName: "App" })({
+  width: "100vw",
+  height: "100vh",
+  display: "flex",
+  flexFlow: "column nowrap"
+});
+const SubmitContainer = glamorous("div", { displayName: "SubmitContainer" })({
+  position: "relative",
 
-  '& svg': {
-    position: 'absolute',
-    right: '-10px',
-  },
-})
+  "& svg": {
+    position: "absolute",
+    right: "-10px"
+  }
+});
 
 class ChallengeView extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       challengeIndex: null,
-      challenge: null,
-    }
+      challenge: null
+    };
   }
 
   componentDidMount() {
-    this.loadLevel()
+    this.loadLevel();
   }
   componentWillReceiveProps(nextProps) {
-    this.loadLevel(nextProps)
+    this.loadLevel(nextProps);
   }
 
   onStylesChanged = styles => {
     this.setState({
       challenge: {
         ...this.state.challenge,
-        styles,
-      },
-    })
-  }
+        styles
+      }
+    });
+  };
 
   onIntroConfirm = () => {
-    this.setState({ showingIntro: false })
-  }
+    this.setState({ showingIntro: false });
+  };
 
   onHelpClick = () => {
-    this.setState({ showingIntro: true })
-  }
+    this.setState({ showingIntro: true });
+  };
 
   gotoNextChallenge = () => {
-    const { history } = this.props
-    const { challengeIndex } = this.state
-    const nextChallengeIndex = challengeIndex + 1
-    const nextChallenge = challenges[nextChallengeIndex]
+    const { history } = this.props;
+    const { challengeIndex } = this.state;
+    const nextChallengeIndex = challengeIndex + 1;
+    const nextChallenge = challenges[nextChallengeIndex];
 
     if (nextChallenge) {
-      history.push(`/challenge/${nextChallengeIndex}`)
+      history.push(`/challenge/${nextChallengeIndex}`);
     } else {
-      history.push('/theend')
+      history.push("/theend");
     }
-  }
+  };
 
   loadLevel = (props = this.props) => {
-    const idParam = props.match.params.id
-    const challengeIndex = parseInt(idParam, 10)
-    const challenge = challenges[challengeIndex]
-    const { history } = this.props
+    const { history, match: { params: { id } } } = props;
+    const challengeIndex = parseInt(id);
+    const challenge = challenges[challengeIndex];
 
     if (!challenge) {
-      history.push('/')
+      history.push("/");
     } else {
       this.setState({
         challengeIndex,
         challenge,
-        showingIntro: !!challenge.introduction,
-      })
+        showingIntro: !!challenge.introduction
+      });
+      storage.setLevel(challengeIndex);
     }
-  }
+  };
 
   handleSubmit = () => {
-    this.gotoNextChallenge()
-  }
+    this.gotoNextChallenge();
+  };
 
   render() {
-    const { challenge, showingIntro } = this.state
+    const { challenge, showingIntro } = this.state;
 
-    if (!challenge) return null
+    if (!challenge) return null;
 
-    const { title, markup, styles, validator } = challenge
+    const { title, markup, styles, validator } = challenge;
 
     return (
       <Wrapper>
@@ -126,8 +127,8 @@ class ChallengeView extends Component {
           markdown
         />
       </Wrapper>
-    )
+    );
   }
 }
 
-export default ChallengeView
+export default ChallengeView;

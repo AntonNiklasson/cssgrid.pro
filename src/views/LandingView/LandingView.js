@@ -1,102 +1,115 @@
-import React from 'react'
-import glamorous from 'glamorous'
-import * as glamor from 'glamor'
-import Button from '../../components/Button'
+import React from "react";
+import glamorous from "glamorous";
+import * as glamor from "glamor";
+import Button from "../../components/Button";
+import storage from "../../storage";
 
 const Wrapper = glamorous.div({
-  width: '100vw',
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
+  width: "100vw",
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
   fontSize: 25,
-  color: '#333',
+  color: "#333",
 
-  '& .content': {
+  "& .content": {
     flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '6em 3em',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "6em 3em"
   },
 
-  '& hgroup': {
-    margin: '0 0 5em 0',
-    textAlign: 'center',
+  "& hgroup": {
+    margin: "0 0 5em 0",
+    textAlign: "center"
   },
 
-  '& h1': {
-    fontSize: '3em',
-    fontFamily: 'Roboto Slab',
+  "& h1": {
+    fontSize: "3em",
+    fontFamily: "Roboto Slab",
     lineHeight: 1.6,
     opacity: 0,
     animation: `${glamor.css.keyframes({
       from: {
-        opacity: 0,
+        opacity: 0
       },
       to: {
-        opacity: 1,
-      },
-    })} 1000ms 300ms forwards`,
+        opacity: 1
+      }
+    })} 1000ms 300ms forwards`
   },
 
-  '& .button-container': {
+  "& .button-container": {
     opacity: 0,
     animation: `${glamor.css.keyframes({
       from: {
-        opacity: 0,
+        opacity: 0
       },
       to: {
-        opacity: 1,
-      },
-    })} 1500ms 1000ms forwards`,
+        opacity: 1
+      }
+    })} 1500ms 1000ms forwards`
   },
 
-  '& h2': {
-    fontSize: '.9em',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
+  "& h2": {
+    fontSize: ".9em",
+    fontWeight: "bold",
+    textTransform: "uppercase",
 
     opacity: 0,
     animation: `${glamor.css.keyframes({
       from: {
-        opacity: 0,
+        opacity: 0
       },
       to: {
-        opacity: 1,
-      },
-    })} 1500ms 1000ms forwards`,
-  },
-})
+        opacity: 1
+      }
+    })} 1500ms 1000ms forwards`
+  }
+});
 const Footer = glamorous.div(({ theme }) => ({
-  flex: '0 0 80px',
-  display: 'flex',
-  justifyContent: 'space-between',
-  padding: '1em 3em',
-  textAlign: 'center',
+  flex: "0 0 80px",
+  display: "flex",
+  justifyContent: "space-between",
+  padding: "1em 3em",
+  textAlign: "center",
   fontSize: 16,
 
   opacity: 0,
   animation: `${glamor.css.keyframes({
     from: {
-      opacity: 0,
+      opacity: 0
     },
     to: {
-      opacity: 1,
-    },
+      opacity: 1
+    }
   })} 2000ms 1500ms forwards`,
 
-  '& a': {
+  "& a": {
     color: theme.colors.primary,
-    textDecoration: 'none',
-  },
-}))
+    textDecoration: "none"
+  }
+}));
 
 class LandingView extends React.Component {
-  handleGoClick = () => {
-    this.props.history.push('/challenge/0')
+  constructor(props) {
+    super(props);
+
+    const storedLevel = storage.getLevel();
+
+    this.state = {
+      storedLevel
+    };
   }
 
+  handleGoClick = () => {
+    this.props.history.push("/challenge/0");
+  };
+
   render() {
+    const { storedLevel } = this.state;
+
     return (
       <Wrapper>
         <div className="content">
@@ -109,6 +122,11 @@ class LandingView extends React.Component {
               Let's go! 🚀
             </Button>
           </div>
+          {typeof storedLevel === "number" && (
+            <a href={`/challenge/${storedLevel}`}>
+              Or continue where you left off...
+            </a>
+          )}
         </div>
         <Footer>
           <div>
@@ -121,8 +139,8 @@ class LandingView extends React.Component {
           </div>
         </Footer>
       </Wrapper>
-    )
+    );
   }
 }
 
-export default LandingView
+export default LandingView;

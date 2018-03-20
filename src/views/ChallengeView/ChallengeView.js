@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
+import _ from "lodash/fp";
 import Challenge from "./Challenge";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Header from "./Header";
-import storage from "../../storage";
+import storage from "../../utils/storage";
 
 const challenges = require("../../data/challenges");
 
@@ -28,6 +29,7 @@ class ChallengeView extends Component {
     super(props);
 
     this.state = {
+      showingIntro: true,
       challengeIndex: null,
       challenge: null
     };
@@ -35,9 +37,12 @@ class ChallengeView extends Component {
 
   componentDidMount() {
     this.loadLevel();
+    console.log("componentDidMount");
   }
+
   componentWillReceiveProps(nextProps) {
     this.loadLevel(nextProps);
+    console.log("componentWillReceiveProps");
   }
 
   onStylesChanged = styles => {
@@ -49,12 +54,16 @@ class ChallengeView extends Component {
     });
   };
 
-  onIntroConfirm = () => {
-    this.setState({ showingIntro: false });
+  showHelpModal = () => {
+    this.setState({ showingIntro: true });
+    storage.setHelpModalState(true);
+
+    console.log("showHelpModal", storage.setHelpModalState.toString());
   };
 
-  onHelpClick = () => {
-    this.setState({ showingIntro: true });
+  hideHelpModal = () => {
+    this.setState({ showingIntro: false });
+    storage.setHelpModalState(false);
   };
 
   gotoNextChallenge = () => {
@@ -71,24 +80,31 @@ class ChallengeView extends Component {
   };
 
   loadLevel = (props = this.props) => {
-    const { history, match: { params: { id } } } = props;
-    const challengeIndex = parseInt(id);
-    const challenge = challenges[challengeIndex];
+    let { history, match: { params: { id } } } = props;
+    let challengeIndex = parseInt(id);
+    let challenge = challenges[challengeIndex];
+    let progressData = storage.getFieldValues();
 
     if (!challenge) {
       history.push("/");
-    } else {
-      this.setState({
-        challengeIndex,
-        challenge,
-        showingIntro: !!challenge.introduction
-      });
-      storage.setLevel(challengeIndex);
+      return;
     }
-  };
 
-  handleSubmit = () => {
-    this.gotoNextChallenge();
+    progressData.forEach(field => {
+      challenge = _.set(
+        ["styles", field.selector, "properties", field.property, "value"],
+        field.value
+      )(challenge);
+    });
+
+    this.setState({
+      challengeIndex,
+      challenge,
+      showingIntro: storage.getHelpModalState()
+    });
+
+    console.log(challengeIndex);
+    storage.setLevel(challengeIndex);
   };
 
   render() {
@@ -104,11 +120,11 @@ class ChallengeView extends Component {
           <h1>{title}</h1>
           <SubmitContainer>
             {!showingIntro && (
-              <Button inverted onClick={this.onHelpClick}>
+              <Button inverted onClick={this.showHelpModal}>
                 ?
               </Button>
             )}
-            <Button large primary onClick={this.handleSubmit}>
+            <Button large primary onClick={this.gotoNextChallenge}>
               Submit!
             </Button>
           </SubmitContainer>
@@ -122,7 +138,7 @@ class ChallengeView extends Component {
         <Modal
           content={challenge.introduction}
           visible={showingIntro}
-          onConfirm={this.onIntroConfirm}
+          onConfirm={this.hideHelpModal}
           confirmLabel="Got it."
           markdown
         />

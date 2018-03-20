@@ -7,7 +7,7 @@ import {
   toString as stringifyStyleTree,
   updateTree
 } from "../../utils/styletree";
-import storage from "../../storage";
+import storage from "../../utils/storage";
 
 const Wrapper = glamorous.div({
   flex: 1,
@@ -43,6 +43,7 @@ class Challenge extends React.Component {
     );
 
     this.props.onStylesChanged(styles);
+
     storage.setFieldValue(selector, property, value);
   };
 

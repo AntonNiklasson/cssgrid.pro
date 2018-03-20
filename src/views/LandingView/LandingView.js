@@ -2,7 +2,7 @@ import React from "react";
 import glamorous from "glamorous";
 import * as glamor from "glamor";
 import Button from "../../components/Button";
-import storage from "../../storage";
+import storage from "../../utils/storage";
 
 const Wrapper = glamorous.div({
   width: "100vw",

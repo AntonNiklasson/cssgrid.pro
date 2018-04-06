@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
-import { every, getOr, values, pipe, map, get, reduce } from "lodash/fp";
+import { every, getOr, values, pipe, map, get } from "lodash/fp";
 import Challenge from "./Challenge";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Header from "./Header";
+import { trackEvent } from "../../tracking";
 
 const challenges = require("../../data/challenges");
 
@@ -61,10 +62,12 @@ class ChallengeView extends Component {
   };
 
   onIntroConfirm = () => {
+    trackEvent("Intro", "Confirm");
     this.setState({ showingIntro: false });
   };
 
   onHelpClick = () => {
+    trackEvent("Help", "Open");
     this.setState({ showingIntro: true });
   };
 
@@ -108,8 +111,10 @@ class ChallengeView extends Component {
     )(this.state.challenge.styles);
 
     if (allFieldsAreValid) {
+      trackEvent("Level", "Submit", "Success");
       this.gotoNextChallenge();
     } else {
+      trackEvent("Level", "Submit", "Failure");
       this.setState({ hasSubmitError: true });
     }
   };

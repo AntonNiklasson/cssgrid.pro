@@ -1,26 +1,47 @@
-import _ from 'lodash/fp'
+import {
+  pipe,
+  keys,
+  map,
+  reduce,
+  get,
+  set,
+  update,
+  mapValues,
+  toPairs,
+  join
+} from "lodash/fp";
 
 export const toString = tree => {
-  if (!tree) return ''
+  if (!tree) return "";
 
-  return _.pipe(
-    _.keys,
-    _.reduce((blob, selectorKey) => {
-      const propertiesBlob = _.pipe(
-        _.get('properties'),
-        _.mapValues('value'),
-        _.toPairs,
-        _.map(_.join(': ')),
-        _.map(str => `${str};`),
-        _.join(' ')
-      )(tree[selectorKey])
+  return pipe(
+    keys,
+    reduce((blob, selectorKey) => {
+      const propertiesBlob = pipe(
+        get("properties"),
+        mapValues("value"),
+        toPairs,
+        map(join(": ")),
+        map(str => `${str};`),
+        join(" ")
+      )(tree[selectorKey]);
 
-      return `${blob ? `${blob} ` : ''}${selectorKey} { ${propertiesBlob} }`
+      return `${blob ? `${blob} ` : ""}${selectorKey} { ${propertiesBlob} }`;
     }, null)
-  )(tree)
-}
+  )(tree);
+};
 
 export const updateTree = (tree, selector, property, value) =>
-  _.update(selector, _.update(['properties', property], _.set('value', value)))(
-    tree
-  )
+  update(
+    selector,
+    update(
+      ["properties", property],
+      pipe(
+        set("value", value),
+        set(
+          "valid",
+          tree[selector].properties[property].input.regex.test(value)
+        )
+      )
+    )
+  )(tree);

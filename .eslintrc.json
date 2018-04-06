@@ -8,6 +8,7 @@
   "rules": {
     "no-nested-ternary": 0,
     "no-param-reassign": 1,
+    "no-useless-constructor": 2,
 
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": 0,

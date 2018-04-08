@@ -1,11 +1,6 @@
 export function trackEvent(category, action, label) {
   if (!window.ga) return;
-  window.ga("send", {
-    hitType: "event",
-    eventCategory: category,
-    eventAction: action,
-    eventLabel: label
-  });
+  window.ga("send", "event", category, action, label);
 }
 
 export function trackPage() {

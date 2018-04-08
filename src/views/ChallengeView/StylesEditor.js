@@ -108,8 +108,7 @@ class StylesEditor extends Component {
                 </Selector>
                 {Object.keys(rule.properties).map(propertyKey => {
                   const property = rule.properties[propertyKey];
-                  const editable = property.input;
-                  const valid = property.valid;
+                  const { input: editable, valid } = property;
 
                   return (
                     <Property

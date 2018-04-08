@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
-import { every, getOr, values, pipe, map, get } from "lodash/fp";
+import { every, values, pipe, map, get } from "lodash/fp";
 import Challenge from "./Challenge";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
@@ -71,16 +71,20 @@ class ChallengeView extends Component {
     this.setState({ showingIntro: true });
   };
 
-  gotoNextChallenge = () => {
-    const { history } = this.props;
-    const { challengeIndex } = this.state;
-    const nextChallengeIndex = challengeIndex + 1;
-    const nextChallenge = challenges[nextChallengeIndex];
+  onLevelSubmit = () => {
+    const allFieldsAreValid = pipe(
+      values,
+      map(get("properties")),
+      map(values),
+      every(get("valid"))
+    )(this.state.challenge.styles);
 
-    if (nextChallenge) {
-      history.push(`/challenge/${nextChallengeIndex}`);
+    if (allFieldsAreValid) {
+      trackEvent("Level", "Submit", "Success");
+      this.gotoNextChallenge();
     } else {
-      history.push("/theend");
+      trackEvent("Level", "Submit", "Failure");
+      this.setState({ hasSubmitError: true });
     }
   };
 
@@ -102,20 +106,16 @@ class ChallengeView extends Component {
     }
   };
 
-  onLevelSubmit = () => {
-    const allFieldsAreValid = pipe(
-      values,
-      map(get("properties")),
-      map(values),
-      every(get("valid"))
-    )(this.state.challenge.styles);
+  gotoNextChallenge = () => {
+    const { history } = this.props;
+    const { challengeIndex } = this.state;
+    const nextChallengeIndex = challengeIndex + 1;
+    const nextChallenge = challenges[nextChallengeIndex];
 
-    if (allFieldsAreValid) {
-      trackEvent("Level", "Submit", "Success");
-      this.gotoNextChallenge();
+    if (nextChallenge) {
+      history.push(`/challenge/${nextChallengeIndex}`);
     } else {
-      trackEvent("Level", "Submit", "Failure");
-      this.setState({ hasSubmitError: true });
+      history.push("/theend");
     }
   };
 

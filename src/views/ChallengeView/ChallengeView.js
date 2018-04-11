@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
-import { flatten, tap, every, values, pipe, map, get, getOr } from "lodash/fp";
+import { flatten, values, pipe, map, get, getOr } from "lodash/fp";
 import Challenge from "./Challenge";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";

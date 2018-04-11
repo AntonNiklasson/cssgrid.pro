@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
-import { every, values, pipe, map, get } from "lodash/fp";
+import { flatten, tap, every, values, pipe, map, get, getOr } from "lodash/fp";
 import Challenge from "./Challenge";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
@@ -72,14 +72,13 @@ class ChallengeView extends Component {
   };
 
   onLevelSubmit = () => {
-    const allFieldsAreValid = pipe(
+    const fieldsValidity = pipe(
       values,
-      map(get("properties")),
-      map(values),
-      every(get("valid"))
+      map(pipe(get("properties"), values, map(getOr(true, "valid")))),
+      flatten
     )(this.state.challenge.styles);
 
-    if (allFieldsAreValid) {
+    if (fieldsValidity.every(field => field === true)) {
       trackEvent("Level", "Submit", "Success");
       this.gotoNextChallenge();
     } else {
@@ -100,7 +99,6 @@ class ChallengeView extends Component {
       this.setState({
         challengeIndex,
         challenge,
-        // showingIntro: !!challenge.introduction,
         hasSubmitError: false
       });
     }

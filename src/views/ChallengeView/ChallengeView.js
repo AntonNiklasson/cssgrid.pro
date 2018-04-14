@@ -36,7 +36,7 @@ class ChallengeView extends Component {
     super(props);
 
     this.state = {
-      showingIntro: false,
+      showingIntro: true,
       challengeIndex: null,
       challenge: null,
       hasSubmitError: false

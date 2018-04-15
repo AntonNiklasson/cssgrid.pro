@@ -6,7 +6,7 @@ export function trackEvent(category, action, label) {
   });
 }
 
-export function trackPage() {
+export function trackPage(page) {
   if (!window.gtag) return;
-  window.gtag("send", "pageview");
+  window.gtag("send", "pageview", page);
 }

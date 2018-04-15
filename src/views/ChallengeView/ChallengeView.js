@@ -79,10 +79,10 @@ class ChallengeView extends Component {
     )(this.state.challenge.styles);
 
     if (fieldsValidity.every(field => field === true)) {
-      trackEvent("Level", "Submit", "Success");
+      trackEvent("Challenge", "Submit", "Success");
       this.gotoNextChallenge();
     } else {
-      trackEvent("Level", "Submit", "Failure");
+      trackEvent("Challenge", "Submit", "Failure");
       this.setState({ hasSubmitError: true });
     }
   };

@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route } from "react-router-dom";
+import { createBrowserHistory } from "history";
 import { ThemeProvider } from "glamorous";
 import { colors } from "./theme";
 import LandingView from "./views/LandingView/LandingView";
@@ -11,27 +12,29 @@ import { trackPage } from "./tracking";
 
 import "./index.css";
 
-const Router = (
-  <ThemeProvider theme={{ colors }}>
-    <BrowserRouter>
-      <Switch>
-        <Route
-          path="/"
-          render={({ location }) => {
-            trackPage(location.pathname);
-          }}
-        />
-        <Route path="/" exact component={LandingView} />
-        <Route path="/challenge/:id" component={ChallengeView} />
-        <Route path="/theend" component={EndView} />
-        <Route>
-          <h1>404 Not Found</h1>
-        </Route>
-      </Switch>
-    </BrowserRouter>
-  </ThemeProvider>
-);
+const history = createBrowserHistory();
 
-ReactDOM.render(Router, document.getElementById("root"));
+history.listen(location => {
+  console.log("Tracking pageview:", location.pathname);
+  trackPage(location.pathname);
+});
+
+ReactDOM.render(
+  <ThemeProvider theme={{ colors }}>
+    <Router history={history}>
+      <Route>
+        <Switch>
+          <Route path="/" exact component={LandingView} />
+          <Route path="/challenge/:id" component={ChallengeView} />
+          <Route path="/theend" component={EndView} />
+          <Route>
+            <h1>404 Not Found</h1>
+          </Route>
+        </Switch>
+      </Route>
+    </Router>
+  </ThemeProvider>,
+  document.getElementById("root")
+);
 
 registerServiceWorker();

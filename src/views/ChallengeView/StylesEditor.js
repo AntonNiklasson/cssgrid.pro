@@ -121,6 +121,7 @@ class StylesEditor extends Component {
                       </PropertyKey>
                       {editable ? (
                         <PropertyInput
+                          aria-label={`styles-${selector}-${propertyKey}`}
                           type="text"
                           value={property.value}
                           placeholder={property.input.placeholder}

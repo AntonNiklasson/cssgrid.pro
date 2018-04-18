@@ -1,59 +1,59 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Markdown from 'react-markdown'
-import glamorous from 'glamorous'
-import Transition from 'react-transition-group/Transition'
-import Button from './Button'
+import React from "react";
+import PropTypes from "prop-types";
+import Markdown from "react-markdown";
+import glamorous from "glamorous";
+import Transition from "react-transition-group/Transition";
+import Button from "./Button";
 
 const Wrapper = glamorous.div(({ transitionState }) => ({
-  position: 'absolute',
+  position: "absolute",
   top: 0,
   left: 0,
-  width: '100vw',
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  padding: '5vh 0',
-  pointerEvents: 'none',
-  background: '#000000CC',
+  width: "100vw",
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-start",
+  alignItems: "center",
+  padding: "5vh 0",
+  pointerEvents: "none",
+  background: "#000000CC",
 
-  transition: 'opacity 200ms',
-  opacity: transitionState === 'entered' ? 1 : 0,
-}))
+  transition: "opacity 200ms",
+  opacity: transitionState === "entered" ? 1 : 0
+}));
 const Content = glamorous.div(({ transitionState }) => ({
-  background: 'white',
-  width: '80%',
+  background: "white",
+  width: "80%",
   maxWidth: 700,
-  padding: '4em',
-  borderRadius: '3px',
-  pointerEvents: transitionState === 'entered' ? 'auto' : 'none',
-  overflow: 'auto',
+  padding: "4em",
+  borderRadius: "3px",
+  pointerEvents: transitionState === "entered" ? "auto" : "none",
+  overflow: "auto",
 
-  '& h1': {
-    lineHeight: 2,
+  "& h1": {
+    lineHeight: 2
   },
-  '& code': {
-    display: 'inline-block',
-    padding: '.2em',
+  "& code": {
+    display: "inline-block",
+    padding: ".2em"
   },
-  '& pre': {
-    margin: '1em 0',
-    padding: '1em',
+  "& pre": {
+    margin: "1em 0",
+    padding: "1em",
     maxWidth: 800,
-    whiteSpace: 'pre-wrap',
-    background: '#EEE',
+    whiteSpace: "pre-wrap",
+    background: "#EEE"
   },
-  '& p': {
-    marginBottom: '1em',
-  },
-}))
+  "& p": {
+    marginBottom: "1em"
+  }
+}));
 const ButtonsContainer = glamorous.div({
-  display: 'flex',
-  justifyContent: 'center',
-  margin: '4em 0 0 0',
-})
+  display: "flex",
+  justifyContent: "center",
+  margin: "4em 0 0 0"
+});
 
 const Modal = ({ visible, markdown, content, onConfirm, confirmLabel }) => (
   <Transition in={visible} timeout={0}>
@@ -62,26 +62,28 @@ const Modal = ({ visible, markdown, content, onConfirm, confirmLabel }) => (
         <Content transitionState={state}>
           {markdown ? <Markdown>{content}</Markdown> : content}
           <ButtonsContainer>
-            <Button onClick={onConfirm}>{confirmLabel}</Button>
+            <Button aria-label="modal-button-close" onClick={onConfirm}>
+              {confirmLabel}
+            </Button>
           </ButtonsContainer>
         </Content>
       </Wrapper>
     )}
   </Transition>
-)
+);
 
 Modal.propTypes = {
   content: PropTypes.string.isRequired,
   markdown: PropTypes.bool,
   onConfirm: PropTypes.func.isRequired,
   confirmLabel: PropTypes.string,
-  visible: PropTypes.bool,
-}
+  visible: PropTypes.bool
+};
 
 Modal.defaultProps = {
   visible: true,
   markdown: false,
-  confirmLabel: 'Ok',
-}
+  confirmLabel: "Ok"
+};
 
-export default Modal
+export default Modal;

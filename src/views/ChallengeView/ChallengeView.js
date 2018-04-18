@@ -134,6 +134,7 @@ class ChallengeView extends Component {
               ?
             </Button>
             <Button
+              aria-label="level-submit"
               large
               primary
               disabled={hasSubmitError}

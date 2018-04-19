@@ -15,7 +15,6 @@ import "./index.css";
 const history = createBrowserHistory();
 
 history.listen(location => {
-  console.log("Tracking pageview:", location.pathname);
   trackPage(location.pathname);
 });
 

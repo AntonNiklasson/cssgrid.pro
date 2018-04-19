@@ -89,23 +89,23 @@ const PropertyInput = glamorous("input", { displayName: "PropertyInput" })(
 );
 
 class StylesEditor extends Component {
-  constructor(props) {
-    super(props);
-
-    this.inputRefs = [];
+  componentDidMount() {
+    this.focusFirstInput();
   }
 
-  componentDidMount() {
-    this.inputRefs[0].focus();
+  componentDidUpdate(prevProps) {
+    if (prevProps.challengeTitle !== this.props.challengeTitle) {
+      this.focusFirstInput();
+    }
   }
 
   onChange = (selector, property) => ({ target: { value } }) => {
     this.props.onChange(selector, property, value);
   };
 
-  inputRefCallback = el => {
-    this.inputRefs = [...this.inputRefs, el];
-  };
+  focusFirstInput() {
+    document.querySelector("input").focus();
+  }
 
   render() {
     const { styles } = this.props;
@@ -140,7 +140,6 @@ class StylesEditor extends Component {
                           value={property.value}
                           placeholder={property.input.placeholder}
                           onChange={this.onChange(selector, propertyKey)}
-                          innerRef={this.inputRefCallback}
                         />
                       ) : (
                         <PropertyValue>{property.value};</PropertyValue>

@@ -163,7 +163,11 @@ class ChallengeView extends Component {
         </Header>
         {!showingIntro && (
           <EditorsContainer>
-            <StylesEditor styles={styles} onChange={this.onStylesChanged} />
+            <StylesEditor
+              challengeTitle={title}
+              styles={styles}
+              onChange={this.onStylesChanged}
+            />
             <MarkupEditor markup={markup} />
             <Output markup={markup}>Output</Output>
             <style>{stringifyStyleTree(styles)}</style>

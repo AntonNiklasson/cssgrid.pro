@@ -15,7 +15,7 @@ const Wrapper = glamorous.div(({ transitionState }) => ({
   flexDirection: "column",
   justifyContent: "flex-start",
   alignItems: "center",
-  padding: "5vh 0",
+  padding: "7vh 0",
   pointerEvents: "none",
   background: "#000000CC",
 

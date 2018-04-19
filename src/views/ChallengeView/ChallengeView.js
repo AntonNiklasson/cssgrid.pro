@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
 import { flatten, values, pipe, map, get, getOr } from "lodash/fp";
-import Challenge from "./Challenge";
+import StylesEditor from "./StylesEditor";
+import MarkupEditor from "./MarkupEditor";
+import Output from "./Output";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 import Header from "./Header";
 import { trackEvent } from "../../tracking";
+import {
+  toString as stringifyStyleTree,
+  updateTree
+} from "../../utils/styletree";
 
 const challenges = require("../../data/challenges");
 
@@ -31,17 +37,21 @@ const SubmitError = glamorous.div({
   textAlign: "right"
 });
 
-class ChallengeView extends Component {
-  constructor(props) {
-    super(props);
+const EditorsContainer = glamorous.div({
+  flex: 1,
+  display: "grid",
+  gridTemplateRows: "1fr 1fr",
+  gridTemplateColumns: "minmax(600px, 1fr) 1fr",
+  gridTemplateAreas: "'styles markup' 'output output'"
+});
 
-    this.state = {
-      showingIntro: true,
-      challengeIndex: null,
-      challenge: null,
-      hasSubmitError: false
-    };
-  }
+class ChallengeView extends Component {
+  state = {
+    showingIntro: true,
+    challengeIndex: null,
+    challenge: null,
+    hasSubmitError: false
+  };
 
   componentDidMount() {
     this.loadLevel();
@@ -51,7 +61,14 @@ class ChallengeView extends Component {
     this.loadLevel(nextProps);
   }
 
-  onStylesChanged = styles => {
+  onStylesChanged = (selector, property, value) => {
+    const styles = updateTree(
+      { ...this.state.challenge.styles },
+      selector,
+      property,
+      value
+    );
+
     this.setState({
       challenge: {
         ...this.state.challenge,
@@ -87,6 +104,19 @@ class ChallengeView extends Component {
     }
   };
 
+  gotoNextChallenge = () => {
+    const { history } = this.props;
+    const { challengeIndex } = this.state;
+    const nextChallengeIndex = challengeIndex + 1;
+    const nextChallenge = challenges[nextChallengeIndex];
+
+    if (nextChallenge) {
+      history.push(`/challenge/${nextChallengeIndex}`);
+    } else {
+      history.push("/theend");
+    }
+  };
+
   loadLevel = (props = this.props) => {
     const idParam = props.match.params.id;
     const challengeIndex = parseInt(idParam, 10);
@@ -101,19 +131,6 @@ class ChallengeView extends Component {
         challenge,
         hasSubmitError: false
       });
-    }
-  };
-
-  gotoNextChallenge = () => {
-    const { history } = this.props;
-    const { challengeIndex } = this.state;
-    const nextChallengeIndex = challengeIndex + 1;
-    const nextChallenge = challenges[nextChallengeIndex];
-
-    if (nextChallenge) {
-      history.push(`/challenge/${nextChallengeIndex}`);
-    } else {
-      history.push("/theend");
     }
   };
 
@@ -144,11 +161,14 @@ class ChallengeView extends Component {
             </Button>
           </SubmitContainer>
         </Header>
-        <Challenge
-          markup={markup}
-          styles={styles}
-          onStylesChanged={this.onStylesChanged}
-        />
+        {!showingIntro && (
+          <EditorsContainer>
+            <StylesEditor styles={styles} onChange={this.onStylesChanged} />
+            <MarkupEditor markup={markup} />
+            <Output markup={markup}>Output</Output>
+            <style>{stringifyStyleTree(styles)}</style>
+          </EditorsContainer>
+        )}
         <Modal
           content={challenge.introduction}
           visible={showingIntro}

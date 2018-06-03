@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Markdown from "react-markdown";
 import glamorous from "glamorous";
 import Transition from "react-transition-group/Transition";
-import Button from "./Button";
+import Button from "./button";
 
 const Wrapper = glamorous.div(({ transitionState }) => ({
   position: "absolute",
@@ -55,35 +55,58 @@ const ButtonsContainer = glamorous.div({
   margin: "4em 0 0 0"
 });
 
-const Modal = ({ visible, markdown, content, onConfirm, confirmLabel }) => (
-  <Transition in={visible} timeout={0}>
-    {state => (
-      <Wrapper transitionState={state}>
-        <Content transitionState={state}>
-          {markdown ? <Markdown>{content}</Markdown> : content}
-          <ButtonsContainer>
-            <Button aria-label="modal-button-close" onClick={onConfirm}>
-              {confirmLabel}
-            </Button>
-          </ButtonsContainer>
-        </Content>
-      </Wrapper>
-    )}
-  </Transition>
-);
+class Modal extends Component {
+  static propTypes = {
+    content: PropTypes.string.isRequired,
+    markdown: PropTypes.bool,
+    onConfirm: PropTypes.func.isRequired,
+    confirmLabel: PropTypes.string,
+    visible: PropTypes.bool
+  };
 
-Modal.propTypes = {
-  content: PropTypes.string.isRequired,
-  markdown: PropTypes.bool,
-  onConfirm: PropTypes.func.isRequired,
-  confirmLabel: PropTypes.string,
-  visible: PropTypes.bool
-};
+  static defaultProps = {
+    visible: true,
+    markdown: false,
+    confirmLabel: "Ok"
+  };
 
-Modal.defaultProps = {
-  visible: true,
-  markdown: false,
-  confirmLabel: "Ok"
-};
+  componentDidMount() {
+    console.log("Modal did mount!");
+    window.addEventListener("keypress", this.onGlobalKeypress);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keypress", this.onGlobalKeypress);
+  }
+
+  onGlobalKeypress = ({ key }) => {
+    if (!this.props.visible) return;
+
+    if (["Enter", "Escape"].includes(key)) {
+      this.props.onConfirm();
+    }
+  };
+
+  render() {
+    const { visible, markdown, content, onConfirm, confirmLabel } = this.props;
+
+    return (
+      <Transition in={visible} timeout={0}>
+        {state => (
+          <Wrapper transitionState={state}>
+            <Content transitionState={state}>
+              {markdown ? <Markdown>{content}</Markdown> : content}
+              <ButtonsContainer>
+                <Button aria-label="modal-button-close" onClick={onConfirm}>
+                  {confirmLabel}
+                </Button>
+              </ButtonsContainer>
+            </Content>
+          </Wrapper>
+        )}
+      </Transition>
+    );
+  }
+}
 
 export default Modal;

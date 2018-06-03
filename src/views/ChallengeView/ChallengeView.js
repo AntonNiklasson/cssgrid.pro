@@ -4,8 +4,8 @@ import { flatten, values, pipe, map, get, getOr } from "lodash/fp";
 import StylesEditor from "./StylesEditor";
 import MarkupEditor from "./MarkupEditor";
 import Output from "./Output";
-import Button from "../../components/Button";
-import Modal from "../../components/Modal";
+import Button from "../../components/button";
+import Modal from "../../components/modal";
 import Header from "./Header";
 import { trackEvent } from "../../tracking";
 import {

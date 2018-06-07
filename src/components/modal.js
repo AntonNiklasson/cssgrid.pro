@@ -70,8 +70,13 @@ class Modal extends Component {
     confirmLabel: "Ok"
   };
 
+  constructor(props) {
+    super(props);
+
+    this.wrapperRef = React.createRef();
+  }
+
   componentDidMount() {
-    console.log("Modal did mount!");
     window.addEventListener("keypress", this.onGlobalKeypress);
   }
 
@@ -87,13 +92,17 @@ class Modal extends Component {
     }
   };
 
+  focus = () => {
+    this.wrapperRef.current.focus();
+  };
+
   render() {
     const { visible, markdown, content, onConfirm, confirmLabel } = this.props;
 
     return (
       <Transition in={visible} timeout={0}>
         {state => (
-          <Wrapper transitionState={state}>
+          <Wrapper transitionState={state} ref={this.wrapperRef}>
             <Content transitionState={state}>
               {markdown ? <Markdown>{content}</Markdown> : content}
               <ButtonsContainer>

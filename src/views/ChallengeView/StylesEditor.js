@@ -99,8 +99,14 @@ class StylesEditor extends Component {
     }
   }
 
-  onChange = (selector, property) => ({ target: { value } }) => {
+  onInputChange = (selector, property) => ({ target: { value } }) => {
     this.props.onChange(selector, property, value);
+  };
+
+  onInputKeyPress = (selector, property) => event => {
+    if (event.key === "Enter") {
+      this.props.onInputEnter(selector, property, event);
+    }
   };
 
   focusFirstInput() {
@@ -139,7 +145,15 @@ class StylesEditor extends Component {
                           type="text"
                           value={property.value}
                           placeholder={property.input.placeholder}
-                          onChange={this.onChange(selector, propertyKey)}
+                          onChange={this.onInputChange(selector, propertyKey)}
+                          onKeyPress={this.onInputKeyPress(
+                            selector,
+                            propertyKey
+                          )}
+                          innerRef={this.props.inputRefCreator(
+                            selector,
+                            propertyKey
+                          )}
                         />
                       ) : (
                         <PropertyValue>{property.value};</PropertyValue>

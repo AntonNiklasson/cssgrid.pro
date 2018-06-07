@@ -1,6 +1,17 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
-import { flatten, values, pipe, map, get, getOr } from "lodash/fp";
+import {
+  eq,
+  findIndex,
+  flatten,
+  get,
+  getOr,
+  keys,
+  map,
+  pipe,
+  size,
+  values
+} from "lodash/fp";
 import StylesEditor from "./StylesEditor";
 import MarkupEditor from "./MarkupEditor";
 import Output from "./Output";
@@ -46,6 +57,12 @@ const EditorsContainer = glamorous.div({
 });
 
 class ChallengeView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.modalRef = React.createRef();
+  }
+
   state = {
     showingIntro: true,
     challengeIndex: null,
@@ -85,6 +102,7 @@ class ChallengeView extends Component {
 
   onHelpClick = () => {
     trackEvent("Help", "Open");
+
     this.setState({ showingIntro: true });
   };
 
@@ -104,16 +122,41 @@ class ChallengeView extends Component {
     }
   };
 
-  gotoNextChallenge = () => {
-    const { history } = this.props;
-    const { challengeIndex } = this.state;
-    const nextChallengeIndex = challengeIndex + 1;
-    const nextChallenge = challenges[nextChallengeIndex];
+  onInputEnter = (selector, property, event) => {
+    trackEvent("Challenge", "Input (KeyPress)", "Enter");
 
-    if (nextChallenge) {
-      history.push(`/challenge/${nextChallengeIndex}`);
+    const { challenge: { styles } } = this.state;
+    const getProperties = get([selector, "properties"]);
+    const inputsInContainer = event.target.parentNode.parentNode.parentNode.querySelectorAll(
+      "input"
+    );
+    const shouldSubmit =
+      inputsInContainer[inputsInContainer.length - 1] === event.target;
+
+    if (shouldSubmit) {
+      this.onLevelSubmit();
     } else {
-      history.push("/theend");
+      const nextPropertyIndex =
+        pipe(getProperties, keys, findIndex(eq(property)))(styles) + 1;
+      const nextSelectorIndex = pipe(keys, findIndex(eq(selector)))(styles) + 1;
+
+      if (pipe(getProperties, keys, size)(styles) === nextPropertyIndex) {
+        const nextSelector = pipe(keys, get(nextSelectorIndex))(styles);
+        const firstProperty = pipe(
+          get([nextSelector, "properties"]),
+          keys,
+          get(0)
+        )(styles);
+
+        console.log(nextSelector, firstProperty);
+        this.inputRefs[`${nextSelector}${firstProperty}`].focus();
+      } else {
+        const nextProperty = pipe(getProperties, keys, get(nextPropertyIndex))(
+          styles
+        );
+
+        this.inputRefs[`${selector}${nextProperty}`].focus();
+      }
     }
   };
 
@@ -132,6 +175,29 @@ class ChallengeView extends Component {
         hasSubmitError: false
       });
     }
+  };
+
+  gotoNextChallenge = () => {
+    const { history } = this.props;
+    const { challengeIndex } = this.state;
+    const nextChallengeIndex = challengeIndex + 1;
+    const nextChallenge = challenges[nextChallengeIndex];
+
+    this.inputRefs = null;
+
+    if (nextChallenge) {
+      history.push(`/challenge/${nextChallengeIndex}`);
+    } else {
+      history.push("/theend");
+    }
+  };
+
+  inputRefCreator = (selector, property) => node => {
+    if (!this.inputRefs) {
+      this.inputRefs = {};
+    }
+
+    this.inputRefs[`${selector}${property}`] = node;
   };
 
   render() {
@@ -167,6 +233,8 @@ class ChallengeView extends Component {
               challengeTitle={title}
               styles={styles}
               onChange={this.onStylesChanged}
+              onInputEnter={this.onInputEnter}
+              inputRefCreator={this.inputRefCreator}
             />
             <MarkupEditor markup={markup} />
             <Output markup={markup}>Output</Output>
@@ -179,6 +247,7 @@ class ChallengeView extends Component {
           onConfirm={this.onIntroConfirm}
           confirmLabel="Got it!"
           markdown
+          ref={this.modalRef}
         />
       </Wrapper>
     );

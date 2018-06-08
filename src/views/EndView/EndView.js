@@ -1,34 +1,33 @@
-import React from 'react'
-import glamorous from 'glamorous'
-import background from '../../resources/background.jpg'
+import React from "react";
+import glamorous from "glamorous";
 
 const Wrapper = glamorous.div({
-  width: '100vw',
-  height: '100vh',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  background: `url(${background}) no-repeat center center fixed`,
-  backgroundSize: 'cover',
+  width: "100vw",
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  background: "white",
+  backgroundSize: "cover",
   fontSize: 25,
-  color: 'white',
-  padding: '5em',
-})
+  color: "#333",
+  padding: "5em"
+});
 const ShareButtons = glamorous.div(() => ({
   maxWidth: 300,
-  background: 'white',
-  margin: '1em',
-  padding: '2em',
+  background: "white",
+  margin: "1em",
+  padding: "2em",
   borderRadius: 3,
   fontSize: 20,
-  textAlign: 'center',
+  textAlign: "center",
 
-  '& h2': {
-    color: '#333',
+  "& h2": {
+    color: "#333",
     lineHeight: 1.2,
-    marginBottom: 15,
-  },
-}))
+    marginBottom: 15
+  }
+}));
 
 const EndView = () => (
   <Wrapper>
@@ -45,6 +44,6 @@ const EndView = () => (
       </a>
     </ShareButtons>
   </Wrapper>
-)
+);
 
-export default EndView
+export default EndView;

@@ -35,6 +35,7 @@ const Property = glamorous("div", { displayName: "Property" })(({ valid }) => ({
   maxWidth: 800,
   margin: ".1em 0",
   padding: ".2em .2em .2em 1rem",
+
   ":after": {
     content: valid ? '"👍"' : '""',
     position: "absolute",
@@ -68,22 +69,26 @@ const PropertyValue = glamorous.span(({ theme }) => ({
   margin: "0 0 0 .5em"
 }));
 const PropertyInput = glamorous("input", { displayName: "PropertyInput" })(
-  ({ theme }) => ({
+  ({ theme, showError }) => ({
     flex: "1 0 100px",
     minWidth: 100,
     position: "relative",
     background: theme.colors.white,
-    border: `1px solid ${theme.colors.grayLight}`,
+    border: !showError
+      ? `1px solid ${theme.colors.grayLight}`
+      : `1px solid red`,
     borderRadius: 3,
     margin: "0 0 0 .5em",
     padding: "0.2em",
+    color: !showError ? "#333" : "red",
     fontSize: "inherit",
     fontFamily: "inherit",
     transition: "all 300ms",
+
     ":focus": {
       outline: "none",
-      color: theme.colors.accentDark,
-      borderColor: theme.colors.primary
+      color: !showError ? theme.colors.accentDark : "red",
+      borderColor: !showError ? theme.colors.primary : "red"
     }
   })
 );
@@ -114,7 +119,8 @@ class StylesEditor extends Component {
   }
 
   render() {
-    const { styles } = this.props;
+    const { styles, hasSubmitError } = this.props;
+
     return (
       <Container>
         <PartialInput>
@@ -129,6 +135,7 @@ class StylesEditor extends Component {
                 {Object.keys(rule.properties).map(propertyKey => {
                   const property = rule.properties[propertyKey];
                   const { input: editable, valid } = property;
+                  const showError = !valid && hasSubmitError;
 
                   return (
                     <Property
@@ -144,6 +151,8 @@ class StylesEditor extends Component {
                           aria-label={`styles-${selector}-${propertyKey}`}
                           type="text"
                           value={property.value}
+                          valid={valid}
+                          showError={showError}
                           placeholder={property.input.placeholder}
                           onChange={this.onInputChange(selector, propertyKey)}
                           onKeyPress={this.onInputKeyPress(

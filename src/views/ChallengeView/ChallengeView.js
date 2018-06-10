@@ -237,6 +237,7 @@ class ChallengeView extends Component {
               onChange={this.onStylesChanged}
               onInputEnter={this.onInputEnter}
               inputRefCreator={this.inputRefCreator}
+              hasSubmitError={hasSubmitError}
             />
             <MarkupEditor markup={markup} />
             <Output markup={markup}>Output</Output>

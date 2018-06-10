@@ -77,11 +77,11 @@ class Modal extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("keypress", this.onGlobalKeypress);
+    document.addEventListener("keypress", this.onGlobalKeypress);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("keypress", this.onGlobalKeypress);
+    document.removeEventListener("keypress", this.onGlobalKeypress);
   }
 
   onGlobalKeypress = ({ key }) => {

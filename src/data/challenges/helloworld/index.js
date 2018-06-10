@@ -1,24 +1,24 @@
-import introduction from './helloworld-introduction.md'
+import introduction from "./helloworld-introduction.md";
 
 export default {
-  title: 'Create your first grid! 🤓',
+  title: "Create your first grid! 🤓",
   markup: `<div class="grid">
   <div class="cat">🐈</div>
   <div class="elephant">🐘</div>
   <div class="shark">🦈</div>
 </div>`,
   styles: {
-    '.grid': {
+    ".grid": {
       properties: {
         display: {
-          value: '',
+          value: "",
           input: {
-            placeholder: '',
-            regex: /^grid$/,
-          },
-        },
-      },
-    },
+            placeholder: "",
+            regex: /^grid;?$/
+          }
+        }
+      }
+    }
   },
-  introduction,
-}
+  introduction
+};

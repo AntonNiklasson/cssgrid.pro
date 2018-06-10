@@ -1,16 +1,21 @@
 import React, { Component } from "react";
 import glamorous from "glamorous";
 import {
+  flatten,
+  every,
+  values,
+  map,
+  has,
+  getOr,
+  cond,
+  T,
+  identity,
   eq,
   findIndex,
-  flatten,
   get,
-  getOr,
   keys,
-  map,
   pipe,
-  size,
-  values
+  size
 } from "lodash/fp";
 import StylesEditor from "./StylesEditor";
 import MarkupEditor from "./MarkupEditor";
@@ -57,6 +62,23 @@ const EditorsContainer = glamorous.div({
 });
 
 class ChallengeView extends Component {
+  static getDerivedStateFromProps(props, state) {
+    const idParam = props.match.params.id;
+    const challengeIndex = parseInt(idParam, 10);
+    const challenge = challenges[challengeIndex];
+
+    if (state.challengeIndex === challengeIndex) return null;
+
+    const derived = {
+      isHelpOpen: true,
+      challengeIndex,
+      challenge,
+      hasSubmitError: false
+    };
+
+    return derived;
+  }
+
   constructor(props) {
     super(props);
 
@@ -64,19 +86,11 @@ class ChallengeView extends Component {
   }
 
   state = {
-    showingIntro: true,
+    isHelpOpen: true,
     challengeIndex: null,
     challenge: null,
     hasSubmitError: false
   };
-
-  componentDidMount() {
-    this.loadLevel();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.loadLevel(nextProps);
-  }
 
   onStylesChanged = (selector, property, value) => {
     const styles = updateTree(
@@ -97,23 +111,29 @@ class ChallengeView extends Component {
 
   onIntroConfirm = () => {
     trackEvent("Intro", "Confirm");
-    this.setState({ showingIntro: false });
+    this.setState({ isHelpOpen: false });
   };
 
   onHelpClick = () => {
     trackEvent("Help", "Open");
-
-    this.setState({ showingIntro: true });
+    this.setState({ isHelpOpen: true });
   };
 
   onLevelSubmit = () => {
-    const fieldsValidity = pipe(
+    const allFieldsAreValid = pipe(
       values,
-      map(pipe(get("properties"), values, map(getOr(true, "valid")))),
-      flatten
+      map(
+        pipe(
+          get("properties"),
+          values,
+          map(cond([[has("input"), getOr(false, "valid")], [T, identity]]))
+        )
+      ),
+      flatten,
+      every(identity)
     )(this.state.challenge.styles);
 
-    if (fieldsValidity.every(field => field === true)) {
+    if (allFieldsAreValid) {
       trackEvent("Challenge", "Submit", "Success");
       this.gotoNextChallenge();
     } else {
@@ -148,7 +168,6 @@ class ChallengeView extends Component {
           get(0)
         )(styles);
 
-        console.log(nextSelector, firstProperty);
         this.inputRefs[`${nextSelector}${firstProperty}`].focus();
       } else {
         const nextProperty = pipe(getProperties, keys, get(nextPropertyIndex))(
@@ -157,23 +176,6 @@ class ChallengeView extends Component {
 
         this.inputRefs[`${selector}${nextProperty}`].focus();
       }
-    }
-  };
-
-  loadLevel = (props = this.props) => {
-    const idParam = props.match.params.id;
-    const challengeIndex = parseInt(idParam, 10);
-    const challenge = challenges[challengeIndex];
-    const { history } = this.props;
-
-    if (!challenge) {
-      history.push("/");
-    } else {
-      this.setState({
-        challengeIndex,
-        challenge,
-        hasSubmitError: false
-      });
     }
   };
 
@@ -201,7 +203,7 @@ class ChallengeView extends Component {
   };
 
   render() {
-    const { challenge, showingIntro, hasSubmitError } = this.state;
+    const { challenge, isHelpOpen, hasSubmitError } = this.state;
 
     if (!challenge) return null;
 
@@ -227,7 +229,7 @@ class ChallengeView extends Component {
             </Button>
           </SubmitContainer>
         </Header>
-        {!showingIntro && (
+        {!isHelpOpen && (
           <EditorsContainer>
             <StylesEditor
               challengeTitle={title}
@@ -243,7 +245,7 @@ class ChallengeView extends Component {
         )}
         <Modal
           content={challenge.introduction}
-          visible={showingIntro}
+          visible={isHelpOpen}
           onConfirm={this.onIntroConfirm}
           confirmLabel="Got it!"
           markdown

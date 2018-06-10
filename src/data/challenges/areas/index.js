@@ -1,7 +1,7 @@
-const introduction = require('./areas-introduction.md')
+const introduction = require("./areas-introduction.md");
 
 export default {
-  title: 'Areas 💥',
+  title: "Areas 💥",
   markup: `<div class="grid">
   <div class="cat">🐈</div>
   <div class="elephant">🐘</div>
@@ -9,53 +9,53 @@ export default {
   <div class="dog">🐶</div>
 </div>`,
   styles: {
-    '.grid': {
+    ".grid": {
       properties: {
         display: {
-          value: 'grid',
+          value: "grid"
         },
-        'grid-template-columns': {
-          value: '200px auto',
+        "grid-template-columns": {
+          value: "300px auto"
         },
-        'grid-template-rows': {
-          value: '50px auto 50px',
+        "grid-template-rows": {
+          value: "200px auto 200px"
         },
-        'grid-template-areas': {
-          value: '',
+        "grid-template-areas": {
+          value: "",
           input: {
-            regex: /( *"[a-z]+ [a-z]+" *)+/,
-          },
-        },
-      },
+            regex: /( *"[a-z]+ [a-z]+" *)+/
+          }
+        }
+      }
     },
-    '.cat': {
+    ".cat": {
       properties: {
-        'grid-area': {
-          value: 'header',
-        },
-      },
+        "grid-area": {
+          value: "header"
+        }
+      }
     },
-    '.elephant': {
+    ".elephant": {
       properties: {
-        'grid-area': {
-          value: 'sidebar',
-        },
-      },
+        "grid-area": {
+          value: "sidebar"
+        }
+      }
     },
-    '.turtle': {
+    ".turtle": {
       properties: {
-        'grid-area': {
-          value: 'content',
-        },
-      },
+        "grid-area": {
+          value: "content"
+        }
+      }
     },
-    '.dog': {
+    ".dog": {
       properties: {
-        'grid-area': {
-          value: 'footer',
-        },
-      },
-    },
+        "grid-area": {
+          value: "footer"
+        }
+      }
+    }
   },
-  introduction,
-}
+  introduction
+};

@@ -47,6 +47,13 @@ const Content = glamorous.div(({ transitionState }) => ({
   },
   "& p": {
     marginBottom: "1em"
+  },
+  "& hr": {
+    height: 1,
+    width: "80%",
+    margin: "1em auto",
+    background: "#DDD",
+    border: "none"
   }
 }));
 const ButtonsContainer = glamorous.div({

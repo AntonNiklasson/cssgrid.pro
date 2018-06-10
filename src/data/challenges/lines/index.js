@@ -1,40 +1,41 @@
-const introduction = require('./lines-introduction.md')
+const emoji = require("node-emoji");
+const introduction = require("./lines-introduction.md");
 
 export default {
-  title: 'Lines',
+  title: emoji.emojify("Lines :triangular_ruler:"),
   markup: `<div class="grid">
   <div class="cat">🐈</div>
 </div>`,
   styles: {
-    '.grid': {
+    ".grid": {
       properties: {
         display: {
-          value: 'grid',
+          value: "grid"
         },
-        'grid-template-column': {
-          value: '1fr 1fr',
+        "grid-template-column": {
+          value: "1fr 1fr"
         },
-        'grid-template-rows': {
-          value: '1fr 1fr 1fr',
-        },
-      },
+        "grid-template-rows": {
+          value: "1fr 1fr 1fr"
+        }
+      }
     },
-    '.cat': {
+    ".cat": {
       properties: {
-        'grid-column': {
-          value: '',
+        "grid-column": {
+          value: "",
           input: {
-            regex: /^ *[\d]+( *\/ *[\d]+)? *$/,
-          },
+            regex: /^ *[\d]+( *\/ *[\d]+)? *$/
+          }
         },
-        'grid-row': {
-          value: '',
+        "grid-row": {
+          value: "",
           input: {
-            regex: /^ *[\d]+( *\/ *[\d]+)? *$/,
-          },
-        },
-      },
-    },
+            regex: /^ *[\d]+( *\/ *[\d]+)? *$/
+          }
+        }
+      }
+    }
   },
-  introduction,
-}
+  introduction
+};

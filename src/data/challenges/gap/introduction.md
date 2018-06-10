@@ -1,17 +1,18 @@
-# Gap Between the Cells
+# Gap
 
-CSS Grid supports a super simple way of adding gap. \`grid-gap\` takes any
+Adding some space between your cells in the grid is a piece of cake. \`grid-gap\` takes any
 kind of "length" argument.
 
 ```
 grid-gap: 10px;
 ```
 
-It also works with two parameters:
+This will space cells out with 10px between them both vertically and horizontally. It also works with two parameters:
 
 ```
 grid-gap: 100px 30px;
 ```
 
-Remember: all of these properties takes what's referred to as a "length".
-[More on that here](https://developer.mozilla.org/en-US/docs/Web/CSS/length)
+This reads as "100px between rows, and 10px between columns".
+
+`grid-gap` is a shorthand property for `grid-column-gap` and `grid-row-gap`.

@@ -1,27 +1,44 @@
 # This is where the magic happens 😍
 
-Instead of fiddling with these lines, grid includes something called _areas_, and it's awesome.
+Instead of fiddling with these lines, grid includes something called _areas_. The idea is that the container defines the available areas, items inside the grid only needs a single area name to be part of the grid.
 
-The idea is that the container defines the available areas, and the items just decides where it
-wants to reside.
+**Your job is to tell the grid where the different areas should be placed.**
 
-A basic website usually comes with a _header_, a _sidebar_, some kind of main _content_ area and a _footer_.
+Every row in the grid gets its own string argument in the `grid-area` property. Each of those strings for the rows tells the grid what areas are place in each cell in that row.
+
+A 2x2 grid could be mapped out like this:
 
 ```
-----------------------------
-|          header          |
-----------------------------
-|         |                |
-|         |                |
-| sidebar |    content     |
-|         |                |
-|         |                |
-----------------------------
-|          footer          |
-----------------------------
+grid-areas: "header header" "content sidebar";
 ```
 
-For this we need two columns: **300px** for the sidebar and **the rest** for the content.
+---
+
+Now for the challenge:
+
+```
++------------------------------------------+
+|                                          |
+|                   cat                    |
+|                                          |
++-----------+------------------------------+
+|           |                              |
+|           |                              |
+|           |                              |
+|           |                              |
+| elephant  |            turtle            |
+|           |                              |
+|           |                              |
+|           |                              |
+|           |                              |
++-----------+------------------------------+
+|                                          |
+|                   dog                    |
+|                                          |
++------------------------------------------+
+```
+
+For this we need two columns: **300px** for the sidebar and **"the rest"** for the content.
 
 Three rows will cover the vertical alignments. Header and footer should be **200px** each, while the middle row **grows to fill the remaining space**.
 

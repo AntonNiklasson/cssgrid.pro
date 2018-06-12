@@ -1,95 +1,8 @@
 import React from "react";
-import glamorous from "glamorous";
-import * as glamor from "glamor";
+import emoji from "node-emoji";
 import Button from "../../components/button";
-
-const Wrapper = glamorous.div({
-  width: "100vw",
-  height: "100vh",
-  display: "flex",
-  flexDirection: "column",
-  fontSize: 25,
-  color: "#333",
-
-  "& .content": {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "6em 3em"
-  },
-
-  "& hgroup": {
-    margin: "0 0 5em 0",
-    textAlign: "center"
-  },
-
-  "& h1": {
-    fontSize: "3em",
-    fontFamily: "Roboto Slab",
-    lineHeight: 1.6,
-    opacity: 0,
-    animation: `${glamor.css.keyframes({
-      from: {
-        opacity: 0
-      },
-      to: {
-        opacity: 1
-      }
-    })} 1000ms 300ms forwards`
-  },
-
-  "& .button-container": {
-    opacity: 0,
-    animation: `${glamor.css.keyframes({
-      from: {
-        opacity: 0
-      },
-      to: {
-        opacity: 1
-      }
-    })} 1500ms 1000ms forwards`
-  },
-
-  "& h2": {
-    fontSize: ".9em",
-    fontWeight: "bold",
-    textTransform: "uppercase",
-
-    opacity: 0,
-    animation: `${glamor.css.keyframes({
-      from: {
-        opacity: 0
-      },
-      to: {
-        opacity: 1
-      }
-    })} 1500ms 1000ms forwards`
-  }
-});
-const Footer = glamorous.div(({ theme }) => ({
-  flex: "0 0 80px",
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "1em 3em",
-  textAlign: "center",
-  fontSize: 16,
-
-  opacity: 0,
-  animation: `${glamor.css.keyframes({
-    from: {
-      opacity: 0
-    },
-    to: {
-      opacity: 1
-    }
-  })} 2000ms 1500ms forwards`,
-
-  "& a": {
-    color: theme.colors.primary,
-    textDecoration: "none"
-  }
-}));
+import Footer from "../../components/footer";
+import { Wrapper } from "./atoms";
 
 class LandingView extends React.Component {
   handleGoClick = () => {
@@ -99,27 +12,34 @@ class LandingView extends React.Component {
   render() {
     return (
       <Wrapper>
-        <div className="content">
+        <header>
           <hgroup>
             <h1>CSSGrid.pro</h1>
             <h2>An Interactive Tutorial</h2>
           </hgroup>
           <div className="button-container">
             <Button crazy onClick={this.handleGoClick}>
-              Let's go! 🚀
+              {emoji.emojify("Let's go! :rocket:")}
             </Button>
           </div>
+        </header>
+        <div className="content">
+          <h2>
+            About <span className="big-number">84.9%</span> of humans are using
+            a browser that supports Grid.
+          </h2>
+          <div
+            className="ciu_embed"
+            data-feature="css-grid"
+            data-periods="future_1,current,past_1,past_2"
+            data-accessible-colours="false"
+          >
+            <a href="http://caniuse.com/#feat=css-grid">Can I Use css-grid?</a>{" "}
+            Data on support for the css-grid feature across the major browsers
+            from caniuse.com.
+          </div>
         </div>
-        <Footer>
-          <div>
-            Made by <a href="http://www.antonniklasson.se">Anton Niklasson</a>
-          </div>
-          <div>
-            <a href="http://github.com/AntonNiklasson/cssgrid.pro">
-              github.com/AntonNiklasson/cssgrid.pro
-            </a>
-          </div>
-        </Footer>
+        <Footer />
       </Wrapper>
     );
   }

@@ -1,94 +1,101 @@
-import type { Lesson, Section, SectionProgress } from '../../types/tutorial';
+import type { Lesson, PracticeLesson, SectionProgress } from '../../types/tutorial';
+import { ComponentType } from 'react';
 
-import whatIsGrid from './lessons/01-what-is-grid';
-import displayGrid from './lessons/02-display-grid';
-import firstGrid from './lessons/03-first-grid';
-import columnsIntro from './lessons/04-columns-intro';
-import columnsPractice from './lessons/05-columns-practice';
-import rowsIntro from './lessons/06-rows-intro';
-import rowsPractice from './lessons/07-rows-practice';
-import gridStructure from './lessons/08-grid-structure';
-import frUnitsIntro from './lessons/09-fr-units-intro';
-import frUnitsPractice from './lessons/10-fr-units-practice';
-import mixingUnits from './lessons/11-mixing-units';
-import gapIntro from './lessons/12-gap-intro';
-import gapPractice from './lessons/13-gap-practice';
-import gridLinesIntro from './lessons/14-grid-lines-intro';
-import gridColumn from './lessons/15-grid-column';
-import gridRow from './lessons/16-grid-row';
-import spanningCells from './lessons/17-spanning-cells';
-import areasIntro from './lessons/18-areas-intro';
-import areasPractice from './lessons/19-areas-practice';
-import layoutChallenge from './lessons/20-layout-challenge';
+// Import MDX lessons
+import IntroContent, {
+  frontmatter as introMeta,
+  markup as introMarkup,
+  styles as introStyles,
+} from './lessons/01-intro.mdx';
 
-const sections: Section[] = [
-  {
-    id: 'basics',
-    title: 'Grid Basics',
-    description: 'Understanding the fundamentals of CSS Grid',
-    lessons: [whatIsGrid, displayGrid, firstGrid],
-  },
-  {
-    id: 'columns-rows',
-    title: 'Columns & Rows',
-    description: 'Defining the structure of your grid',
-    lessons: [columnsIntro, columnsPractice, rowsIntro, rowsPractice, gridStructure],
-  },
-  {
-    id: 'sizing',
-    title: 'Flexible Sizing',
-    description: 'Using fr units and flexible track sizes',
-    lessons: [frUnitsIntro, frUnitsPractice, mixingUnits],
-  },
-  {
-    id: 'gaps',
-    title: 'Grid Gaps',
-    description: 'Adding spacing between grid items',
-    lessons: [gapIntro, gapPractice],
-  },
-  {
-    id: 'placement',
-    title: 'Item Placement',
-    description: 'Positioning items within the grid',
-    lessons: [gridLinesIntro, gridColumn, gridRow, spanningCells],
-  },
-  {
-    id: 'areas',
-    title: 'Grid Areas',
-    description: 'Creating named template areas',
-    lessons: [areasIntro, areasPractice, layoutChallenge],
-  },
+import ColumnsRowsContent, {
+  frontmatter as columnsRowsMeta,
+  markup as columnsRowsMarkup,
+  styles as columnsRowsStyles,
+} from './lessons/02-columns-and-rows.mdx';
+
+import FlexibleSizingContent, {
+  frontmatter as flexibleSizingMeta,
+  markup as flexibleSizingMarkup,
+  styles as flexibleSizingStyles,
+} from './lessons/03-flexible-sizing.mdx';
+
+import GapsContent, {
+  frontmatter as gapsMeta,
+  markup as gapsMarkup,
+  styles as gapsStyles,
+} from './lessons/04-gaps.mdx';
+
+import PlacingItemsContent, {
+  frontmatter as placingItemsMeta,
+  markup as placingItemsMarkup,
+  styles as placingItemsStyles,
+} from './lessons/05-placing-items.mdx';
+
+import SpanningContent, {
+  frontmatter as spanningMeta,
+  markup as spanningMarkup,
+  styles as spanningStyles,
+} from './lessons/06-spanning.mdx';
+
+import GridAreasContent, {
+  frontmatter as gridAreasMeta,
+  markup as gridAreasMarkup,
+  styles as gridAreasStyles,
+} from './lessons/07-grid-areas.mdx';
+
+import FinalLayoutContent, {
+  frontmatter as finalLayoutMeta,
+  markup as finalLayoutMarkup,
+  styles as finalLayoutStyles,
+} from './lessons/08-final-layout.mdx';
+
+// Helper to create lesson from MDX exports
+function createLesson(
+  meta: typeof introMeta,
+  Content: ComponentType,
+  markup: string,
+  styles: typeof introStyles
+): PracticeLesson {
+  return {
+    id: meta.id,
+    type: 'practice',
+    title: meta.title,
+    content: '', // Content rendered via MDX component
+    Content,
+    markup,
+    styles,
+    hints: meta.hints || [],
+    successMessage: meta.successMessage || '',
+  };
+}
+
+export const lessons: Lesson[] = [
+  createLesson(introMeta, IntroContent, introMarkup, introStyles),
+  createLesson(columnsRowsMeta, ColumnsRowsContent, columnsRowsMarkup, columnsRowsStyles),
+  createLesson(flexibleSizingMeta, FlexibleSizingContent, flexibleSizingMarkup, flexibleSizingStyles),
+  createLesson(gapsMeta, GapsContent, gapsMarkup, gapsStyles),
+  createLesson(placingItemsMeta, PlacingItemsContent, placingItemsMarkup, placingItemsStyles),
+  createLesson(spanningMeta, SpanningContent, spanningMarkup, spanningStyles),
+  createLesson(gridAreasMeta, GridAreasContent, gridAreasMarkup, gridAreasStyles),
+  createLesson(finalLayoutMeta, FinalLayoutContent, finalLayoutMarkup, finalLayoutStyles),
 ];
 
-// Flatten lessons with section context for easy navigation
-export const allLessons: Lesson[] = sections.flatMap((section, sectionIndex) =>
-  section.lessons.map((lesson, lessonIndex) => ({
-    ...lesson,
-    sectionId: section.id,
-    sectionTitle: section.title,
-    sectionIndex,
-    lessonIndex,
-  }))
-);
+export const allLessons = lessons;
 
-export const getTotalLessons = (): number => allLessons.length;
+export const getTotalLessons = (): number => lessons.length;
 
-export const getLesson = (index: number): Lesson | null => allLessons[index] || null;
+export const getLesson = (index: number): Lesson | null => lessons[index] || null;
 
 export const getSectionProgress = (currentLessonIndex: number): SectionProgress | null => {
-  const lesson = allLessons[currentLessonIndex];
-  if (!lesson) return null;
-
-  const sectionLessons = allLessons.filter((l) => l.sectionId === lesson.sectionId);
-  const positionInSection = sectionLessons.findIndex((l) => l === lesson) + 1;
+  if (currentLessonIndex < 0 || currentLessonIndex >= lessons.length) return null;
 
   return {
-    sectionId: lesson.sectionId!,
-    sectionTitle: lesson.sectionTitle!,
-    current: positionInSection,
-    total: sectionLessons.length,
+    sectionId: 'tutorial',
+    sectionTitle: 'CSS Grid Tutorial',
+    current: currentLessonIndex + 1,
+    total: lessons.length,
   };
 };
 
-export { sections };
-export default sections;
+export default lessons;

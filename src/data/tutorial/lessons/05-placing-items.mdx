@@ -1,0 +1,75 @@
+---
+id: placing-items
+type: practice
+title: Placing Items
+hints:
+  - "grid-column: 2"
+  - "grid-row: 2"
+successMessage: |
+  **You placed it!**
+
+  Grid lines give you precise control. The item no longer flows automatically — it goes exactly where you tell it.
+---
+
+# Positioning with Grid Lines
+
+By default, items flow automatically. But you can place them exactly where you want using **grid lines**.
+
+Grid lines are numbered starting at 1:
+
+```
+    1     2     3     4   ← column lines
+    ↓     ↓     ↓     ↓
+  ┌─────┬─────┬─────┐
+1→│     │     │     │
+  ├─────┼─────┼─────┤
+2→│     │     │     │
+  └─────┴─────┴─────┘
+3→
+```
+
+Use `grid-column` and `grid-row` to position an item:
+
+```css
+.item {
+  grid-column: 2;      /* start at column line 2 */
+  grid-row: 1;         /* start at row line 1 */
+}
+```
+
+## Your turn
+
+Place the box in the **second column, second row**.
+
+export const markup = `<div class="grid">
+  <div class="box">📦</div>
+</div>`;
+
+export const styles = {
+  '.grid': {
+    properties: {
+      'display': { value: 'grid' },
+      'grid-template-columns': { value: '1fr 1fr 1fr' },
+      'grid-template-rows': { value: '80px 80px' },
+      'gap': { value: '8px' },
+    },
+  },
+  '.box': {
+    properties: {
+      'grid-column': {
+        value: '',
+        input: {
+          placeholder: '2',
+          regex: /^2;?$/,
+        },
+      },
+      'grid-row': {
+        value: '',
+        input: {
+          placeholder: '2',
+          regex: /^2;?$/,
+        },
+      },
+    },
+  },
+};

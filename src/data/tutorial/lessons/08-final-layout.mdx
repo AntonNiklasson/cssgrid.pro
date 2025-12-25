@@ -1,0 +1,83 @@
+---
+id: final-layout
+type: practice
+title: Build a Layout
+hints:
+  - "Columns: 200px 1fr"
+  - "Header and footer: 1 / -1"
+successMessage: |
+  # Congratulations!
+
+  You've completed the CSS Grid tutorial. You now know:
+
+  - `display: grid` — create a grid container
+  - `grid-template-columns/rows` — define structure
+  - `fr` units — flexible proportional sizing
+  - `gap` — clean spacing
+  - `grid-column/row` — place items precisely
+  - `span` and `1 / -1` — stretch across cells
+  - `grid-template-areas` — visual named layouts
+
+  **Go build something!**
+---
+
+# Final Challenge: Dashboard Layout
+
+Let's put it all together! Build a classic dashboard layout:
+
+- Fixed-width sidebar (200px)
+- Flexible content area (1fr)
+- Header and footer spanning full width
+- Some breathing room (gap)
+
+## Your task
+
+1. Set `grid-template-columns` to `200px 1fr`
+2. Make the header span all columns with `grid-column: 1 / -1`
+3. Same for the footer
+
+export const markup = `<div class="grid">
+  <div class="header">Dashboard</div>
+  <div class="sidebar">Menu</div>
+  <div class="main">Charts & Data</div>
+  <div class="footer">© 2024</div>
+</div>`;
+
+export const styles = {
+  '.grid': {
+    properties: {
+      'display': { value: 'grid' },
+      'grid-template-columns': {
+        value: '',
+        input: {
+          placeholder: '200px 1fr',
+          regex: /^200px 1fr;?$/,
+        },
+      },
+      'grid-template-rows': { value: '50px 1fr 40px' },
+      'gap': { value: '12px' },
+    },
+  },
+  '.header': {
+    properties: {
+      'grid-column': {
+        value: '',
+        input: {
+          placeholder: '1 / -1',
+          regex: /^(1 ?\/ ?-1|1 ?\/ ?3|span 2);?$/,
+        },
+      },
+    },
+  },
+  '.footer': {
+    properties: {
+      'grid-column': {
+        value: '',
+        input: {
+          placeholder: '1 / -1',
+          regex: /^(1 ?\/ ?-1|1 ?\/ ?3|span 2);?$/,
+        },
+      },
+    },
+  },
+};

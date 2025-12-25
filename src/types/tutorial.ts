@@ -1,3 +1,5 @@
+import type { ComponentType } from 'react';
+
 export interface CSSProperty {
   value: string;
   input?: {
@@ -19,6 +21,7 @@ export interface BaseLesson {
   title: string;
   content: string;
   hints: string[];
+  Content?: ComponentType; // MDX component
   sectionId?: string;
   sectionTitle?: string;
   sectionIndex?: number;

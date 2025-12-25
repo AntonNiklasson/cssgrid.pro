@@ -9,6 +9,7 @@ interface LessonContentProps {
 
 export function LessonContent({ lesson }: LessonContentProps) {
   const { colors } = useTheme();
+  const { Content } = lesson;
 
   const containerStyle: React.CSSProperties = {
     padding: '32px',
@@ -38,7 +39,11 @@ export function LessonContent({ lesson }: LessonContentProps) {
         {lesson.type === 'learn' ? 'Learn' : 'Practice'}
       </div>
       <div className="markdown-content">
-        <ReactMarkdown>{lesson.content}</ReactMarkdown>
+        {Content ? (
+          <Content />
+        ) : (
+          <ReactMarkdown>{lesson.content}</ReactMarkdown>
+        )}
       </div>
     </div>
   );

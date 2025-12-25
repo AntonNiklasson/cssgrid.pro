@@ -1,0 +1,69 @@
+---
+id: flexible-sizing
+type: practice
+title: Flexible Sizing
+hints:
+  - "Columns: 1fr 3fr"
+  - "Rows: 1fr 1fr"
+successMessage: |
+  **The fr unit is powerful!**
+
+  The sidebar gets 1/4 of the space, content gets 3/4. Resize your browser and they'll maintain that ratio.
+
+  You can also mix units: `200px 1fr` gives a fixed sidebar with flexible content.
+---
+
+# The fr Unit
+
+The `fr` unit means **"fraction of available space"**. It's the secret weapon of CSS Grid.
+
+```css
+grid-template-columns: 1fr 1fr 1fr;
+/*  Equal thirds: each column gets 1 fraction  */
+
+grid-template-columns: 1fr 2fr;
+/*  The second column is twice as wide  */
+```
+
+Think of it like slicing a pizza: `1fr 2fr 1fr` means "1 slice, 2 slices, 1 slice."
+
+## Why use fr instead of %?
+
+- Automatically accounts for gaps
+- More intuitive for proportional layouts
+- No math required!
+
+## Your turn
+
+Create a sidebar layout:
+- Columns: `1fr 3fr` (narrow sidebar, wide content)
+- Rows: `1fr 1fr` (equal height rows)
+
+export const markup = `<div class="grid">
+  <div class="item">Sidebar</div>
+  <div class="item">Content</div>
+  <div class="item">Sidebar</div>
+  <div class="item">Content</div>
+</div>`;
+
+export const styles = {
+  '.grid': {
+    properties: {
+      'display': { value: 'grid' },
+      'grid-template-columns': {
+        value: '',
+        input: {
+          placeholder: '1fr 3fr',
+          regex: /^1fr 3fr;?$/,
+        },
+      },
+      'grid-template-rows': {
+        value: '',
+        input: {
+          placeholder: '1fr 1fr',
+          regex: /^1fr 1fr;?$/,
+        },
+      },
+    },
+  },
+};

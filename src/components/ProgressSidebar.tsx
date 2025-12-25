@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useTutorial } from '../contexts/TutorialContext';
-import { sections } from '../data/tutorial';
+import { lessons } from '../data/tutorial';
 
 interface ProgressSidebarProps {
   isOpen?: boolean;
@@ -12,10 +12,8 @@ export function ProgressSidebar({ isOpen = true, onClose }: ProgressSidebarProps
   const { colors } = useTheme();
   const { currentLessonIndex, goToLesson, isLessonComplete } = useTutorial();
 
-  let globalIndex = 0;
-
   const containerStyle: React.CSSProperties = {
-    width: '280px',
+    width: '260px',
     height: '100vh',
     backgroundColor: colors.grayDarkest,
     color: colors.white,
@@ -26,8 +24,9 @@ export function ProgressSidebar({ isOpen = true, onClose }: ProgressSidebarProps
   };
 
   const headerStyle: React.CSSProperties = {
-    padding: '0 20px 20px',
+    padding: '0 20px 24px',
     borderBottom: `1px solid ${colors.grayDark}`,
+    marginBottom: '16px',
   };
 
   const logoStyle: React.CSSProperties = {
@@ -42,24 +41,11 @@ export function ProgressSidebar({ isOpen = true, onClose }: ProgressSidebarProps
     color: colors.grayLight,
   };
 
-  const sectionStyle: React.CSSProperties = {
-    padding: '16px 0',
-  };
-
-  const sectionTitleStyle: React.CSSProperties = {
-    fontSize: '11px',
-    fontWeight: 600,
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    color: colors.grayLight,
-    padding: '0 20px 8px',
-  };
-
-  const getLessonStyle = (index: number, isActive: boolean): React.CSSProperties => ({
+  const getLessonStyle = (isActive: boolean): React.CSSProperties => ({
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
-    padding: '10px 20px',
+    padding: '12px 20px',
     cursor: 'pointer',
     backgroundColor: isActive ? colors.grayDarker : 'transparent',
     borderLeft: isActive ? `3px solid ${colors.primary}` : '3px solid transparent',
@@ -67,14 +53,14 @@ export function ProgressSidebar({ isOpen = true, onClose }: ProgressSidebarProps
   });
 
   const getIndicatorStyle = (isComplete: boolean, isActive: boolean): React.CSSProperties => ({
-    width: '20px',
-    height: '20px',
+    width: '24px',
+    height: '24px',
     borderRadius: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontSize: '11px',
-    fontWeight: 500,
+    fontSize: '12px',
+    fontWeight: 600,
     backgroundColor: isComplete
       ? colors.green
       : isActive
@@ -87,7 +73,7 @@ export function ProgressSidebar({ isOpen = true, onClose }: ProgressSidebarProps
   const lessonTitleStyle: React.CSSProperties = {
     fontSize: '14px',
     color: colors.grayLightest,
-    lineHeight: 1.3,
+    lineHeight: 1.4,
   };
 
   return (
@@ -97,33 +83,23 @@ export function ProgressSidebar({ isOpen = true, onClose }: ProgressSidebarProps
         <div style={subtitleStyle}>Interactive Tutorial</div>
       </div>
 
-      {sections.map((section) => {
-        const sectionLessons = section.lessons.map((lesson, i) => {
-          const lessonGlobalIndex = globalIndex++;
-          const isActive = lessonGlobalIndex === currentLessonIndex;
-          const isComplete = isLessonComplete(lessonGlobalIndex);
-
-          return (
-            <div
-              key={lesson.id}
-              style={getLessonStyle(lessonGlobalIndex, isActive)}
-              onClick={() => goToLesson(lessonGlobalIndex)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => e.key === 'Enter' && goToLesson(lessonGlobalIndex)}
-            >
-              <div style={getIndicatorStyle(isComplete, isActive)}>
-                {isComplete ? '✓' : i + 1}
-              </div>
-              <span style={lessonTitleStyle}>{lesson.title}</span>
-            </div>
-          );
-        });
+      {lessons.map((lesson, index) => {
+        const isActive = index === currentLessonIndex;
+        const isComplete = isLessonComplete(index);
 
         return (
-          <div key={section.id} style={sectionStyle}>
-            <div style={sectionTitleStyle}>{section.title}</div>
-            {sectionLessons}
+          <div
+            key={lesson.id}
+            style={getLessonStyle(isActive)}
+            onClick={() => goToLesson(index)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => e.key === 'Enter' && goToLesson(index)}
+          >
+            <div style={getIndicatorStyle(isComplete, isActive)}>
+              {isComplete ? '✓' : index + 1}
+            </div>
+            <span style={lessonTitleStyle}>{lesson.title}</span>
           </div>
         );
       })}

@@ -17,19 +17,15 @@ export function LandingPage() {
         <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] bg-clip-text text-transparent">
           CSSGrid.pro
         </h1>
-        <p className="text-2xl text-gray-400 mb-8 font-normal">
-          An Interactive CSS Grid Tutorial
-        </p>
+        <p className="text-2xl text-gray-400 mb-8 font-normal">An Interactive CSS Grid Tutorial</p>
         <p className="text-lg text-gray-500 leading-relaxed mb-10">
-          Master CSS Grid through hands-on practice. Learn by doing, not just reading.
-          Each lesson builds on the last, taking you from beginner to confident in no time.
+          Master CSS Grid through hands-on practice. Learn by doing, not just reading. Each lesson
+          builds on the last, taking you from beginner to confident in no time.
         </p>
 
         <div className="flex gap-12 justify-center mb-12">
           <div className="text-center">
-            <div className="text-4xl font-bold text-[var(--color-accent)] mb-1">
-              {totalLessons}
-            </div>
+            <div className="text-4xl font-bold text-[var(--color-accent)] mb-1">{totalLessons}</div>
             <div className="text-sm text-gray-400 uppercase tracking-wide">Lessons</div>
           </div>
           <div className="text-center">

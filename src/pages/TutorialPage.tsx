@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useTutorial } from '../contexts/TutorialContext';
-import { ProgressSidebar } from '../components/ProgressSidebar';
-import { LessonContent } from '../components/LessonContent';
-import { StyleEditor } from '../components/StyleEditor';
+import React, { useEffect, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from '../components/Button';
 import { GridOutput } from '../components/GridOutput';
 import { HintPanel } from '../components/HintPanel';
-import { Button } from '../components/Button';
-import ReactMarkdown from 'react-markdown';
+import { LessonContent } from '../components/LessonContent';
+import { ProgressSidebar } from '../components/ProgressSidebar';
+import { StyleEditor } from '../components/StyleEditor';
+import { useTutorial } from '../contexts/TutorialContext';
 
 export function TutorialPage() {
   const { lessonId, id } = useParams();
@@ -75,15 +75,10 @@ export function TutorialPage() {
 
   // Determine what markup/styles to show
   const markup =
-    currentLesson.type === 'learn'
-      ? currentLesson.demonstration.markup
-      : currentLesson.markup;
+    currentLesson.type === 'learn' ? currentLesson.demonstration.markup : currentLesson.markup;
   const styles =
-    currentLesson.type === 'learn'
-      ? currentLesson.demonstration.styles
-      : currentLesson.styles;
-  const note =
-    currentLesson.type === 'learn' ? currentLesson.demonstration.note : undefined;
+    currentLesson.type === 'learn' ? currentLesson.demonstration.styles : currentLesson.styles;
+  const note = currentLesson.type === 'learn' ? currentLesson.demonstration.note : undefined;
 
   return (
     <div className="flex min-h-screen bg-gray-50">
@@ -125,8 +120,8 @@ export function TutorialPage() {
               {currentLesson.type === 'learn'
                 ? 'Continue →'
                 : showSuccess
-                ? 'Next Lesson →'
-                : 'Submit'}
+                  ? 'Next Lesson →'
+                  : 'Submit'}
             </Button>
           </div>
         </header>

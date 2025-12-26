@@ -1,13 +1,6 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  ReactNode,
-  useMemo,
-} from 'react';
-import type { Lesson, TutorialProgress, SectionProgress } from '../types/tutorial';
-import { allLessons, getTotalLessons, getSectionProgress } from '../data/tutorial';
+import React, { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
+import { allLessons, getSectionProgress, getTotalLessons } from '../data/tutorial';
+import type { Lesson, SectionProgress, TutorialProgress } from '../types/tutorial';
 
 interface TutorialContextValue {
   // Current state
@@ -45,10 +38,7 @@ export function TutorialProvider({ children }: { children: ReactNode }) {
   const [completedLessons, setCompletedLessons] = useState<Set<number>>(new Set());
   const [userInputs, setUserInputs] = useState<Record<string, Record<string, string>>>({});
 
-  const currentLesson = useMemo(
-    () => allLessons[currentLessonIndex] || null,
-    [currentLessonIndex]
-  );
+  const currentLesson = useMemo(() => allLessons[currentLessonIndex] || null, [currentLessonIndex]);
 
   const totalLessons = getTotalLessons();
 
@@ -66,12 +56,15 @@ export function TutorialProvider({ children }: { children: ReactNode }) {
     [currentLessonIndex, completedLessons, userInputs]
   );
 
-  const goToLesson = useCallback((index: number) => {
-    if (index >= 0 && index < totalLessons) {
-      setCurrentLessonIndex(index);
-      setUserInputs({});
-    }
-  }, [totalLessons]);
+  const goToLesson = useCallback(
+    (index: number) => {
+      if (index >= 0 && index < totalLessons) {
+        setCurrentLessonIndex(index);
+        setUserInputs({});
+      }
+    },
+    [totalLessons]
+  );
 
   const goToNextLesson = useCallback(() => {
     if (currentLessonIndex < totalLessons - 1) {
@@ -97,18 +90,15 @@ export function TutorialProvider({ children }: { children: ReactNode }) {
     [completedLessons]
   );
 
-  const setUserInput = useCallback(
-    (selector: string, property: string, value: string) => {
-      setUserInputs((prev) => ({
-        ...prev,
-        [selector]: {
-          ...prev[selector],
-          [property]: value,
-        },
-      }));
-    },
-    []
-  );
+  const setUserInput = useCallback((selector: string, property: string, value: string) => {
+    setUserInputs((prev) => ({
+      ...prev,
+      [selector]: {
+        ...prev[selector],
+        [property]: value,
+      },
+    }));
+  }, []);
 
   const getUserInput = useCallback(
     (selector: string, property: string) => {
@@ -160,11 +150,7 @@ export function TutorialProvider({ children }: { children: ReactNode }) {
     validateCurrentLesson,
   };
 
-  return (
-    <TutorialContext.Provider value={value}>
-      {children}
-    </TutorialContext.Provider>
-  );
+  return <TutorialContext.Provider value={value}>{children}</TutorialContext.Provider>;
 }
 
 export function useTutorial() {

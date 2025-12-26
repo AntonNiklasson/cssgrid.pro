@@ -9,15 +9,16 @@ interface GridOutputProps {
   note?: string;
 }
 
-function stylesToCSS(styles: StyleTree, userInputs: Record<string, Record<string, string>>): string {
+function stylesToCSS(
+  styles: StyleTree,
+  userInputs: Record<string, Record<string, string>>
+): string {
   let css = '';
 
   for (const [selector, rule] of Object.entries(styles)) {
     css += `${selector} {\n`;
     for (const [property, config] of Object.entries(rule.properties)) {
-      const value = config.input
-        ? userInputs[selector]?.[property] || ''
-        : config.value;
+      const value = config.input ? userInputs[selector]?.[property] || '' : config.value;
       if (value) {
         css += `  ${property}: ${value};\n`;
       }
@@ -31,10 +32,7 @@ function stylesToCSS(styles: StyleTree, userInputs: Record<string, Record<string
 export function GridOutput({ markup, styles, note }: GridOutputProps) {
   const { userInputs } = useTutorial();
 
-  const cssString = useMemo(
-    () => stylesToCSS(styles, userInputs),
-    [styles, userInputs]
-  );
+  const cssString = useMemo(() => stylesToCSS(styles, userInputs), [styles, userInputs]);
 
   // Base styles for grid items
   const baseGridStyles = `

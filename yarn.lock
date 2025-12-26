@@ -260,6 +260,25 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@biomejs/biome@^2.3.10":
+  version "2.3.10"
+  resolved "https://registry.npmjs.org/@biomejs/biome/-/biome-2.3.10.tgz"
+  integrity sha512-/uWSUd1MHX2fjqNLHNL6zLYWBbrJeG412/8H7ESuK8ewoRoMPUgHDebqKrPTx/5n6f17Xzqc9hdg3MEqA5hXnQ==
+  optionalDependencies:
+    "@biomejs/cli-darwin-arm64" "2.3.10"
+    "@biomejs/cli-darwin-x64" "2.3.10"
+    "@biomejs/cli-linux-arm64" "2.3.10"
+    "@biomejs/cli-linux-arm64-musl" "2.3.10"
+    "@biomejs/cli-linux-x64" "2.3.10"
+    "@biomejs/cli-linux-x64-musl" "2.3.10"
+    "@biomejs/cli-win32-arm64" "2.3.10"
+    "@biomejs/cli-win32-x64" "2.3.10"
+
+"@biomejs/cli-linux-x64@2.3.10":
+  version "2.3.10"
+  resolved "https://registry.npmjs.org/@biomejs/cli-linux-x64/-/cli-linux-x64-2.3.10.tgz"
+  integrity sha512-wwAkWD1MR95u+J4LkWP74/vGz+tRrIQvr8kfMMJY8KOQ8+HMVleREOcPYsQX82S7uueco60L58Wc6M1I9WA9Dw==
+
 "@esbuild/linux-x64@0.27.2":
   version "0.27.2"
   resolved "https://registry.npmjs.org/@esbuild/linux-x64/-/linux-x64-0.27.2.tgz"
@@ -346,6 +365,11 @@
     "@rollup/pluginutils" "^5.0.0"
     source-map "^0.7.0"
     vfile "^6.0.0"
+
+"@oxlint/linux-x64-gnu@1.35.0":
+  version "1.35.0"
+  resolved "https://registry.npmjs.org/@oxlint/linux-x64-gnu/-/linux-x64-gnu-1.35.0.tgz"
+  integrity sha512-HDMPOzyVVy+rQl3H7UOq8oGHt7m1yaiWCanlhAu4jciK8dvXeO9OG/OQd74lD/h05IcJh93pCLEJ3wWOG8hTiQ==
 
 "@remix-run/router@1.23.1":
   version "1.23.1"
@@ -7645,6 +7669,20 @@ os-tmpdir@^1.0.1, os-tmpdir@~1.0.2:
   version "1.0.2"
   resolved "https://registry.npmjs.org/os-tmpdir/-/os-tmpdir-1.0.2.tgz"
   integrity sha512-D2FR03Vir7FIu45XBY20mTb+/ZSWB00sjU9jdQXt83gDrI4Ztz5Fs7/yy74g2N5SVQY4xY1qDr4rNddwYRVX0g==
+
+oxlint@^1.35.0:
+  version "1.35.0"
+  resolved "https://registry.npmjs.org/oxlint/-/oxlint-1.35.0.tgz"
+  integrity sha512-QDX1aUgaiqznkGfTM2qHwva2wtKqhVoqPSVXrnPz+yLUhlNadikD3QRuRtppHl7WGuy3wG6nKAuR8lash3aWSg==
+  optionalDependencies:
+    "@oxlint/darwin-arm64" "1.35.0"
+    "@oxlint/darwin-x64" "1.35.0"
+    "@oxlint/linux-arm64-gnu" "1.35.0"
+    "@oxlint/linux-arm64-musl" "1.35.0"
+    "@oxlint/linux-x64-gnu" "1.35.0"
+    "@oxlint/linux-x64-musl" "1.35.0"
+    "@oxlint/win32-arm64" "1.35.0"
+    "@oxlint/win32-x64" "1.35.0"
 
 p-finally@^1.0.0:
   version "1.0.0"

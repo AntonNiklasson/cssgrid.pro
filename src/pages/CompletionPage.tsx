@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import html2canvas from 'html2canvas';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../components/Button';
 import { Certificate } from '../components/Certificate';
 
@@ -82,8 +82,8 @@ export function CompletionPage() {
             Congratulations!
           </h1>
           <p className="text-xl text-gray-400 mb-8 leading-relaxed">
-            You've completed the CSS Grid tutorial! You now have the skills to create
-            powerful, flexible layouts for your web projects.
+            You've completed the CSS Grid tutorial! You now have the skills to create powerful,
+            flexible layouts for your web projects.
           </p>
 
           <div className="flex flex-wrap gap-3 justify-center mb-10">

@@ -29,7 +29,9 @@ export function ProgressSidebar({ isOpen = true }: ProgressSidebarProps) {
           <div
             key={lesson.id}
             className={`flex items-center gap-3 px-5 py-3 cursor-pointer transition-all duration-150 ${
-              isActive ? 'bg-gray-800 border-l-[3px] border-l-[var(--color-primary)]' : 'border-l-[3px] border-l-transparent hover:bg-gray-800/50'
+              isActive
+                ? 'bg-gray-800 border-l-[3px] border-l-[var(--color-primary)]'
+                : 'border-l-[3px] border-l-transparent hover:bg-gray-800/50'
             }`}
             onClick={() => goToLesson(index)}
             role="button"
@@ -41,8 +43,8 @@ export function ProgressSidebar({ isOpen = true }: ProgressSidebarProps) {
                 isComplete
                   ? 'bg-[var(--color-success)] text-white'
                   : isActive
-                  ? 'bg-[var(--color-primary)] text-white'
-                  : 'bg-gray-700 text-white'
+                    ? 'bg-[var(--color-primary)] text-white'
+                    : 'bg-gray-700 text-white'
               }`}
             >
               {isComplete ? '✓' : index + 1}

@@ -8,20 +8,18 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "start": "vite",
-    "start:old": "node scripts/start.js",
-    "build:old": "node scripts/build.js",
-    "test": "npm run lint && npm run test:unit",
-    "test:unit": "jest",
-    "test:integration": "node ./tests/index.js",
-    "lint": "eslint src",
-    "precommit": "lint-staged",
-    "logs": "heroku logs --tail --app cssgridpro",
-    "dashboard": "open https://dashboard.heroku.com/apps/cssgridpro"
+    "lint": "oxlint -c oxlint.json src",
+    "lint:fix": "oxlint -c oxlint.json src --fix",
+    "format": "biome format src",
+    "format:fix": "biome format src --write",
+    "format:check": "biome check src",
+    "check": "npm run lint && npm run format:check && tsc --noEmit",
+    "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "eslint",
-      "git add"
+    "*.{ts,tsx}": [
+      "oxlint -c oxlint.json --fix",
+      "biome format --write"
     ]
   },
   "dependencies": {
@@ -127,6 +125,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.10",
     "@mdx-js/react": "^3.1.1",
     "@mdx-js/rollup": "^3.1.1",
     "@tailwindcss/vite": "^4.1.18",
@@ -135,6 +134,7 @@
     "@types/react-dom": "^18.3.7",
     "@vitejs/plugin-react": "^5.1.2",
     "autoprefixer": "^10.4.23",
+    "oxlint": "^1.35.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",

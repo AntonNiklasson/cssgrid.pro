@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTutorial } from '../contexts/TutorialContext';
-import type { StyleTree, CSSProperty } from '../types/tutorial';
+import type { CSSProperty, StyleTree } from '../types/tutorial';
 
 interface StyleEditorProps {
   styles: StyleTree;

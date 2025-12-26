@@ -1,52 +1,52 @@
-import type { Lesson, PracticeLesson, SectionProgress } from '../../types/tutorial';
 import { ComponentType } from 'react';
+import type { Lesson, PracticeLesson, SectionProgress } from '../../types/tutorial';
 
 // Import MDX lessons
 import IntroContent, {
-  frontmatter as introMeta,
   markup as introMarkup,
+  frontmatter as introMeta,
   styles as introStyles,
 } from './lessons/01-intro.mdx';
 
 import ColumnsRowsContent, {
-  frontmatter as columnsRowsMeta,
   markup as columnsRowsMarkup,
+  frontmatter as columnsRowsMeta,
   styles as columnsRowsStyles,
 } from './lessons/02-columns-and-rows.mdx';
 
 import FlexibleSizingContent, {
-  frontmatter as flexibleSizingMeta,
   markup as flexibleSizingMarkup,
+  frontmatter as flexibleSizingMeta,
   styles as flexibleSizingStyles,
 } from './lessons/03-flexible-sizing.mdx';
 
 import GapsContent, {
-  frontmatter as gapsMeta,
   markup as gapsMarkup,
+  frontmatter as gapsMeta,
   styles as gapsStyles,
 } from './lessons/04-gaps.mdx';
 
 import PlacingItemsContent, {
-  frontmatter as placingItemsMeta,
   markup as placingItemsMarkup,
+  frontmatter as placingItemsMeta,
   styles as placingItemsStyles,
 } from './lessons/05-placing-items.mdx';
 
 import SpanningContent, {
-  frontmatter as spanningMeta,
   markup as spanningMarkup,
+  frontmatter as spanningMeta,
   styles as spanningStyles,
 } from './lessons/06-spanning.mdx';
 
 import GridAreasContent, {
-  frontmatter as gridAreasMeta,
   markup as gridAreasMarkup,
+  frontmatter as gridAreasMeta,
   styles as gridAreasStyles,
 } from './lessons/07-grid-areas.mdx';
 
 import FinalLayoutContent, {
-  frontmatter as finalLayoutMeta,
   markup as finalLayoutMarkup,
+  frontmatter as finalLayoutMeta,
   styles as finalLayoutStyles,
 } from './lessons/08-final-layout.mdx';
 
@@ -73,7 +73,12 @@ function createLesson(
 export const lessons: Lesson[] = [
   createLesson(introMeta, IntroContent, introMarkup, introStyles),
   createLesson(columnsRowsMeta, ColumnsRowsContent, columnsRowsMarkup, columnsRowsStyles),
-  createLesson(flexibleSizingMeta, FlexibleSizingContent, flexibleSizingMarkup, flexibleSizingStyles),
+  createLesson(
+    flexibleSizingMeta,
+    FlexibleSizingContent,
+    flexibleSizingMarkup,
+    flexibleSizingStyles
+  ),
   createLesson(gapsMeta, GapsContent, gapsMarkup, gapsStyles),
   createLesson(placingItemsMeta, PlacingItemsContent, placingItemsMarkup, placingItemsStyles),
   createLesson(spanningMeta, SpanningContent, spanningMarkup, spanningStyles),

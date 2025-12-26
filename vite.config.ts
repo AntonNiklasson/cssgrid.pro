@@ -7,7 +7,6 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import path from 'path';
 
 export default defineConfig({
-  base: process.env.BASE_URL || '/',
   plugins: [
     tailwindcss(),
     {

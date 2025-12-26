@@ -43,7 +43,7 @@ export const Certificate = forwardRef<HTMLDivElement, CertificateProps>(
           </div>
 
           <h1 className="text-5xl font-bold bg-gradient-to-r from-[var(--color-primary)] via-[var(--color-primary-light)] to-[var(--color-primary)] bg-clip-text text-transparent mb-6">
-            Certified Grid Guru
+            CSS Grid Pro
           </h1>
 
           <div className="text-gray-400 mb-2">This is to certify that</div>

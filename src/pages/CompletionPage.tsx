@@ -46,14 +46,14 @@ export function CompletionPage() {
 
   const shareToTwitter = () => {
     const text = encodeURIComponent(
-      `I just became a Certified Grid Guru! 🏆 Completed the CSS Grid tutorial at CSSGrid.pro #CSS #WebDev #CSSGrid`
+      `I'm now a CSS Grid Pro! 🏆 Completed the interactive tutorial at CSSGrid.pro #CSS #WebDev #CSSGrid`
     );
     window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
   };
 
   const shareToLinkedIn = () => {
     const text = encodeURIComponent(
-      `I just completed the CSS Grid interactive tutorial and earned my "Certified Grid Guru" certificate! 🏆`
+      `I just completed the CSS Grid Pro interactive tutorial and earned my certificate! 🏆`
     );
     window.open(
       `https://www.linkedin.com/sharing/share-offsite/?url=https://cssgrid.pro&summary=${text}`,

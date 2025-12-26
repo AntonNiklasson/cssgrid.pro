@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTheme } from '../contexts/ThemeContext';
 import { useTutorial } from '../contexts/TutorialContext';
 import { lessons } from '../data/tutorial';
 
@@ -8,79 +7,18 @@ interface ProgressSidebarProps {
   onClose?: () => void;
 }
 
-export function ProgressSidebar({ isOpen = true, onClose }: ProgressSidebarProps) {
-  const { colors } = useTheme();
+export function ProgressSidebar({ isOpen = true }: ProgressSidebarProps) {
   const { currentLessonIndex, goToLesson, isLessonComplete } = useTutorial();
 
-  const containerStyle: React.CSSProperties = {
-    width: '260px',
-    height: '100vh',
-    backgroundColor: colors.grayDarkest,
-    color: colors.white,
-    padding: '24px 0',
-    overflowY: 'auto',
-    flexShrink: 0,
-    display: isOpen ? 'block' : 'none',
-  };
-
-  const headerStyle: React.CSSProperties = {
-    padding: '0 20px 24px',
-    borderBottom: `1px solid ${colors.grayDark}`,
-    marginBottom: '16px',
-  };
-
-  const logoStyle: React.CSSProperties = {
-    fontSize: '20px',
-    fontWeight: 700,
-    color: colors.primary,
-    marginBottom: '4px',
-  };
-
-  const subtitleStyle: React.CSSProperties = {
-    fontSize: '13px',
-    color: colors.grayLight,
-  };
-
-  const getLessonStyle = (isActive: boolean): React.CSSProperties => ({
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-    padding: '12px 20px',
-    cursor: 'pointer',
-    backgroundColor: isActive ? colors.grayDarker : 'transparent',
-    borderLeft: isActive ? `3px solid ${colors.primary}` : '3px solid transparent',
-    transition: 'all 0.15s ease',
-  });
-
-  const getIndicatorStyle = (isComplete: boolean, isActive: boolean): React.CSSProperties => ({
-    width: '24px',
-    height: '24px',
-    borderRadius: '50%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontSize: '12px',
-    fontWeight: 600,
-    backgroundColor: isComplete
-      ? colors.green
-      : isActive
-      ? colors.primary
-      : colors.grayDark,
-    color: colors.white,
-    flexShrink: 0,
-  });
-
-  const lessonTitleStyle: React.CSSProperties = {
-    fontSize: '14px',
-    color: colors.grayLightest,
-    lineHeight: 1.4,
-  };
-
   return (
-    <aside style={containerStyle}>
-      <div style={headerStyle}>
-        <div style={logoStyle}>CSSGrid.pro</div>
-        <div style={subtitleStyle}>Interactive Tutorial</div>
+    <aside
+      className={`w-[260px] h-screen bg-gray-900 text-white py-6 overflow-y-auto shrink-0 ${
+        isOpen ? 'block' : 'hidden'
+      }`}
+    >
+      <div className="px-5 pb-6 border-b border-gray-700 mb-4">
+        <div className="text-xl font-bold text-[var(--color-primary)] mb-1">CSSGrid.pro</div>
+        <div className="text-sm text-gray-400">Interactive Tutorial</div>
       </div>
 
       {lessons.map((lesson, index) => {
@@ -90,16 +28,26 @@ export function ProgressSidebar({ isOpen = true, onClose }: ProgressSidebarProps
         return (
           <div
             key={lesson.id}
-            style={getLessonStyle(isActive)}
+            className={`flex items-center gap-3 px-5 py-3 cursor-pointer transition-all duration-150 ${
+              isActive ? 'bg-gray-800 border-l-[3px] border-l-[var(--color-primary)]' : 'border-l-[3px] border-l-transparent hover:bg-gray-800/50'
+            }`}
             onClick={() => goToLesson(index)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => e.key === 'Enter' && goToLesson(index)}
           >
-            <div style={getIndicatorStyle(isComplete, isActive)}>
+            <div
+              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold shrink-0 ${
+                isComplete
+                  ? 'bg-[var(--color-success)] text-white'
+                  : isActive
+                  ? 'bg-[var(--color-primary)] text-white'
+                  : 'bg-gray-700 text-white'
+              }`}
+            >
               {isComplete ? '✓' : index + 1}
             </div>
-            <span style={lessonTitleStyle}>{lesson.title}</span>
+            <span className="text-sm text-gray-100 leading-snug">{lesson.title}</span>
           </div>
         );
       })}

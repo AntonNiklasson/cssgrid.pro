@@ -1,147 +1,40 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../contexts/ThemeContext';
 import { Button } from '../components/Button';
 import { getTotalLessons } from '../data/tutorial';
 
 export function LandingPage() {
   const navigate = useNavigate();
-  const { colors } = useTheme();
   const totalLessons = getTotalLessons();
-
-  const containerStyle: React.CSSProperties = {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '40px 20px',
-    background: `linear-gradient(135deg, ${colors.grayDarkest} 0%, ${colors.grayDarker} 100%)`,
-    color: colors.white,
-  };
-
-  const heroStyle: React.CSSProperties = {
-    textAlign: 'center',
-    maxWidth: '700px',
-    marginBottom: '60px',
-  };
-
-  const logoStyle: React.CSSProperties = {
-    fontSize: '3.5rem',
-    fontWeight: 700,
-    marginBottom: '16px',
-    background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryLight} 100%)`,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-  };
-
-  const taglineStyle: React.CSSProperties = {
-    fontSize: '1.5rem',
-    color: colors.grayLight,
-    marginBottom: '32px',
-    fontWeight: 400,
-  };
-
-  const descriptionStyle: React.CSSProperties = {
-    fontSize: '1.125rem',
-    color: colors.gray,
-    lineHeight: 1.7,
-    marginBottom: '40px',
-  };
-
-  const statsStyle: React.CSSProperties = {
-    display: 'flex',
-    gap: '48px',
-    justifyContent: 'center',
-    marginBottom: '48px',
-  };
-
-  const statItemStyle: React.CSSProperties = {
-    textAlign: 'center',
-  };
-
-  const statNumberStyle: React.CSSProperties = {
-    fontSize: '2.5rem',
-    fontWeight: 700,
-    color: colors.accent,
-    marginBottom: '4px',
-  };
-
-  const statLabelStyle: React.CSSProperties = {
-    fontSize: '0.875rem',
-    color: colors.grayLight,
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-  };
-
-  const featuresStyle: React.CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: '24px',
-    maxWidth: '800px',
-    width: '100%',
-    marginBottom: '48px',
-  };
-
-  const featureStyle: React.CSSProperties = {
-    backgroundColor: colors.grayDarker,
-    borderRadius: '12px',
-    padding: '24px',
-    textAlign: 'center',
-  };
-
-  const featureIconStyle: React.CSSProperties = {
-    fontSize: '2rem',
-    marginBottom: '12px',
-  };
-
-  const featureTitleStyle: React.CSSProperties = {
-    fontSize: '1rem',
-    fontWeight: 600,
-    marginBottom: '8px',
-    color: colors.white,
-  };
-
-  const featureDescStyle: React.CSSProperties = {
-    fontSize: '0.875rem',
-    color: colors.grayLight,
-    lineHeight: 1.5,
-  };
-
-  const footerStyle: React.CSSProperties = {
-    marginTop: '60px',
-    textAlign: 'center',
-    color: colors.gray,
-    fontSize: '0.875rem',
-  };
 
   const startTutorial = () => {
     navigate('/learn/0');
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={heroStyle}>
-        <h1 style={logoStyle}>CSSGrid.pro</h1>
-        <p style={taglineStyle}>An Interactive CSS Grid Tutorial</p>
-        <p style={descriptionStyle}>
+    <div className="min-h-screen flex flex-col items-center justify-center px-5 py-10 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <div className="text-center max-w-[700px] mb-16">
+        <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] bg-clip-text text-transparent">
+          CSSGrid.pro
+        </h1>
+        <p className="text-2xl text-gray-400 mb-8 font-normal">
+          An Interactive CSS Grid Tutorial
+        </p>
+        <p className="text-lg text-gray-500 leading-relaxed mb-10">
           Master CSS Grid through hands-on practice. Learn by doing, not just reading.
           Each lesson builds on the last, taking you from beginner to confident in no time.
         </p>
 
-        <div style={statsStyle}>
-          <div style={statItemStyle}>
-            <div style={statNumberStyle}>{totalLessons}</div>
-            <div style={statLabelStyle}>Lessons</div>
+        <div className="flex gap-12 justify-center mb-12">
+          <div className="text-center">
+            <div className="text-4xl font-bold text-[var(--color-accent)] mb-1">
+              {totalLessons}
+            </div>
+            <div className="text-sm text-gray-400 uppercase tracking-wide">Lessons</div>
           </div>
-          <div style={statItemStyle}>
-            <div style={statNumberStyle}>6</div>
-            <div style={statLabelStyle}>Sections</div>
-          </div>
-          <div style={statItemStyle}>
-            <div style={statNumberStyle}>~30</div>
-            <div style={statLabelStyle}>Minutes</div>
+          <div className="text-center">
+            <div className="text-4xl font-bold text-[var(--color-accent)] mb-1">~15</div>
+            <div className="text-sm text-gray-400 uppercase tracking-wide">Minutes</div>
           </div>
         </div>
 
@@ -150,38 +43,38 @@ export function LandingPage() {
         </Button>
       </div>
 
-      <div style={featuresStyle}>
-        <div style={featureStyle}>
-          <div style={featureIconStyle}>📖</div>
-          <h3 style={featureTitleStyle}>Learn by Doing</h3>
-          <p style={featureDescStyle}>
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6 max-w-[800px] w-full mb-12">
+        <div className="bg-gray-800 rounded-xl p-6 text-center">
+          <div className="text-3xl mb-3">📖</div>
+          <h3 className="text-base font-semibold mb-2 text-white">Learn by Doing</h3>
+          <p className="text-sm text-gray-400 leading-normal">
             Interactive exercises with live previews
           </p>
         </div>
-        <div style={featureStyle}>
-          <div style={featureIconStyle}>🎯</div>
-          <h3 style={featureTitleStyle}>Step by Step</h3>
-          <p style={featureDescStyle}>
+        <div className="bg-gray-800 rounded-xl p-6 text-center">
+          <div className="text-3xl mb-3">🎯</div>
+          <h3 className="text-base font-semibold mb-2 text-white">Step by Step</h3>
+          <p className="text-sm text-gray-400 leading-normal">
             Progressive lessons that build on each other
           </p>
         </div>
-        <div style={featureStyle}>
-          <div style={featureIconStyle}>💡</div>
-          <h3 style={featureTitleStyle}>Hints When Stuck</h3>
-          <p style={featureDescStyle}>
+        <div className="bg-gray-800 rounded-xl p-6 text-center">
+          <div className="text-3xl mb-3">💡</div>
+          <h3 className="text-base font-semibold mb-2 text-white">Hints When Stuck</h3>
+          <p className="text-sm text-gray-400 leading-normal">
             Get help without spoiling the answer
           </p>
         </div>
-        <div style={featureStyle}>
-          <div style={featureIconStyle}>✨</div>
-          <h3 style={featureTitleStyle}>Real Examples</h3>
-          <p style={featureDescStyle}>
+        <div className="bg-gray-800 rounded-xl p-6 text-center">
+          <div className="text-3xl mb-3">✨</div>
+          <h3 className="text-base font-semibold mb-2 text-white">Real Examples</h3>
+          <p className="text-sm text-gray-400 leading-normal">
             Practical layouts you'll use in real projects
           </p>
         </div>
       </div>
 
-      <footer style={footerStyle}>
+      <footer className="mt-16 text-center text-gray-500 text-sm">
         <p>Made with ❤️ for the web development community</p>
       </footer>
     </div>

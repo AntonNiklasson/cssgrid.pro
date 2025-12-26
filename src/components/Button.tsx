@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTheme } from '../contexts/ThemeContext';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost';
@@ -15,50 +14,28 @@ export function Button({
   disabled,
   ...props
 }: ButtonProps) {
-  const { colors } = useTheme();
+  const baseClasses =
+    'inline-flex items-center justify-center font-medium rounded-lg border-none transition-all duration-200';
 
-  const baseStyles: React.CSSProperties = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 500,
-    borderRadius: '8px',
-    border: 'none',
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    transition: 'all 0.2s ease',
-    opacity: disabled ? 0.6 : 1,
+  const sizeClasses = {
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-5 py-2.5 text-base',
+    lg: 'px-7 py-3.5 text-lg',
   };
 
-  const sizeStyles: Record<string, React.CSSProperties> = {
-    sm: { padding: '6px 12px', fontSize: '14px' },
-    md: { padding: '10px 20px', fontSize: '16px' },
-    lg: { padding: '14px 28px', fontSize: '18px' },
+  const variantClasses = {
+    primary: 'bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary-dark)]',
+    secondary: 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+    ghost:
+      'bg-transparent text-[var(--color-primary)] border-2 border-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white',
   };
 
-  const variantStyles: Record<string, React.CSSProperties> = {
-    primary: {
-      backgroundColor: colors.primary,
-      color: colors.white,
-    },
-    secondary: {
-      backgroundColor: colors.grayLighter,
-      color: colors.grayDarker,
-    },
-    ghost: {
-      backgroundColor: 'transparent',
-      color: colors.primary,
-      border: `2px solid ${colors.primary}`,
-    },
-  };
+  const disabledClasses = disabled ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer';
 
-  const style: React.CSSProperties = {
-    ...baseStyles,
-    ...sizeStyles[size],
-    ...variantStyles[variant],
-  };
+  const classes = `${baseClasses} ${sizeClasses[size]} ${variantClasses[variant]} ${disabledClasses} ${className}`;
 
   return (
-    <button style={style} disabled={disabled} {...props}>
+    <button className={classes} disabled={disabled} {...props}>
       {children}
     </button>
   );

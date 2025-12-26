@@ -1,69 +1,13 @@
 import React, { useState } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
 
 interface HintPanelProps {
   hints: string[];
 }
 
 export function HintPanel({ hints }: HintPanelProps) {
-  const { colors } = useTheme();
   const [revealedCount, setRevealedCount] = useState(0);
 
   if (hints.length === 0) return null;
-
-  const containerStyle: React.CSSProperties = {
-    backgroundColor: colors.grayLightest,
-    borderRadius: '8px',
-    padding: '16px',
-    marginTop: '16px',
-  };
-
-  const headerStyle: React.CSSProperties = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: revealedCount > 0 ? '12px' : 0,
-  };
-
-  const titleStyle: React.CSSProperties = {
-    fontSize: '14px',
-    fontWeight: 600,
-    color: colors.grayDark,
-  };
-
-  const buttonStyle: React.CSSProperties = {
-    backgroundColor: 'transparent',
-    border: `1px solid ${colors.grayLight}`,
-    borderRadius: '4px',
-    padding: '6px 12px',
-    fontSize: '13px',
-    color: colors.grayDark,
-    cursor: 'pointer',
-  };
-
-  const hintStyle: React.CSSProperties = {
-    backgroundColor: colors.white,
-    border: `1px solid ${colors.grayLighter}`,
-    borderRadius: '6px',
-    padding: '12px',
-    marginBottom: '8px',
-    fontSize: '14px',
-    color: colors.grayDarker,
-  };
-
-  const hintNumberStyle: React.CSSProperties = {
-    display: 'inline-block',
-    width: '20px',
-    height: '20px',
-    borderRadius: '50%',
-    backgroundColor: colors.accent,
-    color: colors.white,
-    fontSize: '12px',
-    fontWeight: 600,
-    textAlign: 'center',
-    lineHeight: '20px',
-    marginRight: '10px',
-  };
 
   const revealNext = () => {
     if (revealedCount < hints.length) {
@@ -72,21 +16,29 @@ export function HintPanel({ hints }: HintPanelProps) {
   };
 
   return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>
-        <span style={titleStyle}>
+    <div className="bg-gray-50 rounded-lg p-4 mt-4">
+      <div className={`flex items-center justify-between ${revealedCount > 0 ? 'mb-3' : ''}`}>
+        <span className="text-sm font-semibold text-gray-600">
           {revealedCount === 0 ? 'Need a hint?' : `Hints (${revealedCount}/${hints.length})`}
         </span>
         {revealedCount < hints.length && (
-          <button style={buttonStyle} onClick={revealNext}>
+          <button
+            className="bg-transparent border border-gray-400 rounded px-3 py-1.5 text-sm text-gray-600 cursor-pointer hover:bg-gray-100 transition-colors"
+            onClick={revealNext}
+          >
             {revealedCount === 0 ? 'Show Hint' : 'Next Hint'}
           </button>
         )}
       </div>
 
       {hints.slice(0, revealedCount).map((hint, index) => (
-        <div key={index} style={hintStyle} className="animate-slide-in">
-          <span style={hintNumberStyle}>{index + 1}</span>
+        <div
+          key={index}
+          className="bg-white border border-gray-200 rounded-md p-3 mb-2 text-sm text-gray-700 animate-slide-in"
+        >
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[var(--color-accent)] text-white text-xs font-semibold mr-2.5">
+            {index + 1}
+          </span>
           {hint}
         </div>
       ))}

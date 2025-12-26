@@ -1,74 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useTheme } from '../contexts/ThemeContext';
 import { Button } from '../components/Button';
 
 export function CompletionPage() {
   const navigate = useNavigate();
-  const { colors } = useTheme();
-
-  const containerStyle: React.CSSProperties = {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '40px 20px',
-    background: `linear-gradient(135deg, ${colors.grayDarkest} 0%, ${colors.grayDarker} 100%)`,
-    color: colors.white,
-    textAlign: 'center',
-  };
-
-  const emojiStyle: React.CSSProperties = {
-    fontSize: '5rem',
-    marginBottom: '24px',
-  };
-
-  const titleStyle: React.CSSProperties = {
-    fontSize: '2.5rem',
-    fontWeight: 700,
-    marginBottom: '16px',
-    background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryLight} 100%)`,
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-  };
-
-  const subtitleStyle: React.CSSProperties = {
-    fontSize: '1.25rem',
-    color: colors.grayLight,
-    marginBottom: '48px',
-    maxWidth: '500px',
-    lineHeight: 1.6,
-  };
-
-  const skillsContainerStyle: React.CSSProperties = {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '12px',
-    justifyContent: 'center',
-    marginBottom: '48px',
-    maxWidth: '600px',
-  };
-
-  const skillStyle: React.CSSProperties = {
-    backgroundColor: colors.grayDarker,
-    color: colors.green,
-    padding: '8px 16px',
-    borderRadius: '20px',
-    fontSize: '14px',
-    fontWeight: 500,
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-  };
-
-  const buttonGroupStyle: React.CSSProperties = {
-    display: 'flex',
-    gap: '16px',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  };
 
   const skills = [
     'display: grid',
@@ -83,30 +18,33 @@ export function CompletionPage() {
   ];
 
   return (
-    <div style={containerStyle}>
-      <div style={emojiStyle}>🎓</div>
-      <h1 style={titleStyle}>Congratulations!</h1>
-      <p style={subtitleStyle}>
+    <div className="min-h-screen flex flex-col items-center justify-center px-5 py-10 bg-gradient-to-br from-gray-900 to-gray-800 text-white text-center">
+      <div className="text-7xl mb-6">🎓</div>
+      <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] bg-clip-text text-transparent">
+        Congratulations!
+      </h1>
+      <p className="text-xl text-gray-400 mb-12 max-w-[500px] leading-relaxed">
         You've completed the CSS Grid tutorial! You now have the skills to create
         powerful, flexible layouts for your web projects.
       </p>
 
-      <div style={skillsContainerStyle}>
+      <div className="flex flex-wrap gap-3 justify-center mb-12 max-w-[600px]">
         {skills.map((skill) => (
-          <div key={skill} style={skillStyle}>
+          <div
+            key={skill}
+            className="bg-gray-800 text-[var(--color-success)] px-4 py-2 rounded-full text-sm font-medium flex items-center gap-1.5"
+          >
             <span>✓</span>
             {skill}
           </div>
         ))}
       </div>
 
-      <div style={buttonGroupStyle}>
+      <div className="flex gap-4 flex-wrap justify-center">
         <Button variant="ghost" onClick={() => navigate('/learn/0')}>
           Start Over
         </Button>
-        <Button onClick={() => navigate('/')}>
-          Back to Home
-        </Button>
+        <Button onClick={() => navigate('/')}>Back to Home</Button>
       </div>
     </div>
   );

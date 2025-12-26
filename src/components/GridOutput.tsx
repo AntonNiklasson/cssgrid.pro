@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
 import { useTutorial } from '../contexts/TutorialContext';
 import type { StyleTree } from '../types/tutorial';
 
@@ -29,8 +28,7 @@ function stylesToCSS(styles: StyleTree, userInputs: Record<string, Record<string
   return css;
 }
 
-export function GridOutput({ markup, styles, showGridLines, note }: GridOutputProps) {
-  const { colors } = useTheme();
+export function GridOutput({ markup, styles, note }: GridOutputProps) {
   const { userInputs } = useTutorial();
 
   const cssString = useMemo(
@@ -38,46 +36,16 @@ export function GridOutput({ markup, styles, showGridLines, note }: GridOutputPr
     [styles, userInputs]
   );
 
-  const containerStyle: React.CSSProperties = {
-    backgroundColor: colors.grayLightest,
-    borderRadius: '8px',
-    overflow: 'hidden',
-  };
-
-  const headerStyle: React.CSSProperties = {
-    backgroundColor: colors.grayLighter,
-    padding: '8px 16px',
-    fontSize: '12px',
-    fontWeight: 600,
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    color: colors.grayDark,
-    borderBottom: `1px solid ${colors.grayLight}`,
-  };
-
-  const outputStyle: React.CSSProperties = {
-    padding: '20px',
-    minHeight: '200px',
-  };
-
-  const noteStyle: React.CSSProperties = {
-    backgroundColor: colors.accentLight,
-    color: colors.accentDark,
-    padding: '12px 16px',
-    fontSize: '14px',
-    borderTop: `1px solid ${colors.accent}`,
-  };
-
   // Base styles for grid items
   const baseGridStyles = `
     .grid {
-      background: #f0f0f0;
+      background: #e5e5e5;
       padding: 10px;
       min-height: 150px;
     }
     .grid > div {
-      background: ${colors.primaryLight};
-      border: 2px solid ${colors.primary};
+      background: var(--color-primary-light);
+      border: 2px solid var(--color-primary);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -89,14 +57,20 @@ export function GridOutput({ markup, styles, showGridLines, note }: GridOutputPr
   `;
 
   return (
-    <div style={containerStyle}>
-      <div style={headerStyle}>Output</div>
-      <div style={outputStyle} className="grid-output">
+    <div className="bg-gray-50 rounded-lg overflow-hidden">
+      <div className="bg-gray-200 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-600 border-b border-gray-300">
+        Output
+      </div>
+      <div className="p-5 min-h-[200px] grid-output">
         <style>{baseGridStyles}</style>
         <style>{cssString}</style>
         <div dangerouslySetInnerHTML={{ __html: markup }} />
       </div>
-      {note && <div style={noteStyle}>{note}</div>}
+      {note && (
+        <div className="bg-[var(--color-accent-light)] text-[var(--color-accent-dark)] px-4 py-3 text-sm border-t border-[var(--color-accent)]">
+          {note}
+        </div>
+      )}
     </div>
   );
 }

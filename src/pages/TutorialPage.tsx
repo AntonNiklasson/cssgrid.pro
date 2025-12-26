@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useTheme } from '../contexts/ThemeContext';
 import { useTutorial } from '../contexts/TutorialContext';
 import { ProgressSidebar } from '../components/ProgressSidebar';
 import { LessonContent } from '../components/LessonContent';
@@ -13,7 +12,6 @@ import ReactMarkdown from 'react-markdown';
 export function TutorialPage() {
   const { lessonId, id } = useParams();
   const navigate = useNavigate();
-  const { colors } = useTheme();
   const {
     currentLesson,
     currentLessonIndex,
@@ -44,8 +42,8 @@ export function TutorialPage() {
 
   if (!currentLesson) {
     return (
-      <div style={{ padding: '40px', textAlign: 'center' }}>
-        <h1>Lesson not found</h1>
+      <div className="p-10 text-center">
+        <h1 className="text-2xl font-semibold mb-4">Lesson not found</h1>
         <Button onClick={() => navigate('/learn/0')}>Go to first lesson</Button>
       </div>
     );
@@ -75,99 +73,6 @@ export function TutorialPage() {
     }
   };
 
-  const containerStyle: React.CSSProperties = {
-    display: 'flex',
-    minHeight: '100vh',
-    backgroundColor: colors.grayLightest,
-  };
-
-  const mainStyle: React.CSSProperties = {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    overflow: 'hidden',
-  };
-
-  const headerStyle: React.CSSProperties = {
-    backgroundColor: colors.white,
-    borderBottom: `1px solid ${colors.grayLighter}`,
-    padding: '16px 24px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  };
-
-  const progressTextStyle: React.CSSProperties = {
-    fontSize: '14px',
-    color: colors.grayDark,
-  };
-
-  const contentAreaStyle: React.CSSProperties = {
-    flex: 1,
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gridTemplateRows: 'auto 1fr',
-    gap: '20px',
-    padding: '24px',
-    overflow: 'auto',
-  };
-
-  const lessonPanelStyle: React.CSSProperties = {
-    gridColumn: '1 / 2',
-    gridRow: '1 / 3',
-    overflow: 'auto',
-  };
-
-  const editorPanelStyle: React.CSSProperties = {
-    gridColumn: '2 / 3',
-    gridRow: '1 / 2',
-  };
-
-  const outputPanelStyle: React.CSSProperties = {
-    gridColumn: '2 / 3',
-    gridRow: '2 / 3',
-  };
-
-  const buttonGroupStyle: React.CSSProperties = {
-    display: 'flex',
-    gap: '12px',
-    alignItems: 'center',
-  };
-
-  const errorStyle: React.CSSProperties = {
-    color: colors.red,
-    fontSize: '14px',
-    marginRight: '16px',
-  };
-
-  const successOverlayStyle: React.CSSProperties = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 1000,
-  };
-
-  const successModalStyle: React.CSSProperties = {
-    backgroundColor: colors.white,
-    borderRadius: '16px',
-    padding: '40px',
-    maxWidth: '500px',
-    textAlign: 'center',
-  };
-
-  const successTitleStyle: React.CSSProperties = {
-    fontSize: '1.5rem',
-    fontWeight: 600,
-    marginBottom: '16px',
-    color: colors.green,
-  };
-
   // Determine what markup/styles to show
   const markup =
     currentLesson.type === 'learn'
@@ -181,25 +86,27 @@ export function TutorialPage() {
     currentLesson.type === 'learn' ? currentLesson.demonstration.note : undefined;
 
   return (
-    <div style={containerStyle}>
+    <div className="flex min-h-screen bg-gray-50">
       <ProgressSidebar />
 
-      <main style={mainStyle}>
-        <header style={headerStyle}>
+      <main className="flex-1 flex flex-col overflow-hidden">
+        <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
           <div>
-            <h1 style={{ fontSize: '18px', fontWeight: 600, marginBottom: '4px' }}>
-              {currentLesson.title}
-            </h1>
+            <h1 className="text-lg font-semibold mb-1">{currentLesson.title}</h1>
             {sectionProgress && (
-              <span style={progressTextStyle}>
+              <span className="text-sm text-gray-600">
                 {sectionProgress.sectionTitle} • Lesson {sectionProgress.current} of{' '}
                 {sectionProgress.total}
               </span>
             )}
           </div>
 
-          <div style={buttonGroupStyle}>
-            {hasError && <span style={errorStyle}>That's not quite right. Try again!</span>}
+          <div className="flex gap-3 items-center">
+            {hasError && (
+              <span className="text-[var(--color-error)] text-sm mr-4">
+                That's not quite right. Try again!
+              </span>
+            )}
 
             {currentLessonIndex > 0 && (
               <Button
@@ -224,30 +131,36 @@ export function TutorialPage() {
           </div>
         </header>
 
-        <div style={contentAreaStyle}>
-          <div style={lessonPanelStyle}>
+        <div className="flex-1 grid grid-cols-2 grid-rows-[auto_1fr] gap-5 p-6 overflow-auto">
+          <div className="col-span-1 row-span-2 overflow-auto">
             <LessonContent lesson={currentLesson} />
             {currentLesson.type === 'practice' && currentLesson.hints && (
               <HintPanel hints={currentLesson.hints} />
             )}
           </div>
 
-          <div style={editorPanelStyle}>
+          <div className="col-span-1 row-span-1">
             <StyleEditor styles={styles} readOnly={currentLesson.type === 'learn'} />
           </div>
 
-          <div style={outputPanelStyle}>
+          <div className="col-span-1 row-span-1">
             <GridOutput markup={markup} styles={styles} note={note} />
           </div>
         </div>
       </main>
 
       {showSuccess && currentLesson.type === 'practice' && (
-        <div style={successOverlayStyle} onClick={handleNext}>
-          <div style={successModalStyle} onClick={(e) => e.stopPropagation()}>
-            <div style={{ fontSize: '3rem', marginBottom: '16px' }}>🎉</div>
-            <h2 style={successTitleStyle}>Great job!</h2>
-            <div className="markdown-content" style={{ marginBottom: '24px', textAlign: 'left' }}>
+        <div
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-[1000]"
+          onClick={handleNext}
+        >
+          <div
+            className="bg-white rounded-2xl p-10 max-w-[500px] text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="text-5xl mb-4">🎉</div>
+            <h2 className="text-2xl font-semibold mb-4 text-[var(--color-success)]">Great job!</h2>
+            <div className="markdown-content mb-6 text-left">
               <ReactMarkdown>{currentLesson.successMessage}</ReactMarkdown>
             </div>
             <Button onClick={handleNext}>

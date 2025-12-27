@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface HintPanelProps {
   hints: string[];
@@ -23,6 +23,7 @@ export function HintPanel({ hints }: HintPanelProps) {
         </span>
         {revealedCount < hints.length && (
           <button
+            type="button"
             className="bg-transparent border border-gray-400 rounded px-3 py-1.5 text-sm text-gray-600 cursor-pointer hover:bg-gray-100 transition-colors"
             onClick={revealNext}
           >

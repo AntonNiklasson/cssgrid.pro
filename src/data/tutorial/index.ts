@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import type { ComponentType } from 'react';
 import type { Lesson, PracticeLesson, SectionProgress } from '../../types/tutorial';
 
 // Import MDX lessons

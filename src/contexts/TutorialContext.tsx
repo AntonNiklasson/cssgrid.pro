@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, type ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import { allLessons, getSectionProgress, getTotalLessons } from '../data/tutorial';
 import type { Lesson, SectionProgress, TutorialProgress } from '../types/tutorial';
 
@@ -66,13 +66,17 @@ export function TutorialProvider({ children }: { children: ReactNode }) {
     [totalLessons]
   );
 
+  const markLessonComplete = useCallback((index: number) => {
+    setCompletedLessons((prev) => new Set([...prev, index]));
+  }, []);
+
   const goToNextLesson = useCallback(() => {
     if (currentLessonIndex < totalLessons - 1) {
       markLessonComplete(currentLessonIndex);
       setCurrentLessonIndex((prev) => prev + 1);
       setUserInputs({});
     }
-  }, [currentLessonIndex, totalLessons]);
+  }, [currentLessonIndex, totalLessons, markLessonComplete]);
 
   const goToPreviousLesson = useCallback(() => {
     if (currentLessonIndex > 0) {
@@ -80,10 +84,6 @@ export function TutorialProvider({ children }: { children: ReactNode }) {
       setUserInputs({});
     }
   }, [currentLessonIndex]);
-
-  const markLessonComplete = useCallback((index: number) => {
-    setCompletedLessons((prev) => new Set([...prev, index]));
-  }, []);
 
   const isLessonComplete = useCallback(
     (index: number) => completedLessons.has(index),

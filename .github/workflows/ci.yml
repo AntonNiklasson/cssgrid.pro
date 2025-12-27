@@ -29,11 +29,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Lint (oxlint)
-        run: pnpm run lint
-
-      - name: Format check (Biome)
-        run: pnpm run format:check
+      - name: Lint & Format (Biome)
+        run: pnpm exec biome check src
 
       - name: Type check (tsgo)
         run: pnpm exec tsgo --noEmit

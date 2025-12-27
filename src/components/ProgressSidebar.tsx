@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTutorial } from '../contexts/TutorialContext';
 import { lessons } from '../data/tutorial';
 
@@ -26,17 +25,15 @@ export function ProgressSidebar({ isOpen = true }: ProgressSidebarProps) {
         const isComplete = isLessonComplete(index);
 
         return (
-          <div
+          <button
+            type="button"
             key={lesson.id}
-            className={`flex items-center gap-3 px-5 py-3 cursor-pointer transition-all duration-150 ${
+            className={`flex items-center gap-3 px-5 py-3 cursor-pointer transition-all duration-150 w-full text-left ${
               isActive
                 ? 'bg-gray-800 border-l-[3px] border-l-[var(--color-primary)]'
                 : 'border-l-[3px] border-l-transparent hover:bg-gray-800/50'
             }`}
             onClick={() => goToLesson(index)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => e.key === 'Enter' && goToLesson(index)}
           >
             <div
               className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-semibold shrink-0 ${
@@ -50,7 +47,7 @@ export function ProgressSidebar({ isOpen = true }: ProgressSidebarProps) {
               {isComplete ? '✓' : index + 1}
             </div>
             <span className="text-sm text-gray-100 leading-snug">{lesson.title}</span>
-          </div>
+          </button>
         );
       })}
     </aside>

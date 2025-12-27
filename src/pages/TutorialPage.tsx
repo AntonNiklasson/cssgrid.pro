@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '../components/Button';
@@ -29,7 +29,7 @@ export function TutorialPage() {
   // Handle URL params to set the lesson
   useEffect(() => {
     const lessonIndex = parseInt(lessonId || id || '0', 10);
-    if (!isNaN(lessonIndex) && lessonIndex !== currentLessonIndex) {
+    if (!Number.isNaN(lessonIndex) && lessonIndex !== currentLessonIndex) {
       goToLesson(lessonIndex);
     }
   }, [lessonId, id, currentLessonIndex, goToLesson]);
@@ -38,7 +38,7 @@ export function TutorialPage() {
   useEffect(() => {
     setShowSuccess(false);
     setHasError(false);
-  }, [currentLessonIndex]);
+  }, []);
 
   if (!currentLesson) {
     return (
@@ -147,11 +147,16 @@ export function TutorialPage() {
       {showSuccess && currentLesson.type === 'practice' && (
         <div
           className="fixed inset-0 bg-black/70 flex items-center justify-center z-[1000]"
+          role="dialog"
+          aria-modal="true"
           onClick={handleNext}
+          onKeyDown={(e) => e.key === 'Enter' && handleNext()}
         >
           <div
             className="bg-white rounded-2xl p-10 max-w-[500px] text-center"
+            role="document"
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.stopPropagation()}
           >
             <div className="text-5xl mb-4">🎉</div>
             <h2 className="text-2xl font-semibold mb-4 text-[var(--color-success)]">Great job!</h2>

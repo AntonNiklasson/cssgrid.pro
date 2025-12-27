@@ -8,18 +8,17 @@
     "build": "tsgo && vite build",
     "preview": "vite preview",
     "start": "vite",
-    "lint": "oxlint -c oxlint.json src",
-    "lint:fix": "oxlint -c oxlint.json src --fix",
+    "lint": "biome lint src",
+    "lint:fix": "biome lint src --write",
     "format": "biome format src",
     "format:fix": "biome format src --write",
-    "format:check": "biome check src",
-    "check": "pnpm run lint && pnpm run format:check && tsgo --noEmit",
+    "check": "biome check src && tsgo --noEmit",
+    "check:fix": "biome check src --write",
     "precommit": "lint-staged"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "oxlint -c oxlint.json --fix",
-      "biome format --write"
+      "biome check --write"
     ]
   },
   "dependencies": {
@@ -135,7 +134,6 @@
     "@typescript/native-preview": "7.0.0-dev.20251227.1",
     "@vitejs/plugin-react": "^5.1.2",
     "autoprefixer": "^10.4.23",
-    "oxlint": "^1.35.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",

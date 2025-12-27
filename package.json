@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsgo && vite build",
     "preview": "vite preview",
     "start": "vite",
     "lint": "oxlint -c oxlint.json src",
@@ -13,7 +13,7 @@
     "format": "biome format src",
     "format:fix": "biome format src --write",
     "format:check": "biome check src",
-    "check": "pnpm run lint && pnpm run format:check && tsc --noEmit",
+    "check": "pnpm run lint && pnpm run format:check && tsgo --noEmit",
     "precommit": "lint-staged"
   },
   "lint-staged": {

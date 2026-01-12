@@ -1,0 +1,55 @@
+---
+id: intro
+type: practice
+title: What is CSS Grid?
+hints:
+  - "Type: grid"
+successMessage: |
+  **You just created a grid!**
+
+  The items are stacking vertically because we haven't defined any columns yet. By default, a grid has just one column.
+
+  Next, we'll define the structure with columns and rows.
+---
+
+# What is CSS Grid?
+
+CSS Grid is a **two-dimensional layout system** for the web. It lets you control both columns AND rows at the same time.
+
+## Grid vs Flexbox
+
+You might already know Flexbox. Here's when to use each:
+
+| Flexbox | Grid |
+|---------|------|
+| **One dimension** (row OR column) | **Two dimensions** (rows AND columns) |
+| Navigation bars, button groups | Page layouts, card grids |
+| Content-driven sizing | Structure-driven sizing |
+
+**They work great together!** Use Grid for the overall page layout, Flexbox for components inside.
+
+## Let's start
+
+To create a grid, set `display: grid` on a container element. This tells the browser: "this element is now a grid, and its children are grid items."
+
+**Your turn:** Type `grid` below to create your first grid.
+
+export const markup = `<div class="grid">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+</div>`;
+
+export const styles = {
+  '.grid': {
+    properties: {
+      'display': {
+        value: '',
+        input: {
+          placeholder: 'grid',
+          regex: /^grid;?$/,
+        },
+      },
+    },
+  },
+};

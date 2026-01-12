@@ -1,0 +1,57 @@
+---
+id: gaps
+type: practice
+title: Gaps
+hints:
+  - "Try: 16px"
+  - "Or two values: 10px 20px (row-gap column-gap)"
+successMessage: |
+  **Clean spacing!**
+
+  Gaps are one of the best features of Grid. No more negative margins or :last-child hacks.
+---
+
+# Adding Space with Gaps
+
+The `gap` property adds space **between** grid items — not around the edges.
+
+```css
+gap: 20px;           /* same gap for rows and columns */
+gap: 10px 20px;      /* row-gap  column-gap */
+```
+
+## Why gap instead of margins?
+
+- Only appears between items, not on edges
+- No margin collapse headaches
+- Works perfectly with `fr` units
+
+## Your turn
+
+Add some breathing room. Try `16px` or `10px 20px`.
+
+export const markup = `<div class="grid">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+</div>`;
+
+export const styles = {
+  '.grid': {
+    properties: {
+      'display': { value: 'grid' },
+      'grid-template-columns': { value: '1fr 1fr 1fr' },
+      'grid-template-rows': { value: '80px 80px' },
+      'gap': {
+        value: '',
+        input: {
+          placeholder: '16px',
+          regex: /^(-?[0-9]*\.?[0-9]+\s?(em|fr|px|%)\s*){1,2};?$/,
+        },
+      },
+    },
+  },
+};

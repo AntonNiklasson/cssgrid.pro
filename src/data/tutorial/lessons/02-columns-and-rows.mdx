@@ -1,0 +1,65 @@
+---
+id: columns-and-rows
+type: practice
+title: Columns & Rows
+hints:
+  - "For columns: 150px 150px (two values separated by space)"
+  - "For rows: 100px 100px"
+successMessage: |
+  **Nice!** You've built a grid structure.
+
+  Notice how items automatically flow into the grid cells, left to right, top to bottom.
+
+  But using fixed pixel values isn't very flexible. What if we want columns to share space proportionally?
+---
+
+# Defining Columns & Rows
+
+A grid needs structure. You define it with two properties:
+
+- `grid-template-columns` — how many columns, and how wide
+- `grid-template-rows` — how many rows, and how tall
+
+Each value you add creates a new track:
+
+```css
+grid-template-columns: 100px 200px 100px;
+/*                     col1  col2  col3  */
+```
+
+## Your turn
+
+Create a grid with:
+- **2 columns** (try `150px 150px`)
+- **2 rows** (try `100px 100px`)
+
+Watch how the 4 items automatically fill into the grid!
+
+export const markup = `<div class="grid">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+</div>`;
+
+export const styles = {
+  '.grid': {
+    properties: {
+      'display': { value: 'grid' },
+      'grid-template-columns': {
+        value: '',
+        input: {
+          placeholder: '150px 150px',
+          regex: /^(\d+(\.\d+)?(px|em|rem|%|fr)\s+)+\d+(\.\d+)?(px|em|rem|%|fr);?$/,
+        },
+      },
+      'grid-template-rows': {
+        value: '',
+        input: {
+          placeholder: '100px 100px',
+          regex: /^(\d+(\.\d+)?(px|em|rem|%|fr)\s+)+\d+(\.\d+)?(px|em|rem|%|fr);?$/,
+        },
+      },
+    },
+  },
+};

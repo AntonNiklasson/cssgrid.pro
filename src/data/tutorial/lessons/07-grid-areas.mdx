@@ -1,0 +1,78 @@
+---
+id: grid-areas
+type: practice
+title: Grid Areas
+hints:
+  - 'Each row in quotes: "header header"'
+  - 'Full value: "header header" "sidebar content" "footer footer"'
+successMessage: |
+  **Your CSS now looks like your layout!**
+
+  Grid areas are incredibly readable. You can literally see the layout structure in your code.
+---
+
+# Named Grid Areas
+
+Instead of line numbers, you can **name areas** of your grid. It's like drawing your layout in CSS:
+
+```css
+grid-template-areas:
+  "header header"
+  "sidebar content"
+  "footer footer";
+```
+
+Then assign items to areas:
+
+```css
+.header { grid-area: header; }
+```
+
+## Rules
+
+- Each row is a quoted string
+- Names must form rectangles (no L-shapes)
+- Use `.` for empty cells
+
+## Your turn
+
+The items are already assigned to area names. Define the template:
+
+`"header header" "sidebar content" "footer footer"`
+
+export const markup = `<div class="grid">
+  <div class="header">Header</div>
+  <div class="sidebar">Sidebar</div>
+  <div class="content">Content</div>
+  <div class="footer">Footer</div>
+</div>`;
+
+export const styles = {
+  '.grid': {
+    properties: {
+      'display': { value: 'grid' },
+      'grid-template-columns': { value: '150px 1fr' },
+      'grid-template-rows': { value: '50px 1fr 50px' },
+      'gap': { value: '8px' },
+      'grid-template-areas': {
+        value: '',
+        input: {
+          placeholder: '"header header" "sidebar content" "footer footer"',
+          regex: /^["']header\s+header["']\s+["']sidebar\s+content["']\s+["']footer\s+footer["'];?$/,
+        },
+      },
+    },
+  },
+  '.header': {
+    properties: { 'grid-area': { value: 'header' } },
+  },
+  '.sidebar': {
+    properties: { 'grid-area': { value: 'sidebar' } },
+  },
+  '.content': {
+    properties: { 'grid-area': { value: 'content' } },
+  },
+  '.footer': {
+    properties: { 'grid-area': { value: 'footer' } },
+  },
+};

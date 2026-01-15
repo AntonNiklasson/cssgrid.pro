@@ -10,7 +10,7 @@
     "lint:fix": "biome lint src app --write",
     "format": "biome format src app",
     "format:fix": "biome format src app --write",
-    "check": "biome check src app && tsc --noEmit",
+    "check": "biome check src app && tsgo --noEmit",
     "check:fix": "biome check src app --write",
     "precommit": "lint-staged"
   },
@@ -28,6 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.10",
+    "@typescript/native-preview": "7.0.0-dev.20251227.1",
     "@mdx-js/loader": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^15.3.0",

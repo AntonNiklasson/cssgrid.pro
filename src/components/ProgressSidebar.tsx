@@ -1,3 +1,5 @@
+'use client';
+
 import { useTutorial } from '../contexts/TutorialContext';
 import { lessons } from '../data/tutorial';
 

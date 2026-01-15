@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import { useTutorial } from '../contexts/TutorialContext';
 import type { StyleTree } from '../types/tutorial';

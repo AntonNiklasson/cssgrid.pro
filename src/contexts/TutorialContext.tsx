@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, type ReactNode, useCallback, useContext, useMemo, useState } from 'react';
 import { allLessons, getSectionProgress, getTotalLessons } from '../data/tutorial';
 import type { Lesson, SectionProgress, TutorialProgress } from '../types/tutorial';

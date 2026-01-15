@@ -85,18 +85,18 @@ export function TutorialPage() {
       <ProgressSidebar />
 
       <main className="flex-1 flex flex-col overflow-hidden">
-        <header className="bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
+        <header className="bg-white border-b border-gray-100 px-8 py-5 flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold mb-1">{currentLesson.title}</h1>
+            <h1 className="text-xl font-semibold mb-1 text-gray-900">{currentLesson.title}</h1>
             {sectionProgress && (
-              <span className="text-sm text-gray-600">
+              <span className="text-sm text-gray-500">
                 {sectionProgress.sectionTitle} • Lesson {sectionProgress.current} of{' '}
                 {sectionProgress.total}
               </span>
             )}
           </div>
 
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-4 items-center">
             {hasError && (
               <span className="text-[var(--color-error)] text-sm mr-4">
                 That's not quite right. Try again!
@@ -126,7 +126,7 @@ export function TutorialPage() {
           </div>
         </header>
 
-        <div className="flex-1 grid grid-cols-2 grid-rows-[auto_1fr] gap-5 p-6 overflow-auto">
+        <div className="flex-1 grid grid-cols-2 grid-rows-[auto_1fr] gap-6 p-8 overflow-auto">
           <div className="col-span-1 row-span-2 overflow-auto">
             <LessonContent lesson={currentLesson} />
             {currentLesson.type === 'practice' && currentLesson.hints && (
@@ -146,21 +146,21 @@ export function TutorialPage() {
 
       {showSuccess && currentLesson.type === 'practice' && (
         <div
-          className="fixed inset-0 bg-black/70 flex items-center justify-center z-[1000]"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000] backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           onClick={handleNext}
           onKeyDown={(e) => e.key === 'Enter' && handleNext()}
         >
           <div
-            className="bg-white rounded-2xl p-10 max-w-[500px] text-center"
+            className="bg-white rounded-2xl p-10 max-w-[480px] text-center shadow-xl"
             role="document"
             onClick={(e) => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
           >
-            <div className="text-5xl mb-4">🎉</div>
+            <div className="text-5xl mb-5">🎉</div>
             <h2 className="text-2xl font-semibold mb-4 text-[var(--color-success)]">Great job!</h2>
-            <div className="markdown-content mb-6 text-left">
+            <div className="markdown-content mb-8 text-left">
               <ReactMarkdown>{currentLesson.successMessage}</ReactMarkdown>
             </div>
             <Button onClick={handleNext}>

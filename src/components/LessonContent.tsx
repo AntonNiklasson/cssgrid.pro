@@ -14,9 +14,9 @@ export function LessonContent({ lesson }: LessonContentProps) {
       : 'bg-[var(--color-primary-light)] text-[var(--color-primary-dark)]';
 
   return (
-    <div className="p-8 bg-white rounded-xl shadow-sm max-w-[700px] mx-auto animate-fade-in">
+    <div className="p-10 bg-white rounded-2xl shadow-sm border border-gray-100 max-w-[700px] mx-auto animate-fade-in">
       <div
-        className={`inline-block px-2.5 py-1 rounded text-xs font-semibold uppercase tracking-wide mb-4 ${typeClasses}`}
+        className={`inline-block px-3 py-1.5 rounded-md text-xs font-semibold uppercase tracking-wider mb-5 ${typeClasses}`}
       >
         {lesson.type === 'learn' ? 'Learn' : 'Practice'}
       </div>

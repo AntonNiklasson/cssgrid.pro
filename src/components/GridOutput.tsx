@@ -37,35 +37,38 @@ export function GridOutput({ markup, styles, note }: GridOutputProps) {
   // Base styles for grid items
   const baseGridStyles = `
     .grid {
-      background: #e5e5e5;
-      padding: 10px;
+      background: #f4f4f5;
+      padding: 12px;
       min-height: 150px;
+      border-radius: 8px;
     }
     .grid > div {
       background: var(--color-primary-light);
-      border: 2px solid var(--color-primary);
+      border: 1px solid rgba(99, 102, 241, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      border-radius: 4px;
+      font-size: 1.125rem;
+      font-weight: 500;
+      color: var(--color-primary-dark);
+      border-radius: 6px;
       min-height: 50px;
-      padding: 8px;
+      padding: 10px;
     }
   `;
 
   return (
-    <div className="bg-gray-50 rounded-lg overflow-hidden">
-      <div className="bg-gray-200 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-gray-600 border-b border-gray-300">
+    <div className="bg-white rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+      <div className="bg-gray-50 px-5 py-3 text-xs font-semibold uppercase tracking-wide text-gray-500 border-b border-gray-100">
         Output
       </div>
-      <div className="p-5 min-h-[200px] grid-output">
+      <div className="p-6 min-h-[200px] grid-output">
         <style>{baseGridStyles}</style>
         <style>{cssString}</style>
         <div dangerouslySetInnerHTML={{ __html: markup }} />
       </div>
       {note && (
-        <div className="bg-[var(--color-accent-light)] text-[var(--color-accent-dark)] px-4 py-3 text-sm border-t border-[var(--color-accent)]">
+        <div className="bg-[var(--color-accent-light)] text-[var(--color-accent-dark)] px-5 py-3 text-sm border-t border-[var(--color-accent)]/20">
           {note}
         </div>
       )}

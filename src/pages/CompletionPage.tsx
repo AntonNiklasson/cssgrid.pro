@@ -74,23 +74,23 @@ export function CompletionPage() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-5 py-10 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 py-16 bg-gradient-to-b from-gray-50 to-white">
       {!showCertificate ? (
         <div className="text-center max-w-xl animate-fade-in">
-          <div className="text-7xl mb-6">🎓</div>
-          <h1 className="text-4xl font-bold mb-4 bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-light)] bg-clip-text text-transparent">
+          <div className="text-7xl mb-8">🎓</div>
+          <h1 className="text-4xl font-bold mb-5 text-gray-900">
             Congratulations!
           </h1>
-          <p className="text-xl text-gray-400 mb-8 leading-relaxed">
+          <p className="text-xl text-gray-500 mb-10 leading-relaxed">
             You've completed the CSS Grid tutorial! You now have the skills to create powerful,
             flexible layouts for your web projects.
           </p>
 
-          <div className="flex flex-wrap gap-3 justify-center mb-10">
+          <div className="flex flex-wrap gap-3 justify-center mb-12">
             {skills.map((skill) => (
               <div
                 key={skill}
-                className="bg-gray-800 text-[var(--color-success)] px-4 py-2 rounded-full text-sm font-medium flex items-center gap-1.5"
+                className="bg-[var(--color-accent-light)] text-[var(--color-accent-dark)] px-4 py-2 rounded-full text-sm font-medium flex items-center gap-1.5"
               >
                 <span>✓</span>
                 {skill}
@@ -99,9 +99,9 @@ export function CompletionPage() {
           </div>
 
           {/* Certificate generation form */}
-          <div className="bg-gray-800/50 rounded-xl p-6 mb-8 border border-gray-700">
-            <h2 className="text-lg font-semibold mb-4">Get Your Certificate</h2>
-            <p className="text-gray-400 text-sm mb-4">
+          <div className="bg-white rounded-2xl p-8 mb-10 border border-gray-200 shadow-sm">
+            <h2 className="text-lg font-semibold mb-4 text-gray-900">Get Your Certificate</h2>
+            <p className="text-gray-500 text-sm mb-5">
               Enter your name to generate a shareable certificate
             </p>
             <input
@@ -109,7 +109,7 @@ export function CompletionPage() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
-              className="w-full px-4 py-3 bg-gray-900 border border-gray-600 rounded-lg text-white text-center text-lg mb-4 focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20"
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 text-center text-lg mb-5 focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all"
               onKeyDown={(e) => e.key === 'Enter' && generateCertificate()}
             />
             <Button onClick={generateCertificate} disabled={!name.trim()}>
@@ -128,15 +128,15 @@ export function CompletionPage() {
         </div>
       ) : (
         <div className="text-center animate-fade-in">
-          <h2 className="text-2xl font-bold mb-6 text-white">Your Certificate</h2>
+          <h2 className="text-2xl font-bold mb-8 text-gray-900">Your Certificate</h2>
 
           {/* Certificate preview */}
-          <div className="mb-6 rounded-lg overflow-hidden shadow-2xl inline-block">
+          <div className="mb-8 rounded-2xl overflow-hidden shadow-lg inline-block border border-gray-200">
             <Certificate ref={certificateRef} name={name} date={today} />
           </div>
 
           {/* Action buttons */}
-          <div className="flex flex-wrap gap-4 justify-center mb-8">
+          <div className="flex flex-wrap gap-4 justify-center mb-10">
             <Button onClick={downloadCertificate} disabled={isGenerating}>
               {isGenerating ? 'Generating...' : '📥 Download PNG'}
             </Button>

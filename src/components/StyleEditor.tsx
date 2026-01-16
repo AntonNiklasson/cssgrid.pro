@@ -1,3 +1,5 @@
+'use client';
+
 import { useCallback } from 'react';
 import { useTutorial } from '../contexts/TutorialContext';
 import type { CSSProperty, StyleTree } from '../types/tutorial';

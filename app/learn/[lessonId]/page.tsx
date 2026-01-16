@@ -30,6 +30,7 @@ export default function TutorialPage() {
 
   const [showSuccess, setShowSuccess] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Handle URL params to set the lesson
   useEffect(() => {
@@ -95,78 +96,152 @@ export default function TutorialPage() {
 
   return (
     <div className="flex min-h-screen bg-gray-50">
-      <ProgressSidebar />
+      <ProgressSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
-      <main className="flex-1 flex flex-col overflow-hidden">
-        <header className="bg-white border-b border-gray-100 px-8 py-5 flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-semibold mb-1 text-gray-900">{currentLesson.title}</h1>
-            {sectionProgress && (
-              <span className="text-sm text-gray-500">
-                {sectionProgress.sectionTitle} • Lesson {sectionProgress.current} of{' '}
-                {sectionProgress.total}
-              </span>
-            )}
-          </div>
+      <main className="flex-1 flex flex-col overflow-hidden min-w-0">
+        {/* Header */}
+        <header className="bg-white border-b border-gray-100 px-4 md:px-8 py-4 md:py-5">
+          <div className="flex items-center justify-between gap-4">
+            {/* Left side: menu button + title */}
+            <div className="flex items-center gap-3 min-w-0">
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden p-2 -ml-2 text-gray-600 hover:text-gray-900"
+                aria-label="Open menu"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+              <div className="min-w-0">
+                <h1 className="text-lg md:text-xl font-semibold text-gray-900 truncate">
+                  {currentLesson.title}
+                </h1>
+                {sectionProgress && (
+                  <span className="text-xs md:text-sm text-gray-500">
+                    Lesson {sectionProgress.current} of {sectionProgress.total}
+                  </span>
+                )}
+              </div>
+            </div>
 
-          <div className="flex gap-4 items-center">
-            {hasError && (
-              <span className="text-[var(--color-error)] text-sm mr-4">
-                That's not quite right. Try again!
-              </span>
-            )}
+            {/* Right side: navigation */}
+            <div className="flex gap-2 md:gap-4 items-center shrink-0">
+              {hasError && (
+                <span className="hidden md:inline text-[var(--color-error)] text-sm">
+                  Not quite right!
+                </span>
+              )}
 
-            {currentLessonIndex > 0 && (
-              <Button variant="ghost" size="sm" onClick={handlePrevious}>
-                ← Previous
+              {currentLessonIndex > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handlePrevious}
+                  className="hidden sm:inline-flex"
+                >
+                  ← Previous
+                </Button>
+              )}
+
+              <Button onClick={handleSubmit} size="sm" className="md:hidden">
+                {currentLesson.type === 'learn' ? 'Next' : showSuccess ? 'Next' : 'Submit'}
               </Button>
-            )}
-
-            <Button onClick={handleSubmit}>
-              {currentLesson.type === 'learn'
-                ? 'Continue →'
-                : showSuccess
-                  ? 'Next Lesson →'
-                  : 'Submit'}
-            </Button>
+              <Button onClick={handleSubmit} className="hidden md:inline-flex">
+                {currentLesson.type === 'learn'
+                  ? 'Continue →'
+                  : showSuccess
+                    ? 'Next Lesson →'
+                    : 'Submit'}
+              </Button>
+            </div>
           </div>
+
+          {/* Mobile error message */}
+          {hasError && (
+            <div className="md:hidden mt-2 text-[var(--color-error)] text-sm">
+              That's not quite right. Try again!
+            </div>
+          )}
         </header>
 
-        <div className="flex-1 grid grid-cols-2 grid-rows-[auto_1fr] gap-6 p-8 overflow-auto">
-          <div className="col-span-1 row-span-2 overflow-auto">
+        {/* Content - responsive layout */}
+        <div className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">
+          {/* Desktop: 2-column grid */}
+          <div className="hidden md:grid md:grid-cols-2 gap-6 h-full">
+            <div className="overflow-auto">
+              <LessonContent lesson={currentLesson} />
+              {currentLesson.type === 'practice' && currentLesson.hints && (
+                <HintPanel hints={currentLesson.hints} />
+              )}
+            </div>
+            <div className="flex flex-col gap-6">
+              <StyleEditor styles={styles} readOnly={currentLesson.type === 'learn'} />
+              <GridOutput markup={markup} styles={styles} note={note} />
+            </div>
+          </div>
+
+          {/* Mobile: stacked layout */}
+          <div className="md:hidden flex flex-col gap-4">
             <LessonContent lesson={currentLesson} />
+            <StyleEditor styles={styles} readOnly={currentLesson.type === 'learn'} />
+            <GridOutput markup={markup} styles={styles} note={note} />
             {currentLesson.type === 'practice' && currentLesson.hints && (
               <HintPanel hints={currentLesson.hints} />
             )}
           </div>
+        </div>
 
-          <div className="col-span-1 row-span-1">
-            <StyleEditor styles={styles} readOnly={currentLesson.type === 'learn'} />
-          </div>
-
-          <div className="col-span-1 row-span-1">
-            <GridOutput markup={markup} styles={styles} note={note} />
-          </div>
+        {/* Mobile bottom navigation */}
+        <div className="sm:hidden border-t border-gray-200 bg-white px-4 py-3 flex justify-between">
+          {currentLessonIndex > 0 ? (
+            <Button variant="ghost" size="sm" onClick={handlePrevious}>
+              ← Prev
+            </Button>
+          ) : (
+            <div />
+          )}
+          <span className="text-sm text-gray-500 self-center">
+            {currentLessonIndex + 1} / {totalLessons}
+          </span>
+          <Button size="sm" onClick={handleSubmit}>
+            {showSuccess ? 'Next →' : 'Submit'}
+          </Button>
         </div>
       </main>
 
+      {/* Success modal */}
       {showSuccess && currentLesson.type === 'practice' && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000] backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-[1000] backdrop-blur-sm p-4"
           role="dialog"
           aria-modal="true"
           onClick={handleNext}
           onKeyDown={(e) => e.key === 'Enter' && handleNext()}
         >
           <div
-            className="bg-white rounded-2xl p-10 max-w-[480px] text-center shadow-xl"
+            className="bg-white rounded-2xl p-6 md:p-10 max-w-[480px] w-full text-center shadow-xl"
             role="document"
             onClick={(e) => e.stopPropagation()}
             onKeyDown={(e) => e.stopPropagation()}
           >
-            <div className="text-5xl mb-5">🎉</div>
-            <h2 className="text-2xl font-semibold mb-4 text-[var(--color-success)]">Great job!</h2>
-            <div className="markdown-content mb-8 text-left">
+            <div className="text-4xl md:text-5xl mb-4 md:mb-5">🎉</div>
+            <h2 className="text-xl md:text-2xl font-semibold mb-3 md:mb-4 text-[var(--color-success)]">
+              Great job!
+            </h2>
+            <div className="markdown-content mb-6 md:mb-8 text-left text-sm md:text-base">
               <ReactMarkdown>{currentLesson.successMessage}</ReactMarkdown>
             </div>
             <Button onClick={handleNext}>
